@@ -1,0 +1,115 @@
+{
+  "version": "1.0",
+  "provider": {
+    "domain": "sap.internal.company.com",
+    "name": "SAP MM - Material Master Creation",
+    "locale": "ko-KR"
+  },
+  "registry": {
+    "url": "https://registry.aimanifest.io/verify",
+    "signature": "sha256:PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH"
+  },
+  "task": {
+    "id": "sap_mm01_material_create",
+    "name": "자재 마스터 생성 (MM01)",
+    "description": "SAP MM01 트랜잭션을 통해 새 자재 마스터를 생성하는 워크플로우",
+    "timeout_seconds": 300,
+    "requires_login": true,
+    "login_check_selector": "#sapwd_main_area"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "action": "fill",
+      "selector": "input[name='RMMG1-MATNR']",
+      "description": "자재 번호 입력",
+      "source": "user_input",
+      "user_input_label": "자재 번호 (Material Number)"
+    },
+    {
+      "step": 2,
+      "action": "select",
+      "selector": "select[name='RMMG1-MTART']",
+      "description": "자재 유형 선택",
+      "source": "user_input",
+      "user_input_label": "자재 유형 (예: ROH=원자재, FERT=완제품)"
+    },
+    {
+      "step": 3,
+      "action": "select",
+      "selector": "select[name='RMMG1-MBRSH']",
+      "description": "산업 섹터 선택",
+      "source": "user_input",
+      "user_input_label": "산업 섹터 코드"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "selector": "button[title='계속']",
+      "description": "View 선택 화면으로 이동",
+      "wait_for_selector": ".view-selection-popup",
+      "note": "View 선택 팝업이 뜨면 필요한 View를 선택해야 함"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "selector": "#view-basic-data-1",
+      "description": "기본 데이터 1 View 선택",
+      "optional": true
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "selector": "#view-purchasing",
+      "description": "구매 View 선택",
+      "optional": true
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "selector": "button[title='확인']",
+      "description": "View 선택 확인 및 데이터 입력 화면 진입",
+      "wait_for_selector": "input[name='MARA-MAKTX']"
+    },
+    {
+      "step": 8,
+      "action": "fill",
+      "selector": "input[name='MARA-MAKTX']",
+      "description": "자재 설명 입력 (한국어)",
+      "source": "user_input",
+      "user_input_label": "자재 설명"
+    },
+    {
+      "step": 9,
+      "action": "select",
+      "selector": "select[name='MARA-MEINS']",
+      "description": "기본 단위 선택",
+      "source": "user_input",
+      "user_input_label": "기본 단위 (예: EA, KG, M)"
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "selector": "button[title='저장']",
+      "description": "자재 마스터 저장",
+      "wait_for_selector": ".success-message",
+      "note": "저장 후 자재 번호가 확정됨. 화면 하단 상태바에서 확인."
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom_text": "자재 번호가 이미 존재합니다",
+      "description": "중복 자재 번호 오류",
+      "resolution": "MM03으로 기존 자재를 조회하거나 다른 자재 번호를 사용하세요."
+    },
+    {
+      "symptom_text": "필수 필드를 입력하십시오",
+      "description": "필수 항목 누락",
+      "resolution": "빨간색으로 표시된 필드를 모두 입력 후 재시도하세요."
+    }
+  ],
+  "on_success": {
+    "symptom_text": "자재 번호가 생성되었습니다",
+    "message": "자재 마스터 생성 완료. 화면 하단 메시지에서 생성된 자재 번호를 확인하세요."
+  }
+}

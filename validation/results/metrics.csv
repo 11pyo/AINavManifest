@@ -1,0 +1,61 @@
+agent,scenario,input_tokens,http_requests,llm_calls,steps_attempted,steps_succeeded,wall_time_ms,success,failure_reason,notes
+baseline_dom,erp_order_v1,1378,1,1,4,3,20.63540000017383,False,step1 필드 추론 실패,baseline: step1 vendor 추론 실패|seed=1000
+manifest_aware,erp_order_v1,341,5,1,8,8,79.06559999901219,True,,detection_method=A_well_known|trust=white|seed=1000
+baseline_dom,erp_order_v1,1378,1,1,4,1,28.110400000514346,False,step1 필드 추론 실패,baseline: step1 vendor 추론 실패|baseline: step1 quantity 추론 실패|baseline: step1 currency 추론 실패|seed=1001
+manifest_aware,erp_order_v1,341,5,1,8,8,55.850000000646105,True,,detection_method=A_well_known|trust=white|seed=1001
+baseline_dom,erp_order_v1,2652,3,2,6,6,43.11459999917133,True,,seed=1002
+manifest_aware,erp_order_v1,341,5,1,8,8,48.72810000051686,True,,detection_method=A_well_known|trust=white|seed=1002
+baseline_dom,erp_order_v1,1378,1,1,4,3,18.198800000391202,False,step1 필드 추론 실패,baseline: step1 quantity 추론 실패|seed=1003
+manifest_aware,erp_order_v1,341,5,1,8,8,49.651199999061646,True,,detection_method=A_well_known|trust=white|seed=1003
+baseline_dom,erp_order_v1,1378,1,1,4,3,17.5147999998444,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|seed=1004
+manifest_aware,erp_order_v1,341,5,1,8,8,62.0574000004126,True,,detection_method=A_well_known|trust=white|seed=1004
+baseline_dom,erp_order_v1,1378,1,1,4,2,20.673500001066714,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|baseline: step1 currency 추론 실패|seed=1005
+manifest_aware,erp_order_v1,341,5,1,8,8,49.119000001155655,True,,detection_method=A_well_known|trust=white|seed=1005
+baseline_dom,erp_order_v1,1378,1,1,4,3,18.255300001328578,False,step1 필드 추론 실패,baseline: step1 currency 추론 실패|seed=1006
+manifest_aware,erp_order_v1,341,5,1,8,8,59.423400000014226,True,,detection_method=A_well_known|trust=white|seed=1006
+baseline_dom,erp_order_v1,1378,1,1,4,1,14.462299999649986,False,step1 필드 추론 실패,baseline: step1 vendor 추론 실패|baseline: step1 item_code 추론 실패|baseline: step1 currency 추론 실패|seed=1007
+manifest_aware,erp_order_v1,341,5,1,8,8,51.46480000075826,True,,detection_method=A_well_known|trust=white|seed=1007
+baseline_dom,erp_order_v1,1378,1,1,4,3,21.002599998610094,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|seed=1008
+manifest_aware,erp_order_v1,341,5,1,8,8,48.28470000029483,True,,detection_method=A_well_known|trust=white|seed=1008
+baseline_dom,erp_order_v1,2652,2,2,6,4,39.58959999908984,False,step2 필드 추론 실패,baseline: step2 ship_to 추론 실패|baseline: step2 delivery_date 추론 실패|seed=1009
+manifest_aware,erp_order_v1,341,5,1,8,8,53.8605000001553,True,,detection_method=A_well_known|trust=white|seed=1009
+baseline_dom,erp_order_v1,1378,1,1,4,3,14.639600000009523,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|seed=1010
+manifest_aware,erp_order_v1,341,5,1,8,8,49.07230000026175,True,,detection_method=A_well_known|trust=white|seed=1010
+baseline_dom,erp_order_v1,2652,2,2,6,5,49.83089999950607,False,step2 필드 추론 실패,baseline: step2 ship_to 추론 실패|seed=1011
+manifest_aware,erp_order_v1,341,5,1,8,8,48.55109999880369,True,,detection_method=A_well_known|trust=white|seed=1011
+baseline_dom,erp_order_v1,2652,2,2,6,5,30.80239999871992,False,step2 필드 추론 실패,baseline: step2 delivery_date 추론 실패|seed=1012
+manifest_aware,erp_order_v1,341,5,1,8,8,55.014999999912106,True,,detection_method=A_well_known|trust=white|seed=1012
+baseline_dom,erp_order_v1,1378,1,1,4,1,15.774100000271574,False,step1 필드 추론 실패,baseline: step1 vendor 추론 실패|baseline: step1 item_code 추론 실패|baseline: step1 currency 추론 실패|seed=1013
+manifest_aware,erp_order_v1,341,5,1,8,8,45.528600001489394,True,,detection_method=A_well_known|trust=white|seed=1013
+baseline_dom,erp_order_v1,2652,2,2,6,5,33.59220000129426,False,step2 필드 추론 실패,baseline: step2 ship_to 추론 실패|seed=1014
+manifest_aware,erp_order_v1,341,5,1,8,8,48.33110000072338,True,,detection_method=A_well_known|trust=white|seed=1014
+baseline_dom,erp_order_v1,1378,1,1,4,3,16.196999999010586,False,step1 필드 추론 실패,baseline: step1 quantity 추론 실패|seed=1015
+manifest_aware,erp_order_v1,341,5,1,8,8,49.81909999878553,True,,detection_method=A_well_known|trust=white|seed=1015
+baseline_dom,erp_order_v1,2652,3,2,6,6,45.651800000996445,True,,seed=1016
+manifest_aware,erp_order_v1,341,5,1,8,8,53.68180000004941,True,,detection_method=A_well_known|trust=white|seed=1016
+baseline_dom,erp_order_v1,2652,3,2,6,6,43.08560000026773,True,,seed=1017
+manifest_aware,erp_order_v1,341,5,1,8,8,46.61309999937657,True,,detection_method=A_well_known|trust=white|seed=1017
+baseline_dom,erp_order_v1,1378,1,1,4,3,15.954999998939456,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|seed=1018
+manifest_aware,erp_order_v1,341,5,1,8,8,41.703599999891594,True,,detection_method=A_well_known|trust=white|seed=1018
+baseline_dom,erp_order_v1,1378,1,1,4,3,13.69429999977001,False,step1 필드 추론 실패,baseline: step1 quantity 추론 실패|seed=1019
+manifest_aware,erp_order_v1,341,5,1,8,8,64.8667999994359,True,,detection_method=A_well_known|trust=white|seed=1019
+baseline_dom,erp_order_v1,2652,2,2,6,5,34.841799999412615,False,step2 필드 추론 실패,baseline: step2 ship_to 추론 실패|seed=1020
+manifest_aware,erp_order_v1,341,5,1,8,8,61.50569999954314,True,,detection_method=A_well_known|trust=white|seed=1020
+baseline_dom,erp_order_v1,2652,3,2,6,6,41.38939999938884,True,,seed=1021
+manifest_aware,erp_order_v1,341,5,1,8,8,42.88119999910123,True,,detection_method=A_well_known|trust=white|seed=1021
+baseline_dom,erp_order_v1,1378,1,1,4,2,19.163099999786937,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|baseline: step1 currency 추론 실패|seed=1022
+manifest_aware,erp_order_v1,341,5,1,8,8,60.868299999128794,True,,detection_method=A_well_known|trust=white|seed=1022
+baseline_dom,erp_order_v1,1378,1,1,4,3,16.519700000571902,False,step1 필드 추론 실패,baseline: step1 quantity 추론 실패|seed=1023
+manifest_aware,erp_order_v1,341,5,1,8,8,68.71030000002065,True,,detection_method=A_well_known|trust=white|seed=1023
+baseline_dom,erp_order_v1,1378,1,1,4,2,19.96549999967101,False,step1 필드 추론 실패,baseline: step1 vendor 추론 실패|baseline: step1 currency 추론 실패|seed=1024
+manifest_aware,erp_order_v1,341,5,1,8,8,57.82290000024659,True,,detection_method=A_well_known|trust=white|seed=1024
+baseline_dom,erp_order_v1,2652,3,2,6,6,88.926000000356,True,,seed=1025
+manifest_aware,erp_order_v1,341,5,1,8,8,55.80840000038734,True,,detection_method=A_well_known|trust=white|seed=1025
+baseline_dom,erp_order_v1,2652,3,2,6,6,43.738099999245605,True,,seed=1026
+manifest_aware,erp_order_v1,341,5,1,8,8,47.549099999741884,True,,detection_method=A_well_known|trust=white|seed=1026
+baseline_dom,erp_order_v1,1378,1,1,4,2,19.56880000034289,False,step1 필드 추론 실패,baseline: step1 item_code 추론 실패|baseline: step1 currency 추론 실패|seed=1027
+manifest_aware,erp_order_v1,341,5,1,8,8,44.35689999991155,True,,detection_method=A_well_known|trust=white|seed=1027
+baseline_dom,erp_order_v1,2652,2,2,6,5,37.0390000007319,False,step2 필드 추론 실패,baseline: step2 ship_to 추론 실패|seed=1028
+manifest_aware,erp_order_v1,341,5,1,8,8,66.17220000043744,True,,detection_method=A_well_known|trust=white|seed=1028
+baseline_dom,erp_order_v1,1378,1,1,4,3,16.272200000457815,False,step1 필드 추론 실패,baseline: step1 currency 추론 실패|seed=1029
+manifest_aware,erp_order_v1,341,5,1,8,8,60.84809999993013,True,,detection_method=A_well_known|trust=white|seed=1029

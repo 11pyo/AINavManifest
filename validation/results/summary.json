@@ -1,0 +1,26 @@
+{
+  "sample_size": 30,
+  "baseline": {
+    "n": 30,
+    "mean_tokens": 1887.6,
+    "std_tokens": 634.7996480019883,
+    "mean_http": 1.6,
+    "mean_llm": 1.4,
+    "mean_ms": 28.60679333328638,
+    "std_ms": 16.204792244505757,
+    "success_rate": 0.2
+  },
+  "manifest": {
+    "n": 30,
+    "mean_tokens": 341,
+    "std_tokens": 0.0,
+    "mean_http": 5,
+    "mean_llm": 1,
+    "mean_ms": 54.24034333330686,
+    "std_ms": 8.560870487893842,
+    "success_rate": 1.0
+  },
+  "token_saving_percent": 81.93473193473193,
+  "success_rate_lift_percent": 80.0,
+  "http_request_delta": 3.4
+}

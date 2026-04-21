@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>ERP 구매 주문 등록 - 실증 대상 페이지</title>
+<!-- 방식 B: HTML meta 태그 내장 매니페스트 포인터 -->
+<meta name="ai-manifest" content='{{ manifest_meta|safe }}'>
+<style>
+body { font-family: system-ui, sans-serif; max-width: 760px; margin: 30px auto; color: #222; }
+h1 { font-size: 1.3rem; }
+.row { margin: 8px 0; display: flex; align-items: center; }
+.row label { width: 140px; color: #555; }
+.row input, .row select { padding: 6px 8px; flex: 1; }
+.btn { padding: 8px 14px; margin-top: 12px; cursor: pointer; }
+.decoy-section { margin-top: 30px; padding: 12px; border: 1px dashed #ccc; color: #888; font-size: 0.85rem; }
+.decoy-section h3 { margin-top: 0; font-size: 0.95rem; }
+.nav { background: #f4f4f4; padding: 10px; margin-bottom: 20px; }
+.nav a { margin-right: 12px; color: #555; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <!-- 디코이 네비게이션: DOM 분석 시 토큰 소모량을 높이는 항목 -->
+  <a href="#">대시보드</a><a href="#">재무</a><a href="#">영업</a><a href="#">구매</a>
+  <a href="#">자재</a><a href="#">생산</a><a href="#">품질</a><a href="#">설비</a>
+  <a href="#">고객지원</a><a href="#">보고서</a><a href="#">환경설정</a>
+</div>
+
+<h1>ERP 구매 주문 등록</h1>
+
+{% if step == 1 %}
+<form action="/order/new" method="POST" id="order_form_step1">
+  <div class="row"><label for="vendor">공급사</label>
+    <input type="text" id="vendor" name="vendor" required></div>
+  <div class="row"><label for="item_code">품목 코드</label>
+    <input type="text" id="item_code" name="item_code" required></div>
+  <div class="row"><label for="quantity">수량</label>
+    <input type="number" id="quantity" name="quantity" min="1" max="10000" required></div>
+  <div class="row"><label for="currency">통화</label>
+    <select id="currency" name="currency" required>
+      <option value="">선택</option><option value="KRW">KRW</option>
+      <option value="USD">USD</option><option value="EUR">EUR</option>
+      <option value="JPY">JPY</option><option value="CNY">CNY</option>
+    </select></div>
+  <button type="submit" id="btn_next" class="btn">다음 단계</button>
+</form>
+{% elif step == 2 %}
+<form action="/order/step2" method="POST" id="order_form_step2">
+  <p>1단계 입력: 공급사 {{ step1.vendor }} / 품목 {{ step1.item_code }} / 수량 {{ step1.quantity }} {{ step1.currency }}</p>
+  <div class="row"><label for="ship_to">배송지</label>
+    <input type="text" id="ship_to" name="ship_to" required></div>
+  <div class="row"><label for="delivery_date">납기일</label>
+    <input type="date" id="delivery_date" name="delivery_date" required></div>
+  <button type="submit" id="btn_submit" class="btn">주문 제출</button>
+</form>
+{% elif step == 'complete' %}
+<h2>주문이 정상적으로 접수되었습니다.</h2>
+<p>공급사 {{ step1.vendor }} / 품목 {{ step1.item_code }} / 수량 {{ step1.quantity }} {{ step1.currency }}</p>
+<p>배송지 {{ step2.ship_to }} / 납기일 {{ step2.delivery_date }}</p>
+<p><a href="/order/complete">/order/complete</a></p>
+{% endif %}
+
+<!-- 디코이 섹션들: 실제 태스크와 무관하지만 DOM 분석 에이전트가 토큰을 소모하도록 유도 -->
+<div class="decoy-section">
+  <h3>최근 공지</h3>
+  <ul>
+    <li>2026-04-15 결재선 개편 안내 - 전사 공통 승인 단계 변경</li>
+    <li>2026-04-10 월결산 일정 변경 안내 - 당월 25일 → 27일</li>
+    <li>2026-04-03 자재 마스터 정비 프로젝트 킥오프</li>
+    <li>2026-03-28 시스템 점검 완료 보고</li>
+    <li>2026-03-19 구매 프로세스 내부통제 감사 결과 회람</li>
+  </ul>
+</div>
+
+<div class="decoy-section">
+  <h3>관련 링크</h3>
+  <p>SAP 통합 BAPI 호출 가이드 / MM 모듈 트랜잭션 코드 일람 /
+  공급사 등록 전자결재 절차 / BOM 구조 표준화 지침 /
+  회계 전표 승인 흐름도 / 창고 재고 실사 매뉴얼 /
+  환율 정책 공지 / 여신 관리 규정 / 개인정보 처리방침</p>
+</div>
+
+<div class="decoy-section">
+  <h3>용어 해설</h3>
+  <p>BOM(Bill Of Materials): 제품을 구성하는 부품 목록과 수량의 구조화된 목록.
+  ERP(Enterprise Resource Planning): 기업 자원 계획 솔루션.
+  MRP(Material Requirements Planning): 자재 소요량 계획.
+  SLA(Service Level Agreement): 서비스 수준 합의. PO(Purchase Order): 구매 주문.</p>
+</div>
+
+</body>
+</html>

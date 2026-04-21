@@ -1,0 +1,193 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aimanifest.io/schema/v1.0.json",
+  "title": "AI Navigation Manifest",
+  "description": "A machine-readable workflow instruction schema embedded in web pages for AI agents. Enables AI agents to navigate complex web UIs without full DOM analysis.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["version", "provider", "registry", "task", "steps"],
+
+  "properties": {
+
+    "version": {
+      "type": "string",
+      "description": "Schema version",
+      "enum": ["1.0"]
+    },
+
+    "provider": {
+      "type": "object",
+      "description": "Website operator information",
+      "required": ["domain"],
+      "properties": {
+        "domain":  { "type": "string", "description": "e.g. scholarone.com" },
+        "name":    { "type": "string", "description": "Human-readable service name" },
+        "contact": { "type": "string", "format": "email" },
+        "locale":  { "type": "string", "description": "Primary language, e.g. ko-KR" }
+      }
+    },
+
+    "registry": {
+      "type": "object",
+      "description": "Central trust registry for manifest verification (anti-prompt-injection)",
+      "required": ["url", "signature"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Registry endpoint to verify this manifest's authenticity"
+        },
+        "signature": {
+          "type": "string",
+          "description": "SHA-256 hash of this manifest signed by the provider"
+        },
+        "certified_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 certification timestamp"
+        }
+      }
+    },
+
+    "task": {
+      "type": "object",
+      "description": "High-level description of the workflow this manifest covers",
+      "required": ["id", "name"],
+      "properties": {
+        "id":               { "type": "string", "description": "Unique task identifier" },
+        "name":             { "type": "string", "description": "Human-readable task name" },
+        "description":      { "type": "string" },
+        "timeout_seconds":  { "type": "integer", "minimum": 10, "default": 300 },
+        "requires_login":   { "type": "boolean", "default": true },
+        "login_check_selector": {
+          "type": "string",
+          "description": "CSS selector that is present only when user is logged in"
+        }
+      }
+    },
+
+    "prerequisites": {
+      "type": "array",
+      "description": "Conditions that must be true before executing steps",
+      "items": {
+        "type": "object",
+        "required": ["description"],
+        "properties": {
+          "description":     { "type": "string" },
+          "check_selector":  { "type": "string", "description": "CSS selector that must exist" },
+          "check_url_contains": { "type": "string" }
+        }
+      }
+    },
+
+    "steps": {
+      "type": "array",
+      "description": "Ordered list of UI manipulation actions",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["step", "action"],
+        "properties": {
+
+          "step": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Execution order (1-based)"
+          },
+
+          "action": {
+            "type": "string",
+            "description": "Type of UI interaction",
+            "enum": ["click", "fill", "select", "upload", "wait", "scroll", "navigate", "assert", "hover"]
+          },
+
+          "selector": {
+            "type": "string",
+            "description": "CSS selector of the target element"
+          },
+
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of what this step does"
+          },
+
+          "value": {
+            "type": "string",
+            "description": "For fill/select: the value to enter or option to choose"
+          },
+
+          "source": {
+            "type": "string",
+            "description": "Where the value comes from",
+            "enum": ["user_input", "static", "previous_step_result"]
+          },
+
+          "user_input_label": {
+            "type": "string",
+            "description": "Label to show the user when asking for this input value"
+          },
+
+          "allowed_extensions": {
+            "type": "array",
+            "description": "For upload action: whitelisted file extensions",
+            "items": { "type": "string" },
+            "example": [".pdf", ".docx"]
+          },
+
+          "max_file_size_mb": {
+            "type": "number",
+            "description": "For upload action: maximum allowed file size in MB"
+          },
+
+          "wait_after_ms": {
+            "type": "integer",
+            "description": "Milliseconds to wait after this action before proceeding",
+            "minimum": 0,
+            "default": 500
+          },
+
+          "wait_for_selector": {
+            "type": "string",
+            "description": "CSS selector to wait for after action (before next step)"
+          },
+
+          "optional": {
+            "type": "boolean",
+            "description": "If true, skip this step gracefully if selector not found",
+            "default": false
+          },
+
+          "note": {
+            "type": "string",
+            "description": "Important caveat or common failure mode for this step"
+          }
+        }
+      }
+    },
+
+    "common_errors": {
+      "type": "array",
+      "description": "Known error patterns and resolutions",
+      "items": {
+        "type": "object",
+        "required": ["description", "resolution"],
+        "properties": {
+          "symptom_selector": { "type": "string" },
+          "symptom_text":     { "type": "string" },
+          "description":      { "type": "string" },
+          "resolution":       { "type": "string" }
+        }
+      }
+    },
+
+    "on_success": {
+      "type": "object",
+      "description": "How to confirm the workflow completed successfully",
+      "properties": {
+        "success_selector": { "type": "string" },
+        "success_url_contains": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    }
+  }
+}
