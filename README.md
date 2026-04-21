@@ -139,7 +139,7 @@ International counterparts (PCT, direct national filings) may be pursued within 
 ## Roadmap
 
 - [x] v0.1 schema and reference implementation
-- [ ] IETF Internet-Draft: `draft-han-ai-manifest-00`
+- [x] IETF Internet-Draft: [`draft-han-ai-manifest-00`](https://datatracker.ietf.org/doc/draft-han-ai-manifest/) — posted 2026-04-21
 - [ ] SDK: auto-generate manifests from existing web UIs (Python, Node.js)
 - [ ] Central Trust Registry deployment: `registry.aimanifest.io`
 - [ ] AI-Certified badge program for compliant websites
