@@ -1,8 +1,15 @@
 # AI Manifest
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Patent: FRAND](https://img.shields.io/badge/Patent-FRAND-green.svg)](docs/FRAND.md)
+[![IETF Draft](https://img.shields.io/badge/IETF-draft--han--ai--manifest--00-blue)](https://datatracker.ietf.org/doc/draft-han-ai-manifest/)
+[![Korean Patent](https://img.shields.io/badge/KIPO-10--2026--0071716-red)](https://github.com/11pyo/AINavManifest/blob/main/docs/FRAND.md)
+[![Tokens](https://img.shields.io/badge/Input_tokens-−81.9%25-brightgreen)](validation/results/summary.json)
+[![Success](https://img.shields.io/badge/Task_success-20%25→100%25-brightgreen)](validation/results/summary.json)
+
 > **Embedded workflow instructions for AI agents — enabling efficient web UI automation without repeated DOM analysis.**
 
-Korean Patent Application No. **10-2026-0071716** (filed 2026-04-21) · MIT License · FRAND terms for patent claims
+Korean Patent Application No. **10-2026-0071716** (filed 2026-04-21) · IETF Internet-Draft **`draft-han-ai-manifest-00`** · MIT License · FRAND terms for patent claims
 
 ---
 
