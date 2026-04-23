@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>AI Navigation Manifest — AI 에이전트를 위한 웹사이트 공식 지침서</title>
+  <meta name="description" content="웹사이트에 AI 에이전트 전용 지침서를 심어 LLM 토큰을 95~98% 절감하고 작업 성공률을 100%로 끌어올리는 B2B 플랫폼. KR 특허 10-2026-0071716 · IETF draft-han-ai-manifest · MIT + FRAND.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="AI Navigation Manifest">
+  <meta property="og:description" content="Web agent manifest with token savings 95~98% — Korean patent + IETF draft + MIT/FRAND open source.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">AI Navigation Manifest</a>
+    <nav class="menu">
+      <a href="#proof">실증</a>
+      <a href="#howitworks">작동 원리</a>
+      <a href="#roi">ROI 계산</a>
+      <a href="#segments">대상 고객</a>
+      <a href="#pricing">가격</a>
+      <a href="#contact">문의</a>
+    </nav>
+    <div class="actions">
+      <a class="lang" href="en.html">EN</a>
+      <a class="btn btn-outline" href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="hero">
+  <div class="wrap">
+    <div class="eyebrow">특허 · 표준 · 오픈소스 3중 포지션</div>
+    <h1>AI 에이전트를 위한<br>웹사이트 공식 지침서</h1>
+    <p class="lede">
+      Claude·GPT·Copilot이 귀사 웹 UI를 직접 조작하는 시대.
+      <strong>ai-manifest.json</strong> 한 장으로 <strong>LLM 토큰 95~98% 절감</strong>과
+      <strong>작업 성공률 100%</strong>를 동시에 달성합니다.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#contact">📧 PoC 문의하기</a>
+      <a class="btn btn-ghost" href="#proof">실증 데이터 보기</a>
+    </div>
+
+    <div class="badges">
+      <a class="badge" href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">
+        <span class="badge-title">GitHub</span><span class="badge-val">MIT + FRAND</span>
+      </a>
+      <a class="badge" href="https://datatracker.ietf.org/doc/draft-han-ai-manifest/" target="_blank" rel="noopener">
+        <span class="badge-title">IETF</span><span class="badge-val">draft-han-ai-manifest-00</span>
+      </a>
+      <div class="badge">
+        <span class="badge-title">특허 (KR)</span><span class="badge-val">10-2026-0071716</span>
+      </div>
+      <div class="badge">
+        <span class="badge-title">청구항</span><span class="badge-val">8개 · 2026-04-21 출원</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section id="proof" class="section">
+  <div class="wrap">
+    <h2>실증 — 수치로 증명된 기술</h2>
+    <p class="section-lede">
+      모든 실증은 <code>python verify.py</code> 한 줄로 재현 가능합니다. Mock 서버 + AI 에이전트 대조군·실험군 · tiktoken 기준.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-tag card-tag-blue">SAP S/4HANA Cloud</div>
+        <h3>CBC T134 자재유형 일괄 세팅</h3>
+        <div class="metrics">
+          <div class="metric"><span class="m-val">-98.9%</span><span class="m-label">입력 토큰</span></div>
+          <div class="metric"><span class="m-val">100%</span><span class="m-label">작업 성공률</span></div>
+          <div class="metric"><span class="m-val">1→48회</span><span class="m-label">LLM 호출</span></div>
+        </div>
+        <p>동국제강 GVA/100 기준 15행 ARef 세팅 · iframe·TD클릭·Transport Request 팝업 재현. 16파일 프리패키지.</p>
+        <a class="card-link" href="https://github.com/11pyo/AINavManifest/tree/main/demo" target="_blank" rel="noopener">데모 코드 →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-tag card-tag-green">공공 4대보험 EDI</div>
+        <h3>월 신고 자격취득·상실</h3>
+        <div class="metrics">
+          <div class="metric"><span class="m-val">-95.5%</span><span class="m-label">입력 토큰</span></div>
+          <div class="metric"><span class="m-val">100%</span><span class="m-label">작업 성공률</span></div>
+          <div class="metric"><span class="m-val">42/42</span><span class="m-label">Steps 성공</span></div>
+        </div>
+        <p>공인인증서 Active-X · 법정양식 필드 의존성 · 보수월액 상·하한 · 세션 만료 재현. 42 step. 13파일.</p>
+        <a class="card-link" href="https://github.com/11pyo/AINavManifest/tree/main/demo_public" target="_blank" rel="noopener">데모 코드 →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-tag card-tag-purple">범용 벤치마크 v2</div>
+        <h3>6 작업 × 3 DOM 복잡도</h3>
+        <div class="metrics">
+          <div class="metric"><span class="m-val">-97.3%</span><span class="m-label">평균 입력 토큰</span></div>
+          <div class="metric"><span class="m-val">+93.4%p</span><span class="m-label">성공률 상승</span></div>
+          <div class="metric"><span class="m-val">n=1,800</span><span class="m-label">표본 · p&lt;0.001</span></div>
+        </div>
+        <p>폼 입력·다단계 승인·파일 업로드·검색·로그인+MFA·결제 · 경량 SPA/중견 SaaS/레거시 SAP. Mann-Whitney + Fisher's exact 검정.</p>
+        <a class="card-link" href="https://github.com/11pyo/AINavManifest/tree/main/validation" target="_blank" rel="noopener">데이터 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM / SOLUTION -->
+<section class="section section-alt">
+  <div class="wrap twocol">
+    <div>
+      <h2>문제</h2>
+      <ul class="bullets">
+        <li><strong>토큰 폭증</strong> — AI 에이전트가 복잡한 DOM을 매 단계 LLM에 보내 토큰 10만+ 소모</li>
+        <li><strong>실패율 80%</strong> — SAP·공공 포털·복잡 SaaS에서 DOM 재추론 실패 반복</li>
+        <li><strong>Active-X·법정양식</strong> — Chrome MCP·Claude Computer Use 단독으로 자동화 불가</li>
+        <li><strong>사이트 운영자의 AI 리스크</strong> — 에이전트가 UI 잘못 눌러 주문 오류·민원 증가</li>
+        <li><strong>벤더 록인 우려</strong> — Anthropic 단독, OpenAI 단독 표준은 경쟁사 에이전트 차별</li>
+      </ul>
+    </div>
+    <div>
+      <h2>해결</h2>
+      <ul class="bullets bullets-ok">
+        <li><strong>ai-manifest.json 배포</strong> — 사이트가 에이전트 전용 지침서를 직접 선언</li>
+        <li><strong>SHA-256 해시 검증</strong> — 중앙 레지스트리로 위조 차단 (특허 청구항 2)</li>
+        <li><strong>3가지 배포 방식</strong> — /.well-known · &lt;meta&gt; · HTTP 헤더 (청구항 3)</li>
+        <li><strong>Active-X·공인인증서 대응</strong> — manual_signature · action_fallback 표준 명시</li>
+        <li><strong>MIT + FRAND + IETF</strong> — 벤더 중립 · 표준화 진행 중</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="howitworks" class="section">
+  <div class="wrap">
+    <h2>작동 원리 — 3단계</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>배포</h3>
+        <p>사이트 운영자(또는 SI 파트너)가 <code>/.well-known/ai-manifest.json</code>에 지침서를 배포.
+           HTTP 헤더 <code>X-AI-Manifest</code> 도 병행 가능.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>조회·검증</h3>
+        <p>AI 에이전트가 매니페스트를 1회 fetch. SHA-256 해시를 중앙 레지스트리에 조회해
+           <code>white/gray/black</code> 신뢰도 판정.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>실행</h3>
+        <p>검증 통과 시 매니페스트의 <code>steps</code> 배열을 순차 실행. DOM 재추론 없이 결정론적 조작.
+           토큰 95~98% 절감.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section id="roi" class="section section-calc">
+  <div class="wrap">
+    <h2>ROI 계산기 — 귀사 숫자로 즉시 확인</h2>
+    <p class="section-lede">월 AI 처리 건수만 입력하시면 연간 절감액을 실시간 계산합니다.</p>
+
+    <div class="calc-grid">
+      <div class="calc-input">
+        <label>월 AI 처리 건수 <input type="number" id="monthlyCount" value="100000" min="100"></label>
+        <label>건당 Baseline 토큰 <input type="number" id="baselineTokens" value="12955" min="100"></label>
+        <label>건당 Manifest 토큰 <input type="number" id="manifestTokens" value="348" min="1"></label>
+        <label>모델 단가 (USD/1M tokens)
+          <select id="modelPrice">
+            <option value="0.8">Claude Haiku 4.5 — $0.8</option>
+            <option value="3" selected>Claude Sonnet 4.6 — $3</option>
+            <option value="15">Claude Opus 4.7 — $15</option>
+            <option value="5">GPT-4o — $5</option>
+          </select>
+        </label>
+        <label>환율 (KRW/USD) <input type="number" id="fxRate" value="1400" min="1000" max="2000"></label>
+        <label>PoC 투자액 (원) <input type="number" id="pocAmount" value="3000000" min="100000"></label>
+      </div>
+
+      <div class="calc-output">
+        <div class="out-card">
+          <div class="out-label">월 절감액</div>
+          <div class="out-val" id="outMonthly">-</div>
+        </div>
+        <div class="out-card out-card-primary">
+          <div class="out-label">연 절감액</div>
+          <div class="out-val" id="outAnnual">-</div>
+        </div>
+        <div class="out-card">
+          <div class="out-label">PoC 회수 기간</div>
+          <div class="out-val" id="outPayback">-</div>
+        </div>
+        <div class="out-card">
+          <div class="out-label">3년 누적 순이익</div>
+          <div class="out-val" id="outThreeYear">-</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">본 계산기는 LLM 토큰 비용 절감만 반영합니다. 작업 성공률 상승으로 인한 재작업 비용 감소·CX 개선은 별도 정성 효과입니다.</p>
+  </div>
+</section>
+
+<!-- SEGMENTS -->
+<section id="segments" class="section section-alt">
+  <div class="wrap">
+    <h2>대상 고객 — 4 세그먼트</h2>
+    <div class="segments">
+      <div class="seg">
+        <div class="seg-head">A · 엔터프라이즈 ERP</div>
+        <p>SAP S/4HANA, Oracle Fusion, Salesforce</p>
+        <p class="seg-note">연 계약 3,000만~1억 · SI 파트너 채널</p>
+      </div>
+      <div class="seg">
+        <div class="seg-head">B · 공공·금융 규제 보고</div>
+        <p>홈택스, 4대보험, 전자소송, DART, 나라장터</p>
+        <p class="seg-note">연 계약 5,000만~3억 · 세무·노무·로펌</p>
+      </div>
+      <div class="seg">
+        <div class="seg-head">C · 복잡 B2B SaaS</div>
+        <p>Workday, ScholarOne, Manhattan SCM</p>
+        <p class="seg-note">연 계약 2,000만~1억 · 직접·파트너 병행</p>
+      </div>
+      <div class="seg">
+        <div class="seg-head">D · 자체 운영 웹</div>
+        <p>이커머스, 예약, 금융 서비스 포털</p>
+        <p class="seg-note">월 100만~500만 구독 · Self-Serve SaaS</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section">
+  <div class="wrap">
+    <h2>가격</h2>
+    <p class="section-lede">14일 PoC · 1호 레퍼런스 프로모션 적용 시 40% 할인 (선착순 3사).</p>
+
+    <div class="price-grid">
+      <div class="price">
+        <h3>PoC 구축</h3>
+        <div class="price-line"><span class="strike">500만원</span></div>
+        <div class="price-main">300만원</div>
+        <div class="price-unit">14일 · 3~5 화면 · 부가세 별도</div>
+        <ul class="price-list">
+          <li>매니페스트 JSON + SHA-256 서명</li>
+          <li>레지스트리 등록 + 배지</li>
+          <li>3종 에이전트 교차 검증 리포트</li>
+          <li>수용 기준 95%+ / 토큰 절감 80%+</li>
+        </ul>
+      </div>
+
+      <div class="price price-highlight">
+        <h3>월 유지보수</h3>
+        <div class="price-line"><span class="strike">30만원/월</span></div>
+        <div class="price-main">6개월 무상</div>
+        <div class="price-unit">1호 프로모션 한정</div>
+        <ul class="price-list">
+          <li>월 1회 벤치마크 리포트</li>
+          <li>UI 변경 시 매니페스트 갱신</li>
+          <li>레지스트리 호스팅</li>
+          <li>24시간 내 이슈 응답</li>
+        </ul>
+      </div>
+
+      <div class="price">
+        <h3>추가 화면</h3>
+        <div class="price-main">40만원/건</div>
+        <div class="price-unit">1호 프로모션 단가 (정가 60만원)</div>
+        <ul class="price-list">
+          <li>PoC 이후 단계적 확장</li>
+          <li>특허 10-2026-0071716 FRAND 실시권 포함</li>
+          <li>MIT 라이선스 SDK 접근</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="section section-alt">
+  <div class="wrap">
+    <h2>공개 자료</h2>
+    <div class="resources">
+      <a class="res" href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">
+        <div class="res-title">💻 GitHub 저장소</div>
+        <div class="res-sub">전체 소스 · MIT 라이선스</div>
+      </a>
+      <a class="res" href="https://datatracker.ietf.org/doc/draft-han-ai-manifest/" target="_blank" rel="noopener">
+        <div class="res-title">📜 IETF Internet-Draft</div>
+        <div class="res-sub">draft-han-ai-manifest-00</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/blob/main/ai-manifest.schema.json" target="_blank" rel="noopener">
+        <div class="res-title">🧬 JSON Schema v1.0</div>
+        <div class="res-sub">스키마 명세</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/tree/main/demo" target="_blank" rel="noopener">
+        <div class="res-title">🔬 SAP 데모</div>
+        <div class="res-sub">98.9% 토큰 절감 실증</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/tree/main/demo_public" target="_blank" rel="noopener">
+        <div class="res-title">🏛 공공 데모</div>
+        <div class="res-sub">4대보험 EDI 95.5% 절감</div>
+      </a>
+      <a class="res" href="FRAND.md">
+        <div class="res-title">⚖ FRAND 라이선스</div>
+        <div class="res-sub">표준 채택용 특허 실시 약정</div>
+      </a>
+      <a class="res" href="FAQ.md">
+        <div class="res-title">❓ FAQ</div>
+        <div class="res-sub">자주 묻는 질문</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/blob/main/achievements.md" target="_blank" rel="noopener">
+        <div class="res-title">🏆 활동·업적 로그</div>
+        <div class="res-sub">achievements.md</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section section-contact">
+  <div class="wrap">
+    <h2>문의 · PoC 신청</h2>
+    <p>15분 화상 미팅 · 영업일 24시간 내 회신.</p>
+    <div class="contact-grid">
+      <a class="cta-big" href="mailto:pk102h@naver.com?subject=AI%20Navigation%20Manifest%20PoC%20%EB%AC%B8%EC%9D%98&body=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%2C%0A%0A%ED%9A%8C%EC%82%AC%EB%AA%85%3A%20%0A%EB%8B%B4%EB%8B%B9%EC%9E%90%3A%20%0A%EC%9E%90%EB%8F%99%ED%99%94%20%EA%B4%80%EC%8B%AC%20%ED%99%94%EB%A9%B4%3A%20%0A%0A">
+        <div class="cta-emo">📧</div>
+        <div class="cta-title">이메일 문의</div>
+        <div class="cta-sub">pk102h@naver.com</div>
+      </a>
+      <div class="cta-big cta-info">
+        <div class="cta-emo">📄</div>
+        <div class="cta-title">필요 문서 미리 준비</div>
+        <ol>
+          <li>대상 화면 3~5개 후보</li>
+          <li>귀사 AI 에이전트 도입 현황</li>
+          <li>월 AI 처리 건수 추정</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="foot-brand">AI Navigation Manifest</div>
+        <p>한원표 · Independent Inventor · Seoul, KR</p>
+        <p>한국 특허 출원 10-2026-0071716 (2026-04-21)</p>
+      </div>
+      <div>
+        <h4>프로젝트</h4>
+        <a href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://datatracker.ietf.org/doc/draft-han-ai-manifest/" target="_blank" rel="noopener">IETF Draft</a>
+        <a href="FAQ.md">FAQ</a>
+        <a href="FRAND.md">FRAND</a>
+      </div>
+      <div>
+        <h4>라이선스</h4>
+        <a href="https://github.com/11pyo/AINavManifest/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a>
+        <a href="FRAND.md">FRAND 특허 실시</a>
+      </div>
+      <div>
+        <h4>연락</h4>
+        <a href="mailto:pk102h@naver.com">pk102h@naver.com</a>
+        <a href="en.html">English</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 Won-pyo Han · AI Navigation Manifest. MIT Licensed for code. FRAND for patent rights.</div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

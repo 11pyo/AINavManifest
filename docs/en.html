@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AI Navigation Manifest — Official Instructions for AI Agents</title>
+  <meta name="description" content="Embed an AI-agent playbook into your website. Cut LLM tokens by 95~98%, lift task success to 100%. KR patent 10-2026-0071716 · IETF draft · MIT + FRAND.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="AI Navigation Manifest">
+  <meta property="og:description" content="Web agent manifest with 95~98% token savings — Korean patent + IETF draft + MIT/FRAND open source.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">AI Navigation Manifest</a>
+    <nav class="menu">
+      <a href="#proof">Proof</a>
+      <a href="#howitworks">How It Works</a>
+      <a href="#roi">ROI</a>
+      <a href="#segments">Customers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="actions">
+      <a class="lang" href="index.html">한국어</a>
+      <a class="btn btn-outline" href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+  </div>
+</header>
+
+<section id="top" class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Patent · Standard · Open Source — All Three</div>
+    <h1>Official Instructions<br>for AI Agents</h1>
+    <p class="lede">
+      Claude, GPT, and Copilot now operate enterprise UIs directly.
+      A single <strong>ai-manifest.json</strong> delivers
+      <strong>95~98% LLM token reduction</strong> and
+      <strong>100% task success</strong> at the same time.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#contact">📧 Request a PoC</a>
+      <a class="btn btn-ghost" href="#proof">See Proof Data</a>
+    </div>
+
+    <div class="badges">
+      <a class="badge" href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">
+        <span class="badge-title">GitHub</span><span class="badge-val">MIT + FRAND</span>
+      </a>
+      <a class="badge" href="https://datatracker.ietf.org/doc/draft-han-ai-manifest/" target="_blank" rel="noopener">
+        <span class="badge-title">IETF</span><span class="badge-val">draft-han-ai-manifest-00</span>
+      </a>
+      <div class="badge">
+        <span class="badge-title">Patent (KR)</span><span class="badge-val">10-2026-0071716</span>
+      </div>
+      <div class="badge">
+        <span class="badge-title">Claims</span><span class="badge-val">8 · Filed 2026-04-21</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proof" class="section">
+  <div class="wrap">
+    <h2>Proof — Verified by Numbers</h2>
+    <p class="section-lede">
+      Every result is reproducible with <code>python verify.py</code>. Mock server + AI agent control/experimental arms · tiktoken-based.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-tag card-tag-blue">SAP S/4HANA Cloud</div>
+        <h3>CBC T134 Batch Material ARef Setup</h3>
+        <div class="metrics">
+          <div class="metric"><span class="m-val">-98.9%</span><span class="m-label">Input tokens</span></div>
+          <div class="metric"><span class="m-val">100%</span><span class="m-label">Success rate</span></div>
+          <div class="metric"><span class="m-val">1 vs 48</span><span class="m-label">LLM calls</span></div>
+        </div>
+        <p>15-row ARef batch for Dongkuk GVA/100. iframe · TD click · Transport Request dialog fully reproduced. 16-file package.</p>
+        <a class="card-link" href="https://github.com/11pyo/AINavManifest/tree/main/demo" target="_blank" rel="noopener">Demo source →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-tag card-tag-green">Korean Public EDI</div>
+        <h3>4 Social Insurance Monthly Filing</h3>
+        <div class="metrics">
+          <div class="metric"><span class="m-val">-95.5%</span><span class="m-label">Input tokens</span></div>
+          <div class="metric"><span class="m-val">100%</span><span class="m-label">Success rate</span></div>
+          <div class="metric"><span class="m-val">42/42</span><span class="m-label">Steps passed</span></div>
+        </div>
+        <p>Digital certificate (Active-X) · legal form field dependency · salary caps · session expiry all reproduced. 42 steps · 13 files.</p>
+        <a class="card-link" href="https://github.com/11pyo/AINavManifest/tree/main/demo_public" target="_blank" rel="noopener">Demo source →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-tag card-tag-purple">General Benchmark v2</div>
+        <h3>6 Tasks × 3 DOM Complexities</h3>
+        <div class="metrics">
+          <div class="metric"><span class="m-val">-97.3%</span><span class="m-label">Mean tokens</span></div>
+          <div class="metric"><span class="m-val">+93.4pp</span><span class="m-label">Success uplift</span></div>
+          <div class="metric"><span class="m-val">n=1,800</span><span class="m-label">Samples · p&lt;0.001</span></div>
+        </div>
+        <p>Form entry · multi-step approval · upload · search · login+MFA · checkout. Lightweight SPA / mid-tier SaaS / legacy SAP. Mann-Whitney + Fisher's exact.</p>
+        <a class="card-link" href="https://github.com/11pyo/AINavManifest/tree/main/validation" target="_blank" rel="noopener">Data →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap twocol">
+    <div>
+      <h2>Problem</h2>
+      <ul class="bullets">
+        <li><strong>Token explosion</strong> — agents pipe massive DOMs to LLMs at every step, burning 100k+ tokens</li>
+        <li><strong>80% failure rate</strong> — SAP, public portals, complex SaaS break DOM-only agents</li>
+        <li><strong>Active-X & legacy forms</strong> — Chrome MCP or Claude Computer Use alone cannot clear them</li>
+        <li><strong>Site owner AI risk</strong> — agents click wrong buttons, causing order errors and complaints</li>
+        <li><strong>Vendor lock-in fear</strong> — Anthropic-only or OpenAI-only standards exclude rival agents</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Solution</h2>
+      <ul class="bullets bullets-ok">
+        <li><strong>Ship ai-manifest.json</strong> — the site declares its own agent playbook</li>
+        <li><strong>SHA-256 verification</strong> — central registry rejects tampered manifests (Claim 2)</li>
+        <li><strong>Three delivery methods</strong> — /.well-known, &lt;meta&gt;, HTTP header (Claim 3)</li>
+        <li><strong>Active-X handling</strong> — <code>manual_signature</code> and <code>action_fallback</code> first-class</li>
+        <li><strong>MIT + FRAND + IETF</strong> — vendor-neutral, on the standards track</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="howitworks" class="section">
+  <div class="wrap">
+    <h2>How It Works — 3 Steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Publish</h3>
+        <p>Site owner (or SI partner) ships <code>/.well-known/ai-manifest.json</code>.
+           Optional <code>X-AI-Manifest</code> HTTP header alongside.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Verify</h3>
+        <p>Agent fetches the manifest once. SHA-256 hash is queried against the central registry
+           which returns <code>white / gray / black</code>.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Execute</h3>
+        <p>Agent runs <code>steps</code> deterministically — no DOM re-inference.
+           95~98% token savings, 100% task success.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roi" class="section section-calc">
+  <div class="wrap">
+    <h2>ROI Calculator — Your Numbers, Instant Answer</h2>
+    <p class="section-lede">Enter monthly AI throughput to see annual savings in real time.</p>
+
+    <div class="calc-grid">
+      <div class="calc-input">
+        <label>Monthly AI tasks <input type="number" id="monthlyCount" value="100000" min="100"></label>
+        <label>Baseline tokens / task <input type="number" id="baselineTokens" value="12955" min="100"></label>
+        <label>Manifest tokens / task <input type="number" id="manifestTokens" value="348" min="1"></label>
+        <label>Model rate (USD/1M tokens)
+          <select id="modelPrice">
+            <option value="0.8">Claude Haiku 4.5 — $0.8</option>
+            <option value="3" selected>Claude Sonnet 4.6 — $3</option>
+            <option value="15">Claude Opus 4.7 — $15</option>
+            <option value="5">GPT-4o — $5</option>
+          </select>
+        </label>
+        <label>FX (KRW / USD) <input type="number" id="fxRate" value="1400" min="1000" max="2000"></label>
+        <label>PoC investment (KRW) <input type="number" id="pocAmount" value="3000000" min="100000"></label>
+      </div>
+
+      <div class="calc-output">
+        <div class="out-card">
+          <div class="out-label">Monthly savings</div>
+          <div class="out-val" id="outMonthly">-</div>
+        </div>
+        <div class="out-card out-card-primary">
+          <div class="out-label">Annual savings</div>
+          <div class="out-val" id="outAnnual">-</div>
+        </div>
+        <div class="out-card">
+          <div class="out-label">Payback period</div>
+          <div class="out-val" id="outPayback">-</div>
+        </div>
+        <div class="out-card">
+          <div class="out-label">3-year net gain</div>
+          <div class="out-val" id="outThreeYear">-</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">This calculator only reflects LLM token cost savings. Rework reduction and CX uplift are separate qualitative gains.</p>
+  </div>
+</section>
+
+<section id="segments" class="section section-alt">
+  <div class="wrap">
+    <h2>Target Customers — 4 Segments</h2>
+    <div class="segments">
+      <div class="seg">
+        <div class="seg-head">A · Enterprise ERP</div>
+        <p>SAP S/4HANA, Oracle Fusion, Salesforce</p>
+        <p class="seg-note">$25K~100K / year · SI partner channel</p>
+      </div>
+      <div class="seg">
+        <div class="seg-head">B · Public &amp; Regulatory Filing</div>
+        <p>HomeTax, 4 Social Insurance, Court, DART</p>
+        <p class="seg-note">$50K~300K / year · Tax &amp; labor firms</p>
+      </div>
+      <div class="seg">
+        <div class="seg-head">C · Complex B2B SaaS</div>
+        <p>Workday, ScholarOne, Manhattan SCM</p>
+        <p class="seg-note">$20K~100K / year · direct + partner</p>
+      </div>
+      <div class="seg">
+        <div class="seg-head">D · Own-Operated Web</div>
+        <p>E-commerce, booking, fintech portals</p>
+        <p class="seg-note">$1K~5K / month · self-serve SaaS</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="section">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <p class="section-lede">14-day PoC · 1st-reference promotion: 40% off (first 3 customers only).</p>
+
+    <div class="price-grid">
+      <div class="price">
+        <h3>PoC Build</h3>
+        <div class="price-line"><span class="strike">KRW 5,000,000</span></div>
+        <div class="price-main">KRW 3,000,000</div>
+        <div class="price-unit">14 days · 3~5 screens · VAT excl.</div>
+        <ul class="price-list">
+          <li>Manifest JSON + SHA-256 signature</li>
+          <li>Registry registration + badge</li>
+          <li>3-agent cross-validation report</li>
+          <li>Acceptance: 95%+ success · 80%+ savings</li>
+        </ul>
+      </div>
+
+      <div class="price price-highlight">
+        <h3>Monthly Maintenance</h3>
+        <div class="price-line"><span class="strike">KRW 300,000 / mo</span></div>
+        <div class="price-main">Free × 6 months</div>
+        <div class="price-unit">1st-reference promotion only</div>
+        <ul class="price-list">
+          <li>Monthly benchmark report</li>
+          <li>Manifest updates on UI change</li>
+          <li>Registry hosting</li>
+          <li>24h issue response</li>
+        </ul>
+      </div>
+
+      <div class="price">
+        <h3>Extra Screens</h3>
+        <div class="price-main">KRW 400k / screen</div>
+        <div class="price-unit">Promo rate (list: KRW 600k)</div>
+        <ul class="price-list">
+          <li>Expand after PoC completion</li>
+          <li>Patent 10-2026-0071716 FRAND license included</li>
+          <li>Access to MIT-licensed SDK</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap">
+    <h2>Resources</h2>
+    <div class="resources">
+      <a class="res" href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">
+        <div class="res-title">💻 GitHub Repo</div>
+        <div class="res-sub">Full source · MIT licensed</div>
+      </a>
+      <a class="res" href="https://datatracker.ietf.org/doc/draft-han-ai-manifest/" target="_blank" rel="noopener">
+        <div class="res-title">📜 IETF Internet-Draft</div>
+        <div class="res-sub">draft-han-ai-manifest-00</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/blob/main/ai-manifest.schema.json" target="_blank" rel="noopener">
+        <div class="res-title">🧬 JSON Schema v1.0</div>
+        <div class="res-sub">Schema specification</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/tree/main/demo" target="_blank" rel="noopener">
+        <div class="res-title">🔬 SAP Demo</div>
+        <div class="res-sub">98.9% token savings</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/tree/main/demo_public" target="_blank" rel="noopener">
+        <div class="res-title">🏛 Public Demo</div>
+        <div class="res-sub">4-Insurance EDI · 95.5%</div>
+      </a>
+      <a class="res" href="FRAND.md">
+        <div class="res-title">⚖ FRAND License</div>
+        <div class="res-sub">Patent license for standards</div>
+      </a>
+      <a class="res" href="FAQ.md">
+        <div class="res-title">❓ FAQ</div>
+        <div class="res-sub">Common questions</div>
+      </a>
+      <a class="res" href="https://github.com/11pyo/AINavManifest/blob/main/achievements.md" target="_blank" rel="noopener">
+        <div class="res-title">🏆 Achievements Log</div>
+        <div class="res-sub">achievements.md</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section section-contact">
+  <div class="wrap">
+    <h2>Contact · Request a PoC</h2>
+    <p>15-minute video call · reply within 1 business day.</p>
+    <div class="contact-grid">
+      <a class="cta-big" href="mailto:pk102h@naver.com?subject=AI%20Navigation%20Manifest%20PoC%20inquiry&body=Hello%2C%0A%0ACompany%3A%20%0AContact%3A%20%0AAutomation%20target%20screens%3A%20%0A%0A">
+        <div class="cta-emo">📧</div>
+        <div class="cta-title">Email us</div>
+        <div class="cta-sub">pk102h@naver.com</div>
+      </a>
+      <div class="cta-big cta-info">
+        <div class="cta-emo">📄</div>
+        <div class="cta-title">What to have ready</div>
+        <ol>
+          <li>3~5 candidate screens for automation</li>
+          <li>Current AI agent stack in your company</li>
+          <li>Estimated monthly agent task volume</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="foot-brand">AI Navigation Manifest</div>
+        <p>Won-pyo Han · Independent Inventor · Seoul, Republic of Korea</p>
+        <p>Korean patent application 10-2026-0071716 (2026-04-21)</p>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <a href="https://github.com/11pyo/AINavManifest" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://datatracker.ietf.org/doc/draft-han-ai-manifest/" target="_blank" rel="noopener">IETF Draft</a>
+        <a href="FAQ.md">FAQ</a>
+        <a href="FRAND.md">FRAND</a>
+      </div>
+      <div>
+        <h4>License</h4>
+        <a href="https://github.com/11pyo/AINavManifest/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a>
+        <a href="FRAND.md">FRAND (patent)</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:pk102h@naver.com">pk102h@naver.com</a>
+        <a href="index.html">한국어</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 Won-pyo Han · AI Navigation Manifest. MIT for code. FRAND for patent rights.</div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
