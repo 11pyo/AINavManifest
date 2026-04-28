@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "manifestId": "urn:ainm:s3-multistep-wizard:v1",
+  "publisher": "example-signup.local",
+  "registryUrl": "https://registry.ainm.example/verify",
+  "issuedAt": "2026-04-28T00:00:00Z",
+  "task": {
+    "name": "multi_step_signup",
+    "description": "Five-or-more step signup wizard with prerequisite validation between steps",
+    "entryUrl": "/wizard/step/1",
+    "category": "sequential_state_bearing",
+    "steps": [
+      {"index": 1,  "action": "fill",   "selector": "#name",            "value": "{name}"},
+      {"index": 2,  "action": "fill",   "selector": "#birthdate",       "value": "{birthdate}"},
+      {"index": 3,  "action": "fill",   "selector": "#email",           "value": "{email}"},
+      {"index": 4,  "action": "click",  "selector": "#step1-next",      "value": null},
+      {"index": 5,  "action": "click",  "selector": "input[name='terms_required_1']", "value": "true"},
+      {"index": 6,  "action": "click",  "selector": "input[name='terms_required_2']", "value": "true"},
+      {"index": 7,  "action": "click",  "selector": "input[name='terms_required_3']", "value": "true"},
+      {"index": 8,  "action": "click",  "selector": "#step2-next",      "value": null},
+      {"index": 9,  "action": "select", "selector": "#occupation",      "value": "{occupation}"},
+      {"index": 10, "action": "click",  "selector": "#step3-next",      "value": null},
+      {"index": 11, "action": "click",  "selector": "#step4-review",    "value": null},
+      {"index": 12, "action": "click",  "selector": "#step5-submit",    "value": null}
+    ],
+    "successUrl": "/wizard/complete",
+    "successAssertion": {"selector": "#signup-complete", "exists": true},
+    "branching": {
+      "step5_required_before": [1, 2, 3, 4],
+      "stepN_validates_stepN-1_state": true
+    }
+  },
+  "requirements": {
+    "auth": "session-cookie",
+    "wait_for_each_step": "form.wizard-step"
+  },
+  "meta": {
+    "canonicalHash": "sha256:placeholder_hash_to_be_computed_at_publish",
+    "publisherKey": "did:web:example-signup.local",
+    "preregistration": "https://github.com/11pyo/AINavManifest/blob/main/research/pre-registration.md"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0",
+  "manifestId": "urn:ainm:s4-i18n-form:v1",
+  "publisher": "example-i18n.local",
+  "registryUrl": "https://registry.ainm.example/verify",
+  "issuedAt": "2026-04-28T00:00:00Z",
+  "task": {
+    "name": "internationalized_form",
+    "description": "Fill the same form in Korean UI, switch to English UI, fill again to verify locale-stable selectors",
+    "entryUrl": "/ko-KR/form",
+    "category": "internationalized",
+    "steps": [
+      {"index": 1,  "action": "fill",   "selector": "input[name='full_name']",    "value": "{full_name}"},
+      {"index": 2,  "action": "fill",   "selector": "input[name='email']",        "value": "{email}"},
+      {"index": 3,  "action": "fill",   "selector": "input[name='phone']",        "value": "{phone}"},
+      {"index": 4,  "action": "fill",   "selector": "input[name='address']",      "value": "{address}"},
+      {"index": 5,  "action": "select", "selector": "select[name='interest']",    "value": "{interest}"},
+      {"index": 6,  "action": "click",  "selector": "a[data-locale='en-US']",     "value": null},
+      {"index": 7,  "action": "fill",   "selector": "input[name='full_name']",    "value": "{full_name_en}"},
+      {"index": 8,  "action": "fill",   "selector": "input[name='email']",        "value": "{email}"},
+      {"index": 9,  "action": "fill",   "selector": "input[name='address']",      "value": "{address_en}"},
+      {"index": 10, "action": "click",  "selector": "button[name='submit']",      "value": null}
+    ],
+    "successUrl": "/{locale}/form/submitted",
+    "successAssertion": {"selector": ".submission-success", "exists": true},
+    "i18n": {
+      "selectors_are_locale_stable": true,
+      "rationale": "name attributes do not change across locales; only labels do"
+    }
+  },
+  "requirements": {
+    "auth": "none",
+    "wait_for": "form.i18n-form",
+    "supported_locales": ["ko-KR", "en-US"]
+  },
+  "meta": {
+    "canonicalHash": "sha256:placeholder_hash_to_be_computed_at_publish",
+    "publisherKey": "did:web:example-i18n.local",
+    "preregistration": "https://github.com/11pyo/AINavManifest/blob/main/research/pre-registration.md"
+  }
+}

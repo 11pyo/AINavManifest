@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "manifestId": "urn:ainm:s1-erp-order:v1",
+  "publisher": "example-erp.local",
+  "registryUrl": "https://registry.ainm.example/verify",
+  "issuedAt": "2026-04-28T00:00:00Z",
+  "task": {
+    "name": "create_purchase_order",
+    "description": "Multi-step ERP purchase order creation",
+    "entryUrl": "/order/new",
+    "category": "transactional",
+    "steps": [
+      {"index": 1, "action": "fill",   "selector": "#vendor",        "value": "{vendor}"},
+      {"index": 2, "action": "fill",   "selector": "#item_code",     "value": "{item_code}"},
+      {"index": 3, "action": "fill",   "selector": "#quantity",      "value": "{quantity}"},
+      {"index": 4, "action": "select", "selector": "#currency",      "value": "{currency}"},
+      {"index": 5, "action": "click",  "selector": "#btn_next",      "value": null},
+      {"index": 6, "action": "fill",   "selector": "#ship_to",       "value": "{ship_to}"},
+      {"index": 7, "action": "fill",   "selector": "#delivery_date", "value": "{delivery_date}"},
+      {"index": 8, "action": "click",  "selector": "#btn_submit",    "value": null}
+    ],
+    "successUrl": "/order/{order_id}",
+    "successAssertion": {"selector": "#order-confirmation", "exists": true}
+  },
+  "requirements": {
+    "auth": "session-cookie",
+    "wait_for": "form#purchase-order"
+  },
+  "meta": {
+    "canonicalHash": "sha256:placeholder_hash_to_be_computed_at_publish",
+    "publisherKey": "did:web:example-erp.local",
+    "preregistration": "https://github.com/11pyo/AINavManifest/blob/main/research/pre-registration.md"
+  }
+}

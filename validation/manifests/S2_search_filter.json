@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "manifestId": "urn:ainm:s2-search-filter:v1",
+  "publisher": "example-catalog.local",
+  "registryUrl": "https://registry.ainm.example/verify",
+  "issuedAt": "2026-04-28T00:00:00Z",
+  "task": {
+    "name": "search_filter_select",
+    "description": "Category search, multi-facet filter, sort, and select one result",
+    "entryUrl": "/catalog",
+    "category": "information_retrieval",
+    "steps": [
+      {"index": 1, "action": "click",  "selector": "a[data-category='{category}']", "value": null},
+      {"index": 2, "action": "fill",   "selector": "#search-input",                  "value": "{keyword}"},
+      {"index": 3, "action": "fill",   "selector": "#filter-price-min",              "value": "{min_price}"},
+      {"index": 4, "action": "fill",   "selector": "#filter-price-max",              "value": "{max_price}"},
+      {"index": 5, "action": "select", "selector": "#sort-order",                    "value": "{sort}"},
+      {"index": 6, "action": "click",  "selector": "a.result-item[data-id='{item_id}']", "value": null}
+    ],
+    "successUrl": "/item/{item_id}",
+    "successAssertion": {"selector": "#item-detail", "exists": true}
+  },
+  "requirements": {
+    "auth": "none",
+    "wait_for": "ul#search-results"
+  },
+  "meta": {
+    "canonicalHash": "sha256:placeholder_hash_to_be_computed_at_publish",
+    "publisherKey": "did:web:example-catalog.local",
+    "preregistration": "https://github.com/11pyo/AINavManifest/blob/main/research/pre-registration.md"
+  }
+}
