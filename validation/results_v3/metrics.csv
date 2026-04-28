@@ -1,0 +1,801 @@
+scenario,agent,trial_index,seed,input_tokens,success,http_requests,llm_calls,steps_attempted,steps_succeeded,wall_time_ms,failure_reason,dom_tier,notes
+S1,baseline_dom,0,1000,8112,False,10,2,8,5,32.258798162327366,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,0,1000,520,True,10,1,8,8,31.109627610005795,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,1,1001,6950,False,10,2,8,1,42.111894980444376,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,1,1001,520,True,10,1,8,8,22.79731676537327,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,2,1002,7640,False,10,2,8,2,36.548911911838914,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,2,1002,520,True,10,1,8,8,27.729002733756033,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,3,1003,7522,False,10,2,8,7,41.78512436946625,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,3,1003,520,True,10,1,8,8,26.895870213299492,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,4,1004,8694,False,10,2,8,3,46.45299721213011,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,4,1004,520,True,10,1,8,8,35.275059749000164,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,5,1005,8554,False,10,2,8,4,38.14893140638061,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,5,1005,520,True,10,1,8,8,34.26968878975731,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,6,1006,7274,False,10,2,8,5,44.186995536192576,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,6,1006,520,True,10,1,8,8,25.10951890673298,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,7,1007,8360,False,10,2,8,4,45.83116339413668,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,7,1007,520,True,10,1,8,8,32.886581595299944,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,8,1008,8660,False,10,2,8,1,32.006533347130926,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,8,1008,520,True,10,1,8,8,35.0342246923847,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,9,1009,7764,False,10,2,8,7,49.39286668050529,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,9,1009,520,True,10,1,8,8,28.62812691283747,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,10,1010,8466,False,10,2,8,1,39.21428230915197,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,10,1010,520,True,10,1,8,8,33.64912801972422,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,11,1011,6898,False,10,2,8,7,38.971817222813804,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,11,1011,520,True,10,1,8,8,22.41844767356735,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,12,1012,7114,False,10,2,8,0,37.88745368367299,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,12,1012,520,True,10,1,8,8,23.969502960791218,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,13,1013,8294,False,10,2,8,2,42.36033841432616,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,13,1013,520,True,10,1,8,8,32.411908068279345,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,14,1014,7294,False,10,2,8,6,44.51950928174728,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,14,1014,520,True,10,1,8,8,25.25402786921492,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,15,1015,3705,False,9,1,8,7,28.235054024950884,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,15,1015,520,True,10,1,8,8,26.092865246009154,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,16,1016,7580,False,10,2,8,2,43.86440009764346,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,16,1016,520,True,10,1,8,8,27.310115303255053,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,17,1017,8046,False,10,2,8,1,38.063453840078516,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,17,1017,520,True,10,1,8,8,30.638724519361336,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,18,1018,8304,False,10,2,8,3,46.727598010000065,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,18,1018,520,True,10,1,8,8,32.486142824342934,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,19,1019,3623,False,9,1,8,7,29.099212988164012,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,19,1019,520,True,10,1,8,8,24.91286746693234,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,20,1020,3859,False,9,1,8,2,25.95709779712432,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,20,1020,520,True,10,1,8,8,28.28524271339483,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,21,1021,7178,False,10,2,8,4,41.69432234892003,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,21,1021,520,True,10,1,8,8,24.424619553113818,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,22,1022,4303,False,9,1,8,6,28.442848329862795,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,22,1022,520,True,10,1,8,8,34.6495544262381,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,23,1023,7698,False,10,2,8,6,37.23446881804675,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,23,1023,520,True,10,1,8,8,28.144850147519577,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,24,1024,7758,False,10,2,8,1,39.9024148155569,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,24,1024,520,True,10,1,8,8,28.5755846348282,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,25,1025,6924,False,10,2,8,3,43.685745012290866,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,25,1025,520,True,10,1,8,8,22.602940925888966,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,26,1026,3870,False,9,1,8,4,25.208262203351286,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,26,1026,520,True,10,1,8,8,28.445850214493632,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,27,1027,4281,False,9,1,8,7,25.19102591297115,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,27,1027,520,True,10,1,8,8,34.32801745176595,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,28,1028,7586,False,10,2,8,4,46.51548032420934,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,28,1028,520,True,10,1,8,8,27.352410815478255,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,29,1029,8174,False,10,2,8,6,48.68560275333347,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,29,1029,520,True,10,1,8,8,31.552095410085354,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,30,1030,11472,False,11,3,8,3,67.2317626362227,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,30,1030,520,True,10,1,8,8,27.79033598946652,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,31,1031,7886,False,10,2,8,5,37.37421146721065,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,31,1031,520,True,10,1,8,8,29.49330431623319,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,32,1032,7878,False,10,2,8,5,35.26714173836421,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,32,1032,520,True,10,1,8,8,29.432821531326173,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,33,1033,10854,False,11,3,8,1,58.08507497823709,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,33,1033,520,True,10,1,8,8,24.848154672168103,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,34,1034,8040,False,10,2,8,6,32.50996882218785,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,34,1034,520,True,10,1,8,8,30.596458390549692,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,35,1035,8530,False,10,2,8,4,34.13321010352108,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,35,1035,520,True,10,1,8,8,34.10026878943832,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,36,1036,8228,False,10,2,8,1,31.76750726620795,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,36,1036,520,True,10,1,8,8,31.940020956176387,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,37,1037,4059,False,9,1,8,0,23.184570875204358,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,37,1037,520,True,10,1,8,8,31.14976275190556,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,38,1038,3661,False,9,1,8,7,23.470442209995475,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,38,1038,520,True,10,1,8,8,25.45630590047952,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,39,1039,7194,False,10,2,8,0,35.65674085926944,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,39,1039,520,True,10,1,8,8,24.537901975092982,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,40,1040,7914,False,10,2,8,5,50.59952918479002,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,40,1040,520,True,10,1,8,8,29.697996563187232,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,41,1041,7700,False,10,2,8,1,35.13762326921727,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,41,1041,520,True,10,1,8,8,28.162888935129185,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,42,1042,7514,False,10,2,8,4,40.7859587360185,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,42,1042,520,True,10,1,8,8,26.83019604047523,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,43,1043,11295,False,11,3,8,3,65.81391702078923,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,43,1043,520,True,10,1,8,8,26.945670148629496,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,44,1044,7518,False,10,2,8,7,46.903901419583924,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,44,1044,520,True,10,1,8,8,26.85359826458142,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,45,1045,12186,False,11,3,8,0,60.06304220823182,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,45,1045,520,True,10,1,8,8,31.197224271270635,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,46,1046,8374,False,10,2,8,5,48.33115199029875,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,46,1046,520,True,10,1,8,8,32.98791411750602,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,47,1047,3776,False,9,1,8,7,24.855222535414924,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,47,1047,520,True,10,1,8,8,27.101020499511222,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,48,1048,7144,False,10,2,8,1,36.95285835820021,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,48,1048,520,True,10,1,8,8,24.17674523933011,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,49,1049,12171,False,11,3,8,0,46.14818235001379,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,49,1049,520,True,10,1,8,8,31.12160394164632,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,50,1050,7998,False,10,2,8,5,50.50415221256724,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,50,1050,520,True,10,1,8,8,30.302073527091153,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,51,1051,3530,False,9,1,8,2,25.60016589371136,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,51,1051,520,True,10,1,8,8,23.5766132504868,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,52,1052,12075,False,11,3,8,2,53.55966922388941,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,52,1052,520,True,10,1,8,8,30.662792262468226,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,53,1053,7512,False,10,2,8,5,44.033578355698936,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,53,1053,520,True,10,1,8,8,26.823523284390056,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,54,1054,4218,False,9,1,8,3,24.72158407579981,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,54,1054,520,True,10,1,8,8,33.43125511336842,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,55,1055,3750,False,9,1,8,3,27.37131743443348,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,55,1055,520,True,10,1,8,8,26.734398912890665,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,56,1056,4242,False,9,1,8,3,26.550938479444504,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,56,1056,520,True,10,1,8,8,33.77958505339693,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,57,1057,7900,False,10,2,8,5,47.05380955668115,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,57,1057,520,True,10,1,8,8,29.59947350863992,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,58,1058,7082,False,10,2,8,7,34.01178830887399,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,58,1058,520,True,10,1,8,8,23.741160729076924,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,59,1059,3988,False,9,1,8,0,27.17852131136909,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,59,1059,520,True,10,1,8,8,30.132378856081736,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,60,1060,6870,False,10,2,8,2,33.82685843991835,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,60,1060,520,True,10,1,8,8,22.226591167063322,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,61,1061,7460,False,10,2,8,5,42.11188919890604,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,61,1061,520,True,10,1,8,8,26.451623071383082,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,62,1062,3755,False,9,1,8,0,28.527106259685464,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,62,1062,520,True,10,1,8,8,26.799680582697334,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,63,1063,8708,False,10,2,8,6,46.040918222709536,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,63,1063,520,True,10,1,8,8,35.38118937302988,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,64,1064,6946,False,10,2,8,7,32.865470578287244,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,64,1064,520,True,10,1,8,8,22.767240680701825,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,65,1065,7074,False,10,2,8,5,49.08396834102568,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,65,1065,520,True,10,1,8,8,23.67553578463768,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,66,1066,7840,False,10,2,8,6,44.36422644725397,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,66,1066,520,True,10,1,8,8,29.160590996225253,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,67,1067,4305,False,9,1,8,5,27.96023792627105,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,67,1067,520,True,10,1,8,8,34.68161384226076,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,68,1068,7232,False,10,2,8,5,40.46650724507411,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,68,1068,520,True,10,1,8,8,24.81527536095936,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,69,1069,12306,False,11,3,8,7,66.74599516330994,셀렉터 오추론(p=0.002),mid,rounds=3|tier=mid
+S1,manifest_aware,69,1069,520,True,10,1,8,8,31.777263275247734,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,70,1070,7010,False,10,2,8,5,49.93094507637544,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,70,1070,520,True,10,1,8,8,23.22508248182525,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,71,1071,4184,False,9,1,8,0,29.039595578308596,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,71,1071,520,True,10,1,8,8,32.945866074887235,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,72,1072,7778,False,10,2,8,6,36.397176475447544,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,72,1072,520,True,10,1,8,8,28.725583170606416,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,73,1073,6846,False,10,2,8,1,41.86372696962651,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,73,1073,520,True,10,1,8,8,22.044022650787436,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,74,1074,7564,False,10,2,8,0,48.32709940228733,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,74,1074,520,True,10,1,8,8,27.18892660970074,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,75,1075,8738,False,10,2,8,4,45.11223583535046,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,75,1075,520,True,10,1,8,8,35.58822835506687,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,76,1076,6900,False,10,2,8,4,31.932537113116485,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,76,1076,520,True,10,1,8,8,22.43974488059821,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,77,1077,7256,False,10,2,8,7,35.39496969579643,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,77,1077,520,True,10,1,8,8,24.97869890808382,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,78,1078,3842,False,9,1,8,0,25.55249049505314,셀렉터 오추론(p=0.002),mid,rounds=1|tier=mid
+S1,manifest_aware,78,1078,520,True,10,1,8,8,28.04942580750035,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,79,1079,7750,False,10,2,8,2,49.23007339341309,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,79,1079,520,True,10,1,8,8,28.51527814190569,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,80,1080,8374,False,10,2,8,4,32.368347129122824,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,80,1080,520,True,10,1,8,8,32.991181847153115,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,81,1081,7406,False,10,2,8,1,42.535062819609735,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,81,1081,520,True,10,1,8,8,26.060238278579504,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,82,1082,8440,False,10,2,8,7,36.56285884082534,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,82,1082,520,True,10,1,8,8,33.45920303572662,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,83,1083,7746,False,10,2,8,3,34.35212561622367,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,83,1083,520,True,10,1,8,8,28.497652893736184,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,84,1084,8244,False,10,2,8,7,49.46178877960486,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,84,1084,520,True,10,1,8,8,32.059852974036204,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,85,1085,8136,False,10,2,8,4,42.382889019988745,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,85,1085,520,True,10,1,8,8,31.28985641009472,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,86,1086,8460,False,10,2,8,5,47.19443218738226,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,86,1086,520,True,10,1,8,8,33.59770378397747,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,87,1087,8472,False,10,2,8,4,46.83567163023712,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,87,1087,520,True,10,1,8,8,33.686633840595924,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,88,1088,7794,False,10,2,8,2,37.30581650923093,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,88,1088,520,True,10,1,8,8,28.841042710917883,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,89,1089,7716,False,10,2,8,7,37.840037872658186,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,89,1089,520,True,10,1,8,8,28.280034028348847,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,90,1090,7584,False,10,2,8,1,45.59614807386817,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,90,1090,520,True,10,1,8,8,27.337881661430323,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,91,1091,8438,False,10,2,8,4,50.105238739791105,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,91,1091,520,True,10,1,8,8,33.444522479326416,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,92,1092,7792,False,10,2,8,2,36.216906815239604,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,92,1092,520,True,10,1,8,8,28.82665698566617,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,93,1093,7972,False,10,2,8,5,50.453891688168476,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,93,1093,520,True,10,1,8,8,30.112634638948542,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,94,1094,8070,False,10,2,8,7,32.2003347154571,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,94,1094,520,True,10,1,8,8,30.813500155138456,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,95,1095,7246,False,10,2,8,6,42.43111112322336,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,95,1095,520,True,10,1,8,8,24.906298051932204,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,96,1096,8596,False,10,2,8,7,42.015677464510524,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,96,1096,520,True,10,1,8,8,34.57120185020851,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,97,1097,6882,False,10,2,8,7,47.41995885176041,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,97,1097,520,True,10,1,8,8,22.30140629187861,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,98,1098,7846,False,10,2,8,6,35.55925953651131,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,98,1098,520,True,10,1,8,8,29.215068525677093,,mid,tier=mid|trust_noise=0.0
+S1,baseline_dom,99,1099,7308,False,10,2,8,2,40.70736390948247,셀렉터 오추론(p=0.002),mid,rounds=2|tier=mid
+S1,manifest_aware,99,1099,520,True,10,1,8,8,25.35871057099573,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,0,1000,8112,False,8,2,6,2,32.258798162327366,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,0,1000,320,True,8,1,6,6,25.832220707504348,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,1,1001,6950,False,8,2,6,0,42.111894980444376,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,1,1001,320,True,8,1,6,6,19.597987574029954,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,2,1002,7640,False,8,2,6,1,36.548911911838914,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,2,1002,320,True,8,1,6,6,23.296752050317025,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,3,1003,7522,False,8,2,6,3,41.78512436946625,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,3,1003,320,True,8,1,6,6,22.67190265997462,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,4,1004,8694,False,8,2,6,5,44.383003847131555,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,4,1004,320,True,8,1,6,6,28.956294811750123,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,5,1005,8554,False,8,2,6,4,43.75450691499171,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,5,1005,320,True,8,1,6,6,28.202266592317983,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,6,1006,7274,False,8,2,6,4,37.45029152324047,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,6,1006,320,True,8,1,6,6,21.332139180049737,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,7,1007,8360,False,8,2,6,2,45.83116339413668,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,7,1007,320,True,8,1,6,6,27.16493619647496,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,8,1008,8660,False,8,2,6,5,46.33436654883906,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,8,1008,320,True,8,1,6,6,28.77566851928852,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,9,1009,7764,False,8,2,6,4,40.569240498489634,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,9,1009,320,True,8,1,6,6,23.9710951846281,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,10,1010,8466,False,8,2,6,0,39.21428230915197,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,10,1010,320,True,8,1,6,6,27.736846014793166,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,11,1011,6898,False,8,2,6,3,38.971817222813804,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,11,1011,320,True,8,1,6,6,19.31383575517551,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,12,1012,7114,False,8,2,6,0,37.88745368367299,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,12,1012,320,True,8,1,6,6,20.477127220593413,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,13,1013,8294,False,8,2,6,5,46.1762658109417,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,13,1013,320,True,8,1,6,6,26.80893105120951,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,14,1014,7294,False,8,2,6,3,44.51950928174728,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,14,1014,320,True,8,1,6,6,21.44052090191119,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,15,1015,3705,False,7,1,6,3,28.235054024950884,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,15,1015,320,True,8,1,6,6,22.069648934506866,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,16,1016,7580,False,8,2,6,4,34.418729699137806,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,16,1016,320,True,8,1,6,6,22.982586477441288,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,17,1017,8046,False,8,2,6,0,38.063453840078516,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,17,1017,320,True,8,1,6,6,25.479043389521003,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,18,1018,8304,False,8,2,6,5,35.412171361801015,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,18,1018,320,True,8,1,6,6,26.864607118257197,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,19,1019,3623,False,7,1,6,3,29.099212988164012,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,19,1019,320,True,8,1,6,6,21.184650600199255,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,20,1020,3859,False,7,1,6,1,25.95709779712432,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,20,1020,320,True,8,1,6,6,23.71393203504612,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,21,1021,7178,False,8,2,6,2,41.69432234892003,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,21,1021,320,True,8,1,6,6,20.818464664835364,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,22,1022,4303,False,7,1,6,3,28.442848329862795,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,22,1022,320,True,8,1,6,6,28.48716581967857,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,23,1023,7698,False,8,2,6,3,37.23446881804675,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,23,1023,320,True,8,1,6,6,23.608637610639683,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,24,1024,7758,False,8,2,6,4,33.00870192723285,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,24,1024,320,True,8,1,6,6,23.93168847612115,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,25,1025,6924,False,8,2,6,1,43.685745012290866,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,25,1025,320,True,8,1,6,6,19.452205694416726,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,26,1026,3870,False,7,1,6,2,25.208262203351286,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,26,1026,320,True,8,1,6,6,23.834387660870224,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,27,1027,4281,False,7,1,6,3,25.19102591297115,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,27,1027,320,True,8,1,6,6,28.246013088824462,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,28,1028,7586,False,8,2,6,2,46.51548032420934,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,28,1028,320,True,8,1,6,6,23.014308111608692,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,29,1029,8174,False,8,2,6,5,41.68806552288368,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,29,1029,320,True,8,1,6,6,26.164071557564014,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,30,1030,11472,False,9,3,6,5,64.13499882563212,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,30,1030,320,True,8,1,6,6,23.342751992099892,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,31,1031,7886,False,8,2,6,2,37.37421146721065,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,31,1031,320,True,8,1,6,6,24.61997823717489,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,32,1032,7878,False,8,2,6,2,35.26714173836421,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,32,1032,320,True,8,1,6,6,24.57461614849463,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,33,1033,10854,False,9,3,6,0,58.08507497823709,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,33,1033,320,True,8,1,6,6,21.136116004126077,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,34,1034,8040,False,8,2,6,3,32.50996882218785,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,34,1034,320,True,8,1,6,6,25.44734379291227,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,35,1035,8530,False,8,2,6,2,34.13321010352108,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,35,1035,320,True,8,1,6,6,28.075201592078738,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,36,1036,8228,False,8,2,6,5,32.29018068885436,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,36,1036,320,True,8,1,6,6,26.45501571713229,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,37,1037,4059,False,7,1,6,0,23.184570875204358,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,37,1037,320,True,8,1,6,6,25.86232206392917,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,38,1038,3661,False,7,1,6,3,23.470442209995475,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,38,1038,320,True,8,1,6,6,21.59222942535964,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,39,1039,7194,False,8,2,6,0,35.65674085926944,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,39,1039,320,True,8,1,6,6,20.903426481319737,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,40,1040,7914,False,8,2,6,2,50.59952918479002,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,40,1040,320,True,8,1,6,6,24.773497422390424,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,41,1041,7700,False,8,2,6,0,35.13762326921727,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,41,1041,320,True,8,1,6,6,23.622166701346888,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,42,1042,7514,False,8,2,6,2,40.7859587360185,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,42,1042,320,True,8,1,6,6,22.622647030356422,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,43,1043,11295,False,9,3,6,5,45.678099832042435,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,43,1043,320,True,8,1,6,6,22.709252611472124,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,44,1044,7518,False,8,2,6,3,46.903901419583924,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,44,1044,320,True,8,1,6,6,22.640198698436066,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,45,1045,12186,False,9,3,6,0,60.06304220823182,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,45,1045,320,True,8,1,6,6,25.897918203452974,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,46,1046,8374,False,8,2,6,2,48.33115199029875,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,46,1046,320,True,8,1,6,6,27.240935588129517,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,47,1047,3776,False,7,1,6,3,24.855222535414924,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,47,1047,320,True,8,1,6,6,22.825765374633416,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,48,1048,7144,False,8,2,6,5,32.549150541073516,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,48,1048,320,True,8,1,6,6,20.632558929497584,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,49,1049,12171,False,9,3,6,0,46.14818235001379,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,49,1049,320,True,8,1,6,6,25.84120295623474,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,50,1050,7998,False,8,2,6,2,50.50415221256724,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,50,1050,320,True,8,1,6,6,25.226555145318365,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,51,1051,3530,False,7,1,6,5,24.281097774208828,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,51,1051,320,True,8,1,6,6,20.1824599378651,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,52,1052,12075,False,9,3,6,1,53.55966922388941,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,52,1052,320,True,8,1,6,6,25.49709419685117,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,53,1053,7512,False,8,2,6,2,44.033578355698936,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,53,1053,320,True,8,1,6,6,22.61764246329254,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,54,1054,4218,True,7,1,6,6,28.94692860208373,,mid,rounds=1|tier=mid
+S2,manifest_aware,54,1054,320,True,8,1,6,6,27.57344133502632,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,55,1055,3750,False,7,1,6,1,27.37131743443348,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,55,1055,320,True,8,1,6,6,22.550799184667998,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,56,1056,4242,False,7,1,6,1,26.550938479444504,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,56,1056,320,True,8,1,6,6,27.834688790047696,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,57,1057,7900,False,8,2,6,2,47.05380955668115,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,57,1057,320,True,8,1,6,6,24.69960513147994,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,58,1058,7082,False,8,2,6,4,45.32655118375557,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,58,1058,320,True,8,1,6,6,20.305870546807693,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,59,1059,3988,False,7,1,6,0,27.17852131136909,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,59,1059,320,True,8,1,6,6,25.0992841420613,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,60,1060,6870,False,8,2,6,1,33.82685843991835,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,60,1060,320,True,8,1,6,6,19.169943375297493,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,61,1061,7460,False,8,2,6,2,42.11188919890604,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,61,1061,320,True,8,1,6,6,22.33871730353731,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,62,1062,3755,False,7,1,6,5,23.39455425386955,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,62,1062,320,True,8,1,6,6,22.599760437023,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,63,1063,8708,False,8,2,6,3,46.040918222709536,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,63,1063,320,True,8,1,6,6,29.035892029772416,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,64,1064,6946,False,8,2,6,3,32.865470578287244,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,64,1064,320,True,8,1,6,6,19.575430510526367,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,65,1065,7074,False,8,2,6,2,49.08396834102568,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,65,1065,320,True,8,1,6,6,20.256651838478263,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,66,1066,7840,False,8,2,6,3,44.36422644725397,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,66,1066,320,True,8,1,6,6,24.37044324716894,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,67,1067,4305,False,7,1,6,5,28.587857091432117,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,67,1067,320,True,8,1,6,6,28.51121038169557,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,68,1068,7232,False,8,2,6,2,40.46650724507411,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,68,1068,320,True,8,1,6,6,21.11145652071952,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,69,1069,12306,False,9,3,6,4,54.17012480461716,셀렉터 오추론(p=0.008),mid,rounds=3|tier=mid
+S2,manifest_aware,69,1069,320,True,8,1,6,6,26.3329474564358,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,70,1070,7010,False,8,2,6,2,49.93094507637544,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,70,1070,320,True,8,1,6,6,19.918811861368937,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,71,1071,4184,False,7,1,6,0,29.039595578308596,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,71,1071,320,True,8,1,6,6,27.209399556165426,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,72,1072,7778,False,8,2,6,4,43.83230981286583,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,72,1072,320,True,8,1,6,6,24.044187377954813,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,73,1073,6846,False,8,2,6,5,32.42605089294707,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,73,1073,320,True,8,1,6,6,19.033016988090576,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,74,1074,7564,False,8,2,6,0,48.32709940228733,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,74,1074,320,True,8,1,6,6,22.891694957275554,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,75,1075,8738,False,8,2,6,4,36.89979137563881,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,75,1075,320,True,8,1,6,6,29.191171266300152,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,76,1076,6900,False,8,2,6,4,36.07674858668847,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,76,1076,320,True,8,1,6,6,19.329808660448656,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,77,1077,7256,False,8,2,6,3,35.39496969579643,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,77,1077,320,True,8,1,6,6,21.234024181062864,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,78,1078,3842,False,7,1,6,0,25.55249049505314,셀렉터 오추론(p=0.008),mid,rounds=1|tier=mid
+S2,manifest_aware,78,1078,320,True,8,1,6,6,23.537069355625263,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,79,1079,7750,False,8,2,6,1,49.23007339341309,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,79,1079,320,True,8,1,6,6,23.886458606429265,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,80,1080,8374,False,8,2,6,2,32.368347129122824,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,80,1080,320,True,8,1,6,6,27.24338638536484,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,81,1081,7406,False,8,2,6,0,42.535062819609735,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,81,1081,320,True,8,1,6,6,22.04517870893463,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,82,1082,8440,False,8,2,6,5,40.316451590976556,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,82,1082,320,True,8,1,6,6,27.594402276794963,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,83,1083,7746,False,8,2,6,1,34.35212561622367,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,83,1083,320,True,8,1,6,6,23.873239670302137,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,84,1084,8244,False,8,2,6,3,49.46178877960486,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,84,1084,320,True,8,1,6,6,26.544889730527153,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,85,1085,8136,False,8,2,6,5,43.11421294929406,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,85,1085,320,True,8,1,6,6,25.96739230757104,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,86,1086,8460,False,8,2,6,2,47.19443218738226,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,86,1086,320,True,8,1,6,6,27.698277837983106,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,87,1087,8472,False,8,2,6,2,46.83567163023712,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,87,1087,320,True,8,1,6,6,27.76497538044694,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,88,1088,7794,False,8,2,6,1,37.30581650923093,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,88,1088,320,True,8,1,6,6,24.13078203318841,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,89,1089,7716,False,8,2,6,3,37.840037872658186,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,89,1089,320,True,8,1,6,6,23.710025521261635,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,90,1090,7584,False,8,2,6,0,45.59614807386817,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,90,1090,320,True,8,1,6,6,23.003411246072744,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,91,1091,8438,False,8,2,6,2,50.105238739791105,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,91,1091,320,True,8,1,6,6,27.58339185949481,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,92,1092,7792,False,8,2,6,1,36.216906815239604,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,92,1092,320,True,8,1,6,6,24.119992739249625,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,93,1093,7972,False,8,2,6,2,50.453891688168476,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,93,1093,320,True,8,1,6,6,25.084475979211405,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,94,1094,8070,False,8,2,6,3,32.2003347154571,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,94,1094,320,True,8,1,6,6,25.610125116353842,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,95,1095,7246,False,8,2,6,4,39.2453789668613,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,95,1095,320,True,8,1,6,6,21.179723538949155,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,96,1096,8596,False,8,2,6,3,42.015677464510524,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,96,1096,320,True,8,1,6,6,28.428401387656386,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,97,1097,6882,False,8,2,6,4,49.2213581343979,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,97,1097,320,True,8,1,6,6,19.22605471890896,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,98,1098,7846,False,8,2,6,4,50.01756890360253,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,98,1098,320,True,8,1,6,6,24.41130139425782,,mid,tier=mid|trust_noise=0.0
+S2,baseline_dom,99,1099,7308,False,8,2,6,5,34.392635060156614,셀렉터 오추론(p=0.008),mid,rounds=2|tier=mid
+S2,manifest_aware,99,1099,320,True,8,1,6,6,21.519032928246798,,mid,tier=mid|trust_noise=0.0
+S3,baseline_dom,0,1000,36825,False,15,3,12,5,40.88819724349106,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,0,1000,640,True,14,1,12,12,41.664441415008696,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,1,1001,31554,False,15,3,12,1,55.667842470666564,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,1,1001,640,True,14,1,12,12,29.195975148059908,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,2,1002,34683,False,15,3,12,2,47.32336786775837,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,2,1002,640,True,14,1,12,12,36.59350410063405,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,3,1003,34152,False,15,3,12,7,55.17768655419938,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,3,1003,640,True,14,1,12,12,35.34380531994924,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,4,1004,26312,False,14,2,12,11,44.383003847131555,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,4,1004,640,True,14,1,12,12,47.912589623500246,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,5,1005,38829,False,15,3,12,9,58.13176037248757,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,5,1005,640,True,14,1,12,12,46.404533184635966,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,6,1006,22014,False,14,2,12,9,37.45029152324047,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,6,1006,640,True,14,1,12,12,32.66427836009947,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,7,1007,37953,False,15,3,12,4,61.24674509120502,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,7,1007,640,True,14,1,12,12,44.32987239294992,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,8,1008,39315,False,15,3,12,11,62.00154982325858,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,8,1008,640,True,14,1,12,12,47.55133703857704,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,9,1009,23502,False,14,2,12,8,40.569240498489634,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,9,1009,640,True,14,1,12,12,37.9421903692562,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,10,1010,38436,False,15,3,12,1,51.32142346372795,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,10,1010,640,True,14,1,12,12,45.47369202958633,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,11,1011,20876,False,14,2,12,7,38.971817222813804,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,11,1011,640,True,14,1,12,12,28.627671510351025,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,12,1012,21532,False,14,2,12,0,37.88745368367299,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,12,1012,640,True,14,1,12,12,30.954254441186826,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,13,1013,37653,False,15,3,12,11,61.76439871641255,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,13,1013,640,True,14,1,12,12,43.61786210241902,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,14,1014,33111,False,15,3,12,6,59.27926392262093,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,14,1014,640,True,14,1,12,12,32.88104180382238,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,15,1015,22430,False,14,2,12,7,41.47010804990177,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,15,1015,640,True,14,1,12,12,34.13929786901373,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,16,1016,22944,False,14,2,12,8,34.418729699137806,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,16,1016,640,True,14,1,12,12,35.965172954882576,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,17,1017,36528,False,15,3,12,1,49.59518076011777,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,17,1017,640,True,14,1,12,12,40.958086779042006,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,18,1018,25132,False,14,2,12,10,35.412171361801015,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,18,1018,640,True,14,1,12,12,43.729214236514395,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,19,1019,10965,False,13,1,12,7,29.099212988164012,셀렉터 오추론(p=0.000),legacy,rounds=1|tier=legacy
+S3,manifest_aware,19,1019,640,True,14,1,12,12,32.36930120039851,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,20,1020,23356,False,14,2,12,2,36.91419559424864,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,20,1020,640,True,14,1,12,12,37.42786407009224,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,21,1021,32586,False,15,3,12,4,55.04148352338005,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,21,1021,640,True,14,1,12,12,31.63692932967073,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,22,1022,26048,False,14,2,12,6,41.88569665972559,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,22,1022,640,True,14,1,12,12,46.97433163935714,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,23,1023,34947,False,15,3,12,6,48.351703227070125,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,23,1023,640,True,14,1,12,12,37.217275221279365,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,24,1024,35220,False,15,3,12,8,42.01305289084928,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,24,1024,640,True,14,1,12,12,37.8633769522423,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,25,1025,20954,False,14,2,12,3,43.685745012290866,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,25,1025,640,True,14,1,12,12,28.90441138883345,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,26,1026,11712,False,13,1,12,4,25.208262203351286,셀렉터 오추론(p=0.000),legacy,rounds=1|tier=legacy
+S3,manifest_aware,26,1026,640,True,14,1,12,12,37.66877532174045,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,27,1027,12956,False,13,1,12,7,25.19102591297115,셀렉터 오추론(p=0.000),legacy,rounds=1|tier=legacy
+S3,manifest_aware,27,1027,640,True,14,1,12,12,46.492026177648924,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,28,1028,34443,False,15,3,12,4,62.27322048631402,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,28,1028,640,True,14,1,12,12,36.028616223217384,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,29,1029,37107,False,15,3,12,11,55.03209828432553,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,29,1029,640,True,14,1,12,12,42.32814311512803,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,30,1030,34722,False,15,3,12,10,64.13499882563212,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,30,1030,640,True,14,1,12,12,36.685503984199784,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,31,1031,35802,False,15,3,12,5,48.56131720081598,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,31,1031,640,True,14,1,12,12,39.23995647434978,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,32,1032,23842,False,14,2,12,5,35.26714173836421,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,32,1032,640,True,14,1,12,12,39.14923229698926,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,33,1033,32856,False,15,3,12,1,58.08507497823709,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,33,1033,640,True,14,1,12,12,32.27223200825215,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,34,1034,36501,False,15,3,12,6,41.26495323328177,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,34,1034,640,True,14,1,12,12,40.89468758582454,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,35,1035,38721,False,15,3,12,4,43.69981515528162,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,35,1035,640,True,14,1,12,12,46.150403184157476,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,36,1036,24902,False,14,2,12,11,32.29018068885436,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,36,1036,640,True,14,1,12,12,42.91003143426458,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,37,1037,24568,False,14,2,12,0,31.369141750408716,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,37,1037,640,True,14,1,12,12,41.72464412785834,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,38,1038,22160,False,14,2,12,7,31.94088441999095,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,38,1038,640,True,14,1,12,12,33.18445885071928,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,39,1039,32658,False,15,3,12,0,45.985111288904164,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,39,1039,640,True,14,1,12,12,31.806852962639475,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,40,1040,23954,False,14,2,12,5,50.59952918479002,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,40,1040,640,True,14,1,12,12,39.54699484478085,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,41,1041,23304,False,14,2,12,1,35.13762326921727,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,41,1041,640,True,14,1,12,12,37.244333402693776,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,42,1042,22742,False,14,2,12,4,40.7859587360185,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,42,1042,640,True,14,1,12,12,35.245294060712844,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,43,1043,34185,False,15,3,12,10,45.678099832042435,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,43,1043,640,True,14,1,12,12,35.41850522294425,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,44,1044,34128,False,15,3,12,7,62.85585212937589,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,44,1044,640,True,14,1,12,12,35.28039739687213,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,45,1045,36882,False,15,3,12,0,60.06304220823182,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,45,1045,640,True,14,1,12,12,41.79583640690595,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,46,1046,38016,False,15,3,12,5,64.99672798544813,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,46,1046,640,True,14,1,12,12,44.481871176259034,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,47,1047,22856,False,14,2,12,7,34.71044507082985,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,47,1047,640,True,14,1,12,12,35.65153074926683,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,48,1048,21620,False,14,2,12,10,32.549150541073516,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,48,1048,640,True,14,1,12,12,31.265117858995165,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,49,1049,49112,False,16,4,12,0,56.530909800018385,셀렉터 오추론(p=0.000),legacy,rounds=4|tier=legacy
+S3,manifest_aware,49,1049,640,True,14,1,12,12,41.68240591246948,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,50,1050,24210,False,14,2,12,5,50.50415221256724,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,50,1050,640,True,14,1,12,12,40.45311029063673,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,51,1051,10683,False,13,1,12,10,24.281097774208828,셀렉터 오추론(p=0.000),legacy,rounds=1|tier=legacy
+S3,manifest_aware,51,1051,640,True,14,1,12,12,30.3649198757302,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,52,1052,36543,False,15,3,12,2,53.55966922388941,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,52,1052,640,True,14,1,12,12,40.99418839370234,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,53,1053,34107,False,15,3,12,5,58.55036753354841,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,53,1053,640,True,14,1,12,12,35.23528492658508,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,54,1054,25532,False,14,2,12,9,42.09978924292739,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,54,1054,640,True,14,1,12,12,45.14688267005264,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,55,1055,22700,False,14,2,12,3,39.74263486886696,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,55,1055,640,True,14,1,12,12,35.101598369335996,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,56,1056,25680,False,14,2,12,3,38.10187695888901,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,56,1056,640,True,14,1,12,12,45.66937758009539,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,57,1057,35868,False,15,3,12,5,63.080714335021725,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,57,1057,640,True,14,1,12,12,39.39921026295988,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,58,1058,21436,False,14,2,12,8,45.32655118375557,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,58,1058,640,True,14,1,12,12,30.611741093615386,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,59,1059,12069,False,13,1,12,0,27.17852131136909,셀렉터 오추론(p=0.000),legacy,rounds=1|tier=legacy
+S3,manifest_aware,59,1059,640,True,14,1,12,12,40.1985682841226,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,60,1060,20794,False,14,2,12,2,33.82685843991835,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,60,1060,640,True,14,1,12,12,28.339886750594985,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,61,1061,33873,False,15,3,12,5,55.66783379835906,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,61,1061,640,True,14,1,12,12,34.67743460707462,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,62,1062,22728,False,14,2,12,10,31.7891085077391,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,62,1062,640,True,14,1,12,12,35.199520874046,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,63,1063,26356,False,14,2,12,6,46.040918222709536,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,63,1063,640,True,14,1,12,12,48.07178405954483,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,64,1064,21024,False,14,2,12,7,32.865470578287244,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,64,1064,640,True,14,1,12,12,29.150861021052734,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,65,1065,32112,False,15,3,12,5,66.12595251153851,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,65,1065,640,True,14,1,12,12,30.51330367695652,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,66,1066,35589,False,15,3,12,6,59.046339670880954,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,66,1066,640,True,14,1,12,12,38.74088649433788,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,67,1067,13030,False,13,1,12,10,28.587857091432117,셀렉터 오추론(p=0.000),legacy,rounds=1|tier=legacy
+S3,manifest_aware,67,1067,640,True,14,1,12,12,47.02242076339114,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,68,1068,21890,False,14,2,12,5,40.46650724507411,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,68,1068,640,True,14,1,12,12,32.22291304143904,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,69,1069,37248,False,15,3,12,9,54.17012480461716,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,69,1069,640,True,14,1,12,12,42.6658949128716,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,70,1070,21216,False,14,2,12,5,49.93094507637544,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,70,1070,640,True,14,1,12,12,29.837623722737874,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,71,1071,25326,False,14,2,12,0,43.07919115661719,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,71,1071,640,True,14,1,12,12,44.41879911233085,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,72,1072,35313,False,15,3,12,9,58.248464719298745,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,72,1072,640,True,14,1,12,12,38.088374755909626,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,73,1073,20718,False,14,2,12,10,32.42605089294707,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,73,1073,640,True,14,1,12,12,28.066033976181153,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,74,1074,34338,False,15,3,12,0,64.990649103431,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,74,1074,640,True,14,1,12,12,35.78338991455111,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,75,1075,26444,False,14,2,12,8,36.89979137563881,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,75,1075,640,True,14,1,12,12,48.382342532600305,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,76,1076,20884,False,14,2,12,9,36.07674858668847,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,76,1076,640,True,14,1,12,12,28.65961732089731,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,77,1077,32937,False,15,3,12,7,45.59245454369464,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,77,1077,640,True,14,1,12,12,32.46804836212573,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,78,1078,23256,False,14,2,12,0,36.10498099010628,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,78,1078,640,True,14,1,12,12,37.07413871125053,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,79,1079,35181,False,15,3,12,2,66.34511009011965,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,79,1079,640,True,14,1,12,12,37.77291721285853,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,80,1080,38019,False,15,3,12,4,41.05252069368424,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,80,1080,640,True,14,1,12,12,44.48677277072968,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,81,1081,33624,False,15,3,12,1,56.30259422941461,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,81,1081,640,True,14,1,12,12,34.09035741786926,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,82,1082,25544,False,14,2,12,11,40.316451590976556,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,82,1082,640,True,14,1,12,12,45.188804553589925,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,83,1083,23446,False,14,2,12,3,34.35212561622367,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,83,1083,640,True,14,1,12,12,37.746479340604274,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,84,1084,37428,False,15,3,12,7,66.69268316940729,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,84,1084,640,True,14,1,12,12,43.089779461054306,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,85,1085,36939,False,15,3,12,10,57.171319423941085,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,85,1085,640,True,14,1,12,12,41.93478461514208,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,86,1086,38403,False,15,3,12,5,63.29164828107339,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,86,1086,640,True,14,1,12,12,45.39655567596621,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,87,1087,25640,False,14,2,12,4,46.83567163023712,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,87,1087,640,True,14,1,12,12,45.52995076089388,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,88,1088,35388,False,15,3,12,2,48.45872476384639,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,88,1088,640,True,14,1,12,12,38.26156406637682,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,89,1089,23354,False,14,2,12,7,37.840037872658186,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,89,1089,640,True,14,1,12,12,37.42005104252327,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,90,1090,34434,False,15,3,12,1,60.89422211080226,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,90,1090,640,True,14,1,12,12,36.00682249214549,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,91,1091,25538,False,14,2,12,4,50.105238739791105,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,91,1091,640,True,14,1,12,12,45.16678371898962,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,92,1092,35379,False,15,3,12,2,46.8253602228594,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,92,1092,640,True,14,1,12,12,38.23998547849925,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,93,1093,24128,False,14,2,12,5,50.453891688168476,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,93,1093,640,True,14,1,12,12,40.16895195842281,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,94,1094,36639,False,15,3,12,7,40.80050207318566,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,94,1094,640,True,14,1,12,12,41.220250232707684,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,95,1095,21928,False,14,2,12,9,39.2453789668613,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,95,1095,640,True,14,1,12,12,32.35944707789831,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,96,1096,39021,False,15,3,12,7,55.52351619676578,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,96,1096,640,True,14,1,12,12,46.85680277531277,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,97,1097,31239,False,15,3,12,9,66.33203720159685,셀렉터 오추론(p=0.000),legacy,rounds=3|tier=legacy
+S3,manifest_aware,97,1097,640,True,14,1,12,12,28.452109437817917,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,98,1098,23750,False,14,2,12,8,50.01756890360253,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,98,1098,640,True,14,1,12,12,38.82260278851564,,legacy,tier=legacy|trust_noise=0.0
+S3,baseline_dom,99,1099,22120,False,14,2,12,11,34.392635060156614,셀렉터 오추론(p=0.000),legacy,rounds=2|tier=legacy
+S3,manifest_aware,99,1099,640,True,14,1,12,12,33.038065856493596,,legacy,tier=legacy|trust_noise=0.0
+S4,baseline_dom,0,1000,8112,False,12,2,10,5,32.258798162327366,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,0,1000,480,True,12,1,10,10,36.38703451250724,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,1,1001,6950,False,12,2,10,1,42.111894980444376,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,1,1001,480,True,12,1,10,10,25.996645956716588,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,2,1002,7640,False,12,2,10,2,36.548911911838914,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,2,1002,480,True,12,1,10,10,32.16125341719504,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,3,1003,7522,False,12,2,10,7,41.78512436946625,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,3,1003,480,True,12,1,10,10,31.119837766624364,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,4,1004,8694,False,12,2,10,8,43.74978551086956,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,4,1004,480,True,12,1,10,10,41.5938246862502,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,5,1005,8554,False,12,2,10,9,43.75450691499171,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,5,1005,480,True,12,1,10,10,40.33711098719664,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,6,1006,7274,False,12,2,10,9,37.45029152324047,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,6,1006,480,True,12,1,10,10,28.886898633416227,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,7,1007,8360,False,12,2,10,4,45.83116339413668,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,7,1007,480,True,12,1,10,10,38.608226994124934,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,8,1008,8660,False,12,2,10,1,32.006533347130926,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,8,1008,480,True,12,1,10,10,41.292780865480864,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,9,1009,7764,False,12,2,10,8,40.569240498489634,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,9,1009,480,True,12,1,10,10,33.285158641046834,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,10,1010,8466,False,12,2,10,1,39.21428230915197,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,10,1010,480,True,12,1,10,10,39.56141002465528,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,11,1011,6898,False,12,2,10,7,38.971817222813804,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,11,1011,480,True,12,1,10,10,25.52305959195919,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,12,1012,7114,False,12,2,10,0,37.88745368367299,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,12,1012,480,True,12,1,10,10,27.461878700989022,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,13,1013,8294,False,12,2,10,2,42.36033841432616,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,13,1013,480,True,12,1,10,10,38.01488508534918,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,14,1014,7294,False,12,2,10,6,44.51950928174728,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,14,1014,480,True,12,1,10,10,29.06753483651865,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,15,1015,3705,False,11,1,10,7,28.235054024950884,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,15,1015,480,True,12,1,10,10,30.116081557511443,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,16,1016,7580,False,12,2,10,8,34.418729699137806,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,16,1016,480,True,12,1,10,10,31.637644129068818,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,17,1017,8046,False,12,2,10,1,38.063453840078516,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,17,1017,480,True,12,1,10,10,35.79840564920167,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,18,1018,8304,False,12,2,10,3,46.727598010000065,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,18,1018,480,True,12,1,10,10,38.107678530428664,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,19,1019,3623,False,11,1,10,7,29.099212988164012,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,19,1019,480,True,12,1,10,10,28.64108433366542,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,20,1020,3859,False,11,1,10,2,25.95709779712432,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,20,1020,480,True,12,1,10,10,32.85655339174354,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,21,1021,7178,False,12,2,10,4,41.69432234892003,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,21,1021,480,True,12,1,10,10,28.03077444139227,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,22,1022,4303,False,11,1,10,6,28.442848329862795,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,22,1022,480,True,12,1,10,10,40.811943032797615,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,23,1023,7698,False,12,2,10,6,37.23446881804675,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,23,1023,480,True,12,1,10,10,32.68106268439947,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,24,1024,7758,False,12,2,10,8,33.00870192723285,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,24,1024,480,True,12,1,10,10,33.219480793535254,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,25,1025,6924,False,12,2,10,3,43.685745012290866,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,25,1025,480,True,12,1,10,10,25.753676157361205,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,26,1026,3870,False,11,1,10,4,25.208262203351286,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,26,1026,480,True,12,1,10,10,33.05731276811704,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,27,1027,4281,False,11,1,10,7,25.19102591297115,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,27,1027,480,True,12,1,10,10,40.41002181470744,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,28,1028,7586,False,12,2,10,4,46.51548032420934,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,28,1028,480,True,12,1,10,10,31.690513519347817,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,29,1029,8174,False,12,2,10,8,42.19658037127789,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,29,1029,480,True,12,1,10,10,36.94011926260669,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,30,1030,11472,False,13,3,10,3,67.2317626362227,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,30,1030,480,True,12,1,10,10,32.23791998683315,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,31,1031,7886,False,12,2,10,5,37.37421146721065,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,31,1031,480,True,12,1,10,10,34.36663039529149,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,32,1032,7878,False,12,2,10,5,35.26714173836421,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,32,1032,480,True,12,1,10,10,34.29102691415771,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,33,1033,10854,False,13,3,10,1,58.08507497823709,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,33,1033,480,True,12,1,10,10,28.56019334021013,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,34,1034,8040,False,12,2,10,6,32.50996882218785,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,34,1034,480,True,12,1,10,10,35.745572988187114,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,35,1035,8530,False,12,2,10,4,34.13321010352108,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,35,1035,480,True,12,1,10,10,40.12533598679789,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,36,1036,8228,False,12,2,10,1,31.76750726620795,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,36,1036,480,True,12,1,10,10,37.42502619522048,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,37,1037,4059,False,11,1,10,0,23.184570875204358,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,37,1037,480,True,12,1,10,10,36.43720343988195,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,38,1038,3661,False,11,1,10,7,23.470442209995475,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,38,1038,480,True,12,1,10,10,29.320382375599404,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,39,1039,7194,False,12,2,10,0,35.65674085926944,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,39,1039,480,True,12,1,10,10,28.172377468866227,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,40,1040,7914,False,12,2,10,5,50.59952918479002,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,40,1040,480,True,12,1,10,10,34.62249570398404,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,41,1041,7700,False,12,2,10,1,35.13762326921727,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,41,1041,480,True,12,1,10,10,32.70361116891148,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,42,1042,7514,False,12,2,10,4,40.7859587360185,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,42,1042,480,True,12,1,10,10,31.037745050594037,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,43,1043,11295,False,13,3,10,3,65.81391702078923,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,43,1043,480,True,12,1,10,10,31.18208768578687,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,44,1044,7518,False,12,2,10,7,46.903901419583924,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,44,1044,480,True,12,1,10,10,31.066997830726777,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,45,1045,12186,False,13,3,10,0,60.06304220823182,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,45,1045,480,True,12,1,10,10,36.496530339088295,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,46,1046,8374,False,12,2,10,5,48.33115199029875,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,46,1046,480,True,12,1,10,10,38.73489264688253,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,47,1047,3776,False,11,1,10,7,24.855222535414924,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,47,1047,480,True,12,1,10,10,31.376275624389027,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,48,1048,7144,False,12,2,10,1,36.95285835820021,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,48,1048,480,True,12,1,10,10,27.720931549162636,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,49,1049,12171,False,13,3,10,0,46.14818235001379,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,49,1049,480,True,12,1,10,10,36.4020049270579,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,50,1050,7998,False,12,2,10,5,50.50415221256724,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,50,1050,480,True,12,1,10,10,35.37759190886394,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,51,1051,3530,False,11,1,10,2,25.60016589371136,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,51,1051,480,True,12,1,10,10,26.9707665631085,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,52,1052,12075,False,13,3,10,2,53.55966922388941,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,52,1052,480,True,12,1,10,10,35.82849032808528,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,53,1053,7512,False,12,2,10,5,44.033578355698936,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,53,1053,480,True,12,1,10,10,31.029404105487572,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,54,1054,4218,False,11,1,10,9,28.549894621463697,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,54,1054,480,True,12,1,10,10,39.28906889171053,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,55,1055,3750,False,11,1,10,3,27.37131743443348,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,55,1055,480,True,12,1,10,10,30.917998641113332,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,56,1056,4242,False,11,1,10,3,26.550938479444504,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,56,1056,480,True,12,1,10,10,39.724481316746164,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,57,1057,7900,False,12,2,10,5,47.05380955668115,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,57,1057,480,True,12,1,10,10,34.4993418857999,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,58,1058,7082,False,12,2,10,8,45.32655118375557,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,58,1058,480,True,12,1,10,10,27.176450911346155,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,59,1059,3988,False,11,1,10,0,27.17852131136909,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,59,1059,480,True,12,1,10,10,35.16547357010217,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,60,1060,6870,False,12,2,10,2,33.82685843991835,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,60,1060,480,True,12,1,10,10,25.283238958829152,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,61,1061,7460,False,12,2,10,5,42.11188919890604,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,61,1061,480,True,12,1,10,10,30.564528839228853,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,62,1062,3755,False,11,1,10,0,28.527106259685464,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,62,1062,480,True,12,1,10,10,30.999600728371668,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,63,1063,8708,False,12,2,10,6,46.040918222709536,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,63,1063,480,True,12,1,10,10,41.726486716287354,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,64,1064,6946,False,12,2,10,7,32.865470578287244,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,64,1064,480,True,12,1,10,10,25.95905085087728,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,65,1065,7074,False,12,2,10,5,49.08396834102568,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,65,1065,480,True,12,1,10,10,27.0944197307971,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,66,1066,7840,False,12,2,10,6,44.36422644725397,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,66,1066,480,True,12,1,10,10,33.95073874528157,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,67,1067,4305,False,11,1,10,8,26.200707025529727,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,67,1067,480,True,12,1,10,10,40.85201730282595,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,68,1068,7232,False,12,2,10,5,40.46650724507411,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,68,1068,480,True,12,1,10,10,28.519094201199206,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,69,1069,12306,False,13,3,10,9,54.17012480461716,셀렉터 오추론(p=0.000),mid,rounds=3|tier=mid
+S4,manifest_aware,69,1069,480,True,12,1,10,10,37.22157909405966,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,70,1070,7010,False,12,2,10,5,49.93094507637544,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,70,1070,480,True,12,1,10,10,26.531353102281564,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,71,1071,4184,False,11,1,10,0,29.039595578308596,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,71,1071,480,True,12,1,10,10,38.68233259360905,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,72,1072,7778,False,12,2,10,9,43.83230981286583,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,72,1072,480,True,12,1,10,10,33.40697896325802,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,73,1073,6846,False,12,2,10,1,41.86372696962651,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,73,1073,480,True,12,1,10,10,25.055028313484296,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,74,1074,7564,False,12,2,10,0,48.32709940228733,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,74,1074,480,True,12,1,10,10,31.486158262125926,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,75,1075,8738,False,12,2,10,8,36.89979137563881,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,75,1075,480,True,12,1,10,10,41.98528544383358,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,76,1076,6900,False,12,2,10,9,36.07674858668847,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,76,1076,480,True,12,1,10,10,25.54968110074776,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,77,1077,7256,False,12,2,10,7,35.39496969579643,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,77,1077,480,True,12,1,10,10,28.723373635104778,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,78,1078,3842,False,11,1,10,0,25.55249049505314,셀렉터 오추론(p=0.000),mid,rounds=1|tier=mid
+S4,manifest_aware,78,1078,480,True,12,1,10,10,32.561782259375434,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,79,1079,7750,False,12,2,10,2,49.23007339341309,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,79,1079,480,True,12,1,10,10,33.14409767738211,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,80,1080,8374,False,12,2,10,4,32.368347129122824,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,80,1080,480,True,12,1,10,10,38.7389773089414,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,81,1081,7406,False,12,2,10,1,42.535062819609735,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,81,1081,480,True,12,1,10,10,30.07529784822438,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,82,1082,8440,False,12,2,10,7,36.56285884082534,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,82,1082,480,True,12,1,10,10,39.32400379465827,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,83,1083,7746,False,12,2,10,3,34.35212561622367,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,83,1083,480,True,12,1,10,10,33.122066117170235,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,84,1084,8244,False,12,2,10,7,49.46178877960486,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,84,1084,480,True,12,1,10,10,37.574816217545255,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,85,1085,8136,False,12,2,10,9,49.56242769063839,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,85,1085,480,True,12,1,10,10,36.6123205126184,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,86,1086,8460,False,12,2,10,5,47.19443218738226,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,86,1086,480,True,12,1,10,10,39.49712972997184,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,87,1087,8472,False,12,2,10,4,46.83567163023712,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,87,1087,480,True,12,1,10,10,39.60829230074491,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,88,1088,7794,False,12,2,10,2,37.30581650923093,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,88,1088,480,True,12,1,10,10,33.551303388647355,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,89,1089,7716,False,12,2,10,7,37.840037872658186,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,89,1089,480,True,12,1,10,10,32.85004253543606,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,90,1090,7584,False,12,2,10,1,45.59614807386817,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,90,1090,480,True,12,1,10,10,31.672352076787902,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,91,1091,8438,False,12,2,10,4,50.105238739791105,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,91,1091,480,True,12,1,10,10,39.30565309915802,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,92,1092,7792,False,12,2,10,2,36.216906815239604,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,92,1092,480,True,12,1,10,10,33.53332123208271,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,93,1093,7972,False,12,2,10,5,50.453891688168476,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,93,1093,480,True,12,1,10,10,35.14079329868568,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,94,1094,8070,False,12,2,10,7,32.2003347154571,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,94,1094,480,True,12,1,10,10,36.01687519392307,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,95,1095,7246,False,12,2,10,9,39.2453789668613,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,95,1095,480,True,12,1,10,10,28.632872564915257,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,96,1096,8596,False,12,2,10,7,42.015677464510524,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,96,1096,480,True,12,1,10,10,40.71400231276064,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,97,1097,6882,False,12,2,10,9,49.2213581343979,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,97,1097,480,True,12,1,10,10,25.376757864848262,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,98,1098,7846,False,12,2,10,8,50.01756890360253,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,98,1098,480,True,12,1,10,10,34.01883565709637,,mid,tier=mid|trust_noise=0.0
+S4,baseline_dom,99,1099,7308,False,12,2,10,2,40.70736390948247,셀렉터 오추론(p=0.000),mid,rounds=2|tier=mid
+S4,manifest_aware,99,1099,480,True,12,1,10,10,29.19838821374466,,mid,tier=mid|trust_noise=0.0

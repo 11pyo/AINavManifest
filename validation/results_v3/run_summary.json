@@ -1,0 +1,70 @@
+{
+  "pre_registration_tag": "v0.3-prereg-2026-04-28",
+  "amendment_applied": [
+    "Amendment 1 (2026-04-28): simulation-only measurement"
+  ],
+  "scenario_ids": [
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+  ],
+  "repeats": 100,
+  "base_seed": 1000,
+  "total_trials": 800,
+  "expected_trials": 800,
+  "counts_per_scenario": {
+    "S1": {
+      "baseline_dom": 100,
+      "manifest_aware": 100
+    },
+    "S2": {
+      "baseline_dom": 100,
+      "manifest_aware": 100
+    },
+    "S3": {
+      "baseline_dom": 100,
+      "manifest_aware": 100
+    },
+    "S4": {
+      "baseline_dom": 100,
+      "manifest_aware": 100
+    }
+  },
+  "failures_per_scenario": {
+    "S1": {
+      "baseline_dom": [],
+      "manifest_aware": []
+    },
+    "S2": {
+      "baseline_dom": [],
+      "manifest_aware": []
+    },
+    "S3": {
+      "baseline_dom": [],
+      "manifest_aware": []
+    },
+    "S4": {
+      "baseline_dom": [],
+      "manifest_aware": []
+    }
+  },
+  "wall_time_seconds": 0.71,
+  "csv_path": "results_v3\\metrics.csv",
+  "csv_columns": [
+    "scenario",
+    "agent",
+    "trial_index",
+    "seed",
+    "input_tokens",
+    "success",
+    "http_requests",
+    "llm_calls",
+    "steps_attempted",
+    "steps_succeeded",
+    "wall_time_ms",
+    "failure_reason",
+    "dom_tier",
+    "notes"
+  ]
+}
