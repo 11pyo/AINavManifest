@@ -135,7 +135,7 @@ git ls-tree v0.3-prereg-2026-04-28 research/
 | Phase | 상태 | 시점 | Tag |
 |-------|----|----|-----|
 | 1 — Pre-registration | ✅ 완료 | 2026-04-28 09:57:56 KST | `v0.3-prereg-2026-04-28` |
-| 2 — Code implementation | 진행 예정 | - | `v0.4-code-YYYY-MM-DD` |
+| 2 — Code implementation | ✅ 완료 | 2026-04-28 12:43 KST | `v0.4-code-2026-04-28` |
 | 3 — Data collection | 진행 예정 | - | `v0.5-data-YYYY-MM-DD` |
 | 4 — Analysis | 진행 예정 | - | `v0.6-analysis-YYYY-MM-DD` |
 | 5 — Report | 진행 예정 | - | `v1.0-report-YYYY-MM-DD` |
