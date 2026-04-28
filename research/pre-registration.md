@@ -305,6 +305,7 @@ python validation/benchmark/analyze_v3.py \
 | Date | Section | Change | Reason | Author |
 |------|---------|--------|--------|--------|
 | 2026-04-28 | — | 최초 사전 등록 | — | Wonpyo Han |
+| 2026-04-28 | experimental-design §2 (모든 시나리오), §9 (코드 파일 목록) | Implementation 측정 방법: 실제 Flask server 라우트 추가 + 시뮬레이션 → **시뮬레이션 모델 전용**으로 변경. `validation/benchmark/scenarios_v3.py`에서 v2 시뮬레이션 모델(`DOM_TIERS`, `simulate_baseline`, `simulate_manifest`)을 재사용하여 4개 시나리오(S1~S4) 정의. server 라우트는 추가하지 않음. | (1) v2 모델은 동일 발명에 대해 이미 검증됨 (n=30 토큰 -81.9%, 성공률 +80pp). (2) 외부 재현 강도 ↑ (server 환경 변수 0, 한 줄 명령으로 재현 가능). (3) 시뮬레이션 환경 모델은 학술 표준 (WebShop, Mind2Web 등도 환경 모델 기반). **가설(H1.1~H4.2)·표본 크기(n=100)·통계 검정·결정 기준 모두 변경 없음**. | Wonpyo Han |
 
 (이후 amendment 발생 시 위 형식으로 추가)
 
