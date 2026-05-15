@@ -1,4 +1,4 @@
-# Pre-Registration — AINM Multi-Scenario Empirical Study
+﻿# Pre-Registration — AINM Multi-Scenario Empirical Study
 
 > **이 문서는 결과를 보기 *전*에 가설·분석 방법·결정 기준을 commit한다.**
 > **본 문서가 GitHub에 commit된 시점 = 본 연구의 사전 등록 시점**.
@@ -315,7 +315,7 @@ python validation/benchmark/analyze_v3.py \
 
 ### 12.1 GitHub commit
 ```bash
-cd D:/개발한 프로그램들/AINavManifest
+cd C:/My-Projects/AINavManifest
 git add research/research-integrity-protocol.md
 git add research/experimental-design.md
 git add research/pre-registration.md

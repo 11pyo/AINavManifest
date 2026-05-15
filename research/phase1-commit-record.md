@@ -1,4 +1,4 @@
-# Phase 1 사전 등록 — Commit Record
+﻿# Phase 1 사전 등록 — Commit Record
 
 > **본 문서는 Phase 1 사전 등록의 immutable timestamp 증거다.**
 > 본 문서를 변경할 수 없다 — 변경 시 commit history에 그 흔적이 영구히 남는다.
@@ -16,7 +16,7 @@
 | **Git tag** | `v0.3-prereg-2026-04-28` (annotated tag) |
 | **Tagger·Author** | Won-pyo Han <pk102h@naver.com> |
 | **ORCID** | 0009-0002-7528-2228 |
-| **Repository (local)** | `D:/개발한 프로그램들/AINavManifest/github_repo/` |
+| **Repository (local)** | `C:/My-Projects/AINavManifest/github_repo/` |
 | **Repository (remote)** | `https://github.com/11pyo/AINavManifest` (push deferred — 아래 §"Push 보류" 참조) |
 
 ---

@@ -1,4 +1,4 @@
-# OSF 사전 등록 가이드
+﻿# OSF 사전 등록 가이드
 
 > **목적**: Open Science Framework (osf.io)에 본 연구를 사전 등록하는 절차.
 > **상태**: 가이드만 작성. 실제 등록은 본인이 수행 (계정 인증 필요).
@@ -119,7 +119,7 @@ Conflict of Interest: The author is the inventor on the cited patent application
    ```
 4. 로컬 commit 추가:
    ```bash
-   cd "D:/개발한 프로그램들/AINavManifest/github_repo"
+   cd "C:/My-Projects/AINavManifest/github_repo"
    git add research/phase1-commit-record.md
    git commit -m "Add OSF DOI to phase1 commit record"
    ```
