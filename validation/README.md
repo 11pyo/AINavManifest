@@ -65,3 +65,9 @@ python benchmark/analyze.py
 - with/try-finally 기반 리소스 해제 (Improper Resource Release 방지)
 - 내부 예외는 logger.exception, 사용자에겐 일반 메시지 (Error Message Information Exposure 방지)
 - HTTP 헤더 CR/LF 제거 (HTTP Response Splitting 방지)
+
+## 버전 2.0 (draft-han-ai-manifest-03) 과의 관계 — 2026-11-04
+
+- 서버는 이제 `/.well-known/ai-friction-manifest.json` 에 버전 "2.0" 매니페스트를 내고, HTML 응답에 `Link: </.well-known/ai-friction-manifest.json>; rel="ai-friction-manifest"` 를 붙인다.
+- 이 폴더의 에이전트·벤치마크·`manifests/S1~S4` 는 부록 B 2번 수치(341 vs 1887.6 토큰)를 낸 **1.0 하네스**이며 재현을 위해 그대로 둔다. 그래서 1.0 경로 `/.well-known/ai-manifest.json`, meta 태그, `X-AI-Manifest` 헤더도 남아 있다. -03 §3.1 에 따라 2.0 에이전트는 이것들을 쓰지 않는다.
+- 2.0 검증기·PEP·감사 기록 참조 구현은 `github_repo/reference/` 에 있다.

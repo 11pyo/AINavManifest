@@ -2,9 +2,12 @@
 """
 실증 대상 웹 서버 (AI 매니페스트 내장 방식 A/B/C 모두 구현)
 
-- 방식 A (Well-Known URI): GET /.well-known/ai-manifest.json    (RFC 8615)
-- 방식 B (HTML meta 태그): <meta name="ai-manifest" content="..."> 페이지에 내장
-- 방식 C (HTTP 응답 헤더):  X-AI-Manifest 헤더로 매니페스트 URL 및 SHA-256 해시 노출
+- 버전 "2.0" (draft-han-ai-manifest-03): GET /.well-known/ai-friction-manifest.json
+  + HTML 응답마다 Link: </.well-known/ai-friction-manifest.json>; rel="ai-friction-manifest"
+- [레거시 1.0 — 부록 B 2번 벤치마크 재현 전용] 방식 A /.well-known/ai-manifest.json,
+  방식 B <meta name="ai-manifest">, 방식 C X-AI-Manifest 헤더. -03 §3.1·§3.3 에 따라
+  2.0 에이전트는 이 경로·방식을 사용하지 않는다. HTML 본문을 바꾸지 않아야 기준선 토큰
+  수치(1887.6)가 재현되므로 그대로 둔다.
 - 복잡한 다단계 ERP-style 주문 입력 폼 제공
 - 폼 제출의 정답 셀렉터/값 시퀀스를 사전에 고정하여 실험의 재현성 확보
 """
@@ -14,6 +17,7 @@ import json
 import logging
 import os
 import secrets
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from flask import Flask, Response, abort, jsonify, render_template, request, session
@@ -60,14 +64,56 @@ MANIFEST_BYTES = json.dumps(MANIFEST, ensure_ascii=False, sort_keys=True).encode
 MANIFEST_HASH = hashlib.sha256(MANIFEST_BYTES).hexdigest()
 
 # --------------------------------------------------
-# 방식 A: Well-Known URI
+# 버전 "2.0" 매니페스트 (draft-han-ai-manifest-03 §3.1, §4)
+# 이 주문 폼에는 알려진 함정이 없다(knownTraps 빈 배열). 사이트 고유 지식은
+# 통화 코드 목록뿐이므로 fieldHints 로 둔다. expires 는 제공 시점 + 30 일.
+# --------------------------------------------------
+ORIGIN = "http://127.0.0.1:6000"
+
+
+def manifest_v2():
+    return {
+        "version": "2.0",
+        "origin": ORIGIN,
+        "expires": (datetime.now(timezone.utc) + timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "scope": ["/order/"],
+        "frameworkHints": {"name": "flask-jinja", "renderingModel": "server-rendered"},
+        "knownTraps": [],
+        "fieldHints": [
+            {"fieldId": "currency",
+             "locator": {"role": "combobox", "name": "통화"},
+             "allowedValues": ["KRW", "USD", "EUR", "JPY", "CNY"],
+             "description": "Currencies accepted by this order form."},
+        ],
+        "shortcuts": [
+            {"shortcutId": "order-new", "target": "/order/new", "label": "New purchase order"},
+        ],
+    }
+
+
+@app.route("/.well-known/ai-friction-manifest.json")
+def well_known_friction_manifest():
+    body = json.dumps(manifest_v2(), ensure_ascii=False).encode("utf-8")
+    return Response(body, mimetype="application/json")
+
+
+@app.after_request
+def _link_header(resp):
+    # [SECURE] 고정 문자열만 헤더에 사용 - HTTP Response Splitting 방지 (Category 1)
+    if resp.mimetype == "text/html":
+        resp.headers["Link"] = '</.well-known/ai-friction-manifest.json>; rel="ai-friction-manifest"'
+    return resp
+
+
+# --------------------------------------------------
+# [레거시 1.0] 방식 A: Well-Known URI — 부록 B 2번 벤치마크 재현 전용
 # --------------------------------------------------
 @app.route("/.well-known/ai-manifest.json")
 def well_known_manifest():
     return Response(MANIFEST_BYTES, mimetype="application/json")
 
 # --------------------------------------------------
-# 방식 B, C 은 페이지 및 응답 헤더에서 처리
+# [레거시 1.0] 방식 B, C 은 페이지 및 응답 헤더에서 처리 (벤치마크 재현 전용)
 # --------------------------------------------------
 @app.route("/")
 def index():

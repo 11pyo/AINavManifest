@@ -1,0 +1,47 @@
+{
+  "version": "2.0",
+  "origin": "https://erp.example.com",
+  "expires": "2026-12-01T00:00:00Z",
+  "scope": ["/maint/"],
+  "frameworkHints": {
+    "name": "webdynpro",
+    "renderingModel": "server-rendered"
+  },
+  "knownTraps": [
+    {
+      "trapId": "row-commit",
+      "category": "commit-gesture",
+      "locator": { "role": "gridcell", "focused": true },
+      "condition": { "visible": { "role": "status",
+                                  "name": "Row locked" } },
+      "recovery": [
+        { "action": "key", "key": "Enter",
+          "locator": { "role": "gridcell", "focused": true } },
+        { "action": "wait", "timeoutMs": 3000 }
+      ],
+      "description": "Commit each entry with Enter to unlock."
+    }
+  ],
+  "fieldHints": [
+    {
+      "fieldId": "companyCode",
+      "locator": { "role": "combobox", "name": "Company Code" }
+    },
+    {
+      "fieldId": "acctCatRef-1000",
+      "locator": { "role": "gridcell",
+                   "column": "Account Category Ref" },
+      "when": { "companyCode": "1000" },
+      "allowedValues": ["Z051", "Z063", "Z072"],
+      "commit": { "action": "key", "key": "Enter",
+                  "locator": { "role": "gridcell",
+                               "focused": true } },
+      "description": "Only codes registered for the company code."
+    }
+  ],
+  "shortcuts": [
+    { "shortcutId": "acct-cat-maint",
+      "target": "/maint/account-category",
+      "label": "Account category maintenance" }
+  ]
+}

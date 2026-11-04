@@ -36,7 +36,7 @@
     <h1>Official Instructions<br>for AI Agents</h1>
     <p class="lede">
       Claude, GPT, and Copilot now operate enterprise UIs directly.
-      A single <strong>ai-manifest.json</strong> delivers
+      A single <strong>ai-friction-manifest.json</strong> delivers
       <strong>95~98% LLM token reduction</strong> and
       <strong>100% task success</strong> at the same time.
     </p>
@@ -124,7 +124,7 @@
     <div>
       <h2>Solution</h2>
       <ul class="bullets bullets-ok">
-        <li><strong>Ship ai-manifest.json</strong> — the site declares its own agent playbook</li>
+        <li><strong>Ship ai-friction-manifest.json</strong> — the site declares its own agent playbook</li>
         <li><strong>SHA-256 verification</strong> — central registry rejects tampered manifests (Claim 2)</li>
         <li><strong>Three delivery methods</strong> — /.well-known, &lt;meta&gt;, HTTP header (Claim 3)</li>
         <li><strong>Active-X handling</strong> — <code>manual_signature</code> and <code>action_fallback</code> first-class</li>
@@ -141,7 +141,7 @@
       <div class="step">
         <div class="step-num">1</div>
         <h3>Publish</h3>
-        <p>Site owner (or SI partner) ships <code>/.well-known/ai-manifest.json</code>.
+        <p>Site owner (or SI partner) ships <code>/.well-known/ai-friction-manifest.json</code>.
            Optional <code>X-AI-Manifest</code> HTTP header alongside.</p>
       </div>
       <div class="step">

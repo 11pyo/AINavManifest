@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/11pyo/AINavManifest/ai-friction-manifest.schema.json",
+  "title": "AI Friction-Recovery Manifest, version 2.0 (draft-han-ai-manifest-03)",
+  "description": "Publisher-side lint schema for /.well-known/ai-friction-manifest.json. It is strict: every descriptor must be valid. An agent applies the same $defs per descriptor and ignores (rather than rejects the manifest for) an invalid descriptor (Section 4.1). Checks a schema cannot express (I-JSON, 262144-octet limit, unique identifiers, origin equality, expiry, navigate scope, 'when' references) are in reference/afrm/validator.py.",
+  "type": "object",
+  "required": ["version", "origin", "expires", "knownTraps"],
+  "properties": {
+    "version": { "const": "2.0" },
+    "origin": {
+      "type": "string",
+      "description": "ASCII serialization of the publisher origin (RFC 6454): scheme://host[:port], no path, no trailing slash.",
+      "pattern": "^https?://([a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*|\\[[0-9a-f:.]+\\])(:[0-9]{1,5})?$"
+    },
+    "expires": { "type": "string", "format": "date-time" },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^/([^?#]*/)?$" }
+    },
+    "frameworkHints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "renderingModel": { "enum": ["server-rendered", "client-rendered", "hybrid", "canvas"] }
+      }
+    },
+    "knownTraps": { "type": "array", "items": { "$ref": "#/$defs/trap" } },
+    "fieldHints": { "type": "array", "items": { "$ref": "#/$defs/fieldHint" } },
+    "shortcuts": { "type": "array", "items": { "$ref": "#/$defs/shortcut" } },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "JWS compact serialization with detached payload (RFC 7515 Appendix F).",
+        "pattern": "^[A-Za-z0-9_-]+\\.\\.[A-Za-z0-9_-]+$"
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string" },
+    "displayText": { "type": "string", "maxLength": 280 },
+    "pathTarget": {
+      "type": "string",
+      "description": "Path-absolute URI reference (RFC 3986) with neither query nor fragment.",
+      "pattern": "^/(?!/)[^?#\\s]*$"
+    },
+    "ariaRole": {
+      "description": "WAI-ARIA 1.2 non-abstract roles. Any other value makes the containing descriptor invalid.",
+      "enum": [
+        "alert", "alertdialog", "application", "article", "banner", "blockquote", "button", "caption",
+        "cell", "checkbox", "code", "columnheader", "combobox", "complementary", "contentinfo",
+        "definition", "deletion", "dialog", "document", "emphasis", "feed", "figure", "form",
+        "generic", "grid", "gridcell", "group", "heading", "img", "insertion", "link", "list",
+        "listbox", "listitem", "log", "main", "marquee", "math", "menu", "menubar", "menuitem",
+        "menuitemcheckbox", "menuitemradio", "meter", "navigation", "none", "note", "option",
+        "paragraph", "presentation", "progressbar", "radio", "radiogroup", "region", "row",
+        "rowgroup", "rowheader", "scrollbar", "search", "searchbox", "separator", "slider",
+        "spinbutton", "status", "strong", "subscript", "superscript", "switch", "tab", "table",
+        "tablist", "tabpanel", "term", "textbox", "time", "timer", "toolbar", "tooltip", "tree",
+        "treegrid", "treeitem"
+      ]
+    },
+    "locator": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "role": { "$ref": "#/$defs/ariaRole" },
+        "name": { "type": "string" },
+        "column": { "type": "string" },
+        "focused": { "const": true },
+        "within": { "$ref": "#/$defs/locator" },
+        "testId": { "type": "string" },
+        "css": { "type": "string" }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "visible": { "$ref": "#/$defs/locator" },
+        "absent": { "$ref": "#/$defs/locator" },
+        "dialog": { "const": "alert" }
+      }
+    },
+    "step": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": { "enum": ["click", "focus", "key", "scroll", "wait", "assert", "navigate", "dismissAlert"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "action": { "enum": ["click", "focus", "scroll", "assert"] } } },
+          "then": {
+            "required": ["locator"],
+            "properties": { "action": true, "locator": { "$ref": "#/$defs/locator" } },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "action": { "const": "key" } } },
+          "then": {
+            "required": ["locator", "key"],
+            "properties": {
+              "action": true,
+              "locator": { "$ref": "#/$defs/locator" },
+              "key": { "enum": ["Enter", "Tab", "Escape", "ArrowUp", "ArrowDown", "PageUp", "PageDown"] }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "action": { "const": "navigate" } } },
+          "then": {
+            "required": ["target"],
+            "properties": { "action": true, "target": { "$ref": "#/$defs/pathTarget" } },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "action": { "const": "wait" } } },
+          "then": {
+            "required": ["timeoutMs"],
+            "properties": { "action": true, "timeoutMs": { "type": "integer", "minimum": 1, "maximum": 30000 } },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "action": { "const": "dismissAlert" } } },
+          "then": { "properties": { "action": true }, "additionalProperties": false }
+        }
+      ]
+    },
+    "trap": {
+      "type": "object",
+      "required": ["trapId", "category", "recovery"],
+      "additionalProperties": false,
+      "properties": {
+        "trapId": { "$ref": "#/$defs/id" },
+        "category": {
+          "enum": ["commit-gesture", "shadow-dom", "virtual-scroll", "same-origin-frame",
+                   "delayed-render", "hidden-required", "native-alert"]
+        },
+        "locator": { "$ref": "#/$defs/locator" },
+        "condition": { "$ref": "#/$defs/condition" },
+        "recovery": { "type": "array", "minItems": 1, "maxItems": 8, "items": { "$ref": "#/$defs/step" } },
+        "description": { "$ref": "#/$defs/displayText" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "category": { "const": "native-alert" } } },
+          "then": {
+            "required": ["condition"],
+            "not": { "required": ["locator"] }
+          },
+          "else": { "required": ["locator"] }
+        },
+        {
+          "if": { "properties": { "recovery": { "contains": { "properties": { "action": { "const": "wait" } }, "required": ["action"] } } } },
+          "then": { "required": ["condition"] }
+        }
+      ]
+    },
+    "fieldHint": {
+      "type": "object",
+      "required": ["fieldId", "locator"],
+      "additionalProperties": false,
+      "properties": {
+        "fieldId": { "$ref": "#/$defs/id" },
+        "locator": { "$ref": "#/$defs/locator" },
+        "allowedValues": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,32}$" }
+        },
+        "when": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "string" }
+        },
+        "commit": {
+          "allOf": [
+            { "$ref": "#/$defs/step" },
+            { "properties": { "action": { "const": "key" } } }
+          ]
+        },
+        "description": { "$ref": "#/$defs/displayText" }
+      }
+    },
+    "shortcut": {
+      "type": "object",
+      "required": ["shortcutId", "target", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "shortcutId": { "$ref": "#/$defs/id" },
+        "target": { "$ref": "#/$defs/pathTarget" },
+        "label": { "type": "string", "maxLength": 80 }
+      }
+    }
+  }
+}

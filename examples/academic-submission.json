@@ -1,133 +1,89 @@
 {
-  "version": "1.0",
-  "provider": {
-    "domain": "submit.example-journal.com",
-    "name": "Example Journal Submission System",
-    "contact": "support@example-journal.com",
-    "locale": "en-US"
+  "version": "2.0",
+  "origin": "https://submit.example-journal.org",
+  "expires": "2026-12-04T00:00:00Z",
+  "frameworkHints": {
+    "name": "react",
+    "renderingModel": "client-rendered"
   },
-  "registry": {
-    "url": "https://registry.aimanifest.io/verify",
-    "signature": "sha256:PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH",
-    "certified_at": "2026-04-20T00:00:00Z"
-  },
-  "task": {
-    "id": "manuscript_submission",
-    "name": "Submit New Manuscript",
-    "description": "Full workflow for submitting a new manuscript to this journal",
-    "timeout_seconds": 600,
-    "requires_login": true,
-    "login_check_selector": "#author-dashboard"
-  },
-  "prerequisites": [
+  "knownTraps": [
     {
-      "description": "Must be logged in as corresponding author",
-      "check_selector": "#author-dashboard"
+      "trapId": "details-tab-locked",
+      "category": "hidden-required",
+      "locator": {
+        "role": "tab",
+        "name": "Manuscript Details"
+      },
+      "condition": {
+        "absent": {
+          "role": "textbox",
+          "name": "Manuscript Title"
+        }
+      },
+      "recovery": [
+        {
+          "action": "click",
+          "locator": {
+            "role": "button",
+            "name": "Save and Continue"
+          }
+        },
+        {
+          "action": "wait",
+          "timeoutMs": 5000
+        }
+      ],
+      "description": "The Manuscript Details tab, which holds the required title and abstract, stays locked until the article type step is saved with Save and Continue."
     },
     {
-      "description": "Must be on the dashboard page",
-      "check_url_contains": "/dashboard"
+      "trapId": "upload-processing",
+      "category": "delayed-render",
+      "locator": {
+        "role": "progressbar",
+        "name": "Processing main document"
+      },
+      "condition": {
+        "visible": {
+          "role": "progressbar",
+          "name": "Processing main document"
+        }
+      },
+      "recovery": [
+        {
+          "action": "wait",
+          "timeoutMs": 30000
+        },
+        {
+          "action": "assert",
+          "locator": {
+            "role": "status",
+            "name": "Main document processed"
+          }
+        }
+      ],
+      "description": "An uploaded file is processed asynchronously. Moving on before processing finishes loses the file without an error message."
     }
   ],
-  "steps": [
+  "fieldHints": [
     {
-      "step": 1,
-      "action": "click",
-      "selector": "#btn-new-submission",
-      "description": "Click 'Submit New Manuscript' button",
-      "wait_for_selector": "#article-type-select",
-      "note": "Button is only visible when logged in as an author"
-    },
-    {
-      "step": 2,
-      "action": "select",
-      "selector": "#article-type-select",
-      "description": "Select article type",
-      "source": "user_input",
-      "user_input_label": "Article Type (e.g. Research Article, Review, Letter)"
-    },
-    {
-      "step": 3,
-      "action": "click",
-      "selector": "#btn-save-continue",
-      "description": "Save article type and proceed to Step 2",
-      "wait_for_selector": "#manuscript-title",
-      "note": "CRITICAL: Must click Save before proceeding. Next tab is locked until saved."
-    },
-    {
-      "step": 4,
-      "action": "fill",
-      "selector": "#manuscript-title",
-      "description": "Enter manuscript title",
-      "source": "user_input",
-      "user_input_label": "Manuscript Title"
-    },
-    {
-      "step": 5,
-      "action": "fill",
-      "selector": "#abstract-field",
-      "description": "Enter abstract",
-      "source": "user_input",
-      "user_input_label": "Abstract"
-    },
-    {
-      "step": 6,
-      "action": "click",
-      "selector": "#tab-authors",
-      "description": "Navigate to Authors tab",
-      "wait_for_selector": "#corresponding-author-email"
-    },
-    {
-      "step": 7,
-      "action": "fill",
-      "selector": "#corresponding-author-email",
-      "description": "Confirm corresponding author email",
-      "source": "user_input",
-      "user_input_label": "Corresponding Author Email"
-    },
-    {
-      "step": 8,
-      "action": "click",
-      "selector": "#tab-files",
-      "description": "Navigate to File Upload tab",
-      "wait_for_selector": "#main-document-upload"
-    },
-    {
-      "step": 9,
-      "action": "upload",
-      "selector": "#main-document-upload",
-      "description": "Upload main manuscript file",
-      "source": "user_input",
-      "user_input_label": "Main Manuscript File",
-      "allowed_extensions": [".pdf", ".docx", ".tex"],
-      "max_file_size_mb": 30,
-      "wait_after_ms": 10000,
-      "note": "CRITICAL: Wait 10 seconds after upload before clicking Next. Premature click causes silent failure."
-    },
-    {
-      "step": 10,
-      "action": "click",
-      "selector": "#btn-submit-review",
-      "description": "Submit manuscript for review",
-      "wait_for_selector": "#submission-confirmation",
-      "note": "Final submit — irreversible. Confirm with user before executing."
+      "fieldId": "articleType",
+      "locator": {
+        "role": "combobox",
+        "name": "Article Type"
+      },
+      "allowedValues": [
+        "research-article",
+        "review-article",
+        "letter"
+      ],
+      "description": "Option values of the article type list (labels: Research Article, Review Article, Letter)."
     }
   ],
-  "common_errors": [
+  "shortcuts": [
     {
-      "symptom_selector": "#error-file-size",
-      "description": "File exceeds size limit",
-      "resolution": "Compress images or split supplementary files. Maximum 30MB for main document."
-    },
-    {
-      "symptom_selector": "#error-tab-locked",
-      "description": "Next tab is locked / greyed out",
-      "resolution": "Return to current tab, click Save, then retry navigation."
+      "shortcutId": "author-dashboard",
+      "target": "/dashboard",
+      "label": "Author dashboard"
     }
-  ],
-  "on_success": {
-    "success_selector": "#submission-confirmation",
-    "success_url_contains": "/confirmation",
-    "message": "Manuscript submitted successfully. Confirmation number is shown on screen."
-  }
+  ]
 }

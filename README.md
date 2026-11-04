@@ -46,9 +46,9 @@ Three embedding methods (sites can combine):
 
 ### Method A — Well-Known URI
 ```html
-<meta name="ai-manifest" content="/.well-known/ai-manifest.json">
+<meta name="ai-manifest" content="/.well-known/ai-friction-manifest.json">
 ```
-Serve the JSON at `/.well-known/ai-manifest.json` per IETF RFC 8615.
+Serve the JSON at `/.well-known/ai-friction-manifest.json` per IETF RFC 8615.
 
 ### Method B — Hidden DOM Element
 ```html
@@ -58,7 +58,7 @@ Serve the JSON at `/.well-known/ai-manifest.json` per IETF RFC 8615.
 
 ### Method C — HTTP Response Header
 ```
-X-AI-Manifest: url=/.well-known/ai-manifest.json; hash=sha256:...
+X-AI-Manifest: url=/.well-known/ai-friction-manifest.json; hash=sha256:...
 ```
 
 Agents fetch the manifest, compute its SHA-256 hash over a canonical (key-sorted, UTF-8) byte sequence, and verify against a central trust registry before executing `steps[]` sequentially.

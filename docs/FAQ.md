@@ -26,7 +26,7 @@ The **Central Trust Registry** (Section 5 of the IETF draft). Manifests are pre-
 
 Pick one of three embedding methods:
 
-**Easiest — Well-Known URI**: Upload `/.well-known/ai-manifest.json` containing your task definitions. Add `<meta name="ai-manifest" content="/.well-known/ai-manifest.json">` to your `<head>`.
+**Easiest — Well-Known URI**: Upload `/.well-known/ai-friction-manifest.json` containing your task definitions. Add `<meta name="ai-manifest" content="/.well-known/ai-friction-manifest.json">` to your `<head>`.
 
 **Inline — Hidden DOM**: Add a `<div id="ai-manifest" style="display:none" data-manifest='...'></div>`.
 
