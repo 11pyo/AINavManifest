@@ -1,35 +1,63 @@
 # -*- coding: utf-8 -*-
-"""Minimal manifest-aware agent core for version "2.0" manifests.
+"""Manifest-aware agent core for version "2.0" manifests.
 
-The agent's own model (not included) drives the task. This module is the part
-that touches the manifest:
+Two surfaces, kept apart as Section 4.7 requires:
 
-* ``ManifestSession.discover``   retrieve + validate (Sections 3, 4); on any
-  failure the session has no manifest and the agent keeps its baseline.
-* ``applicable_traps``           reactive consultation (Section 5.1).
-* ``recover``                    runs a trap's recovery, every step through the
-  PEP (Section 5.2) and the principal's answer to "ask".
-* ``follow_shortcut`` / ``enter_listed_value`` / ``commit_field``
-                                 the other manifest-derived actions.
+* ``ManifestSession`` is the agent's runtime, on the principal's side. It
+  retrieves and validates the manifest, evaluates trap conditions against the
+  live document, runs recoveries through the PEP, asks the principal, shows
+  publisher text (marked as publisher-written) and lists allowedValues and
+  shortcuts to the principal only.
+* ``ModelInterface`` is the only thing a language model may call. Everything
+  it returns is built from closed-vocabulary values (trap categories, action
+  names, rendering models), integers the runtime assigns, and booleans. No
+  manifest string - description, label, allowedValues, ids, locators, targets
+  - and no PEP reason or audit text passes through it.
 
-Free-text members are never returned to a caller that feeds a model; the
-``model_view`` helper exposes ids, categories and allowedValues only (4.7).
-
-"ask" handling: ``ConsolePrompt`` asks a human on the terminal;
-``DenyAsk`` answers every ask with "declined" and is the default, for
-automated benchmark runs where no principal is present.
+Principal-facing handlers:
+* ask handlers decide one PEP "ask": ``ConsolePrompt`` (terminal y/N) or
+  ``DenyAsk`` (default; automated runs have no principal, so every ask is
+  declined and recorded as such).
+* choosers let the principal pick from a publisher-written list (allowedValues,
+  shortcut labels): ``ConsoleChooser`` or ``AbandonChooser`` (default; automated
+  runs abandon the entry).
 """
-import time
 from dataclasses import dataclass, field
 from typing import Optional
+from urllib.parse import urlsplit
 
 from .discovery import fetch_manifest_bytes
-from .pep import (ALLOW, ASK, DENY, NAV_KEYS, ActionRequest, AuditLog, Decision,
-                  PolicyEnforcementPoint, Provenance, is_value_bearing)
-from .validator import ManifestRejected, load_for_agent
+from .pep import (ASK, DENY, ActionRequest, AuditLog, Decision,
+                  PolicyEnforcementPoint, Provenance)
+from .validator import ManifestRejected, load_for_agent, origin_of
+
+PUBLISHER = "[publisher-written]"
 
 
-# ---------------------------------------------------------------- ask handlers
+# ---------------------------------------------------------------- principal side
+
+def describe_ask(req: ActionRequest, d: Decision) -> list:
+    """Lines an ask must show (Section 5.2): the action; for element actions the
+    resolved element's role and accessible name; the page's origin and path;
+    publisher text visibly marked as publisher-written."""
+    what = req.action if req.action != "key" else f"press {req.step.get('key')}"
+    lines = [f"Action: {what}"]
+    if d.element is not None:
+        lines.append(f"Element: role={d.element.role or d.element.tag} name={d.element.name!r}")
+    if d.document_url:
+        p = urlsplit(d.document_url)
+        lines.append(f"Page: {origin_of(d.document_url)}{p.path or '/'}")
+    if d.target_url:
+        lines.append(f"Destination: {d.target_url}")
+    for key in ("description", "label"):
+        if req.descriptor.get(key):
+            lines.append(f"{PUBLISHER} {req.descriptor[key]}")
+    if d.warning:
+        lines.append(f"Warning: {d.warning}")
+    if d.sensitive:
+        lines.append("Sensitive: this can submit or save a form changed by manifest-derived actions.")
+    return lines
+
 
 class DenyAsk:
     """Automated runs: no principal is present, so every ask is declined."""
@@ -44,38 +72,52 @@ class ApproveAsk:
 
 
 class ConsolePrompt:
-    """Interactive runs: shows the principal what would happen and waits for y/N."""
     def __init__(self, input_fn=input, print_fn=print):
         self.input, self.print = input_fn, print_fn
 
     def __call__(self, req: ActionRequest, d: Decision) -> bool:
-        what = req.action if req.action != "key" else f"press {req.step.get('key')}"
-        on = f" on {d.element.role or d.element.tag} '{d.element.name}'" if d.element else ""
-        to = f" -> {d.target_url}" if d.target_url else ""
-        val = f" value {req.value!r}" if req.value is not None else ""
-        self.print(f"[AFRM] manifest-derived action from {req.kind} '{req.descriptor_id}'"
-                   f" step {req.position}: {what}{val}{on}{to}  ({d.reason})")
-        if d.warning:
-            self.print(f"[AFRM] warning: {d.warning}")
+        self.print("[AFRM] The agent wants to perform a manifest-derived action:")
+        for line in describe_ask(req, d):
+            self.print("  " + line)
         return self.input("Allow this action? [y/N] ").strip().lower() in ("y", "yes")
 
 
-# ---------------------------------------------------------------- session
+class AbandonChooser:
+    """Automated runs: nobody can choose, so the entry is abandoned."""
+    def __call__(self, options: list, context: list) -> Optional[int]:
+        return None
+
+
+class ConsoleChooser:
+    def __init__(self, input_fn=input, print_fn=print):
+        self.input, self.print = input_fn, print_fn
+
+    def __call__(self, options: list, context: list) -> Optional[int]:
+        for line in context:
+            self.print("  " + line)
+        for i, o in enumerate(options, 1):
+            self.print(f"  {i}. {PUBLISHER} {o}")
+        ans = self.input("Choose a number, or press Enter to abandon: ").strip()
+        return int(ans) - 1 if ans.isdigit() and 1 <= int(ans) <= len(options) else None
+
+
+# ---------------------------------------------------------------- runtime
 
 @dataclass
 class RecoveryResult:
-    trap_id: str
+    trap_no: int
     status: str                    # completed | abandoned | stopped | assert-failed
-    reason: str = ""
-    steps_executed: int = 0
+    reason: str = ""               # principal/log only
+    steps: list = field(default_factory=list)      # [(action, executed)]
     security_control: Optional[str] = None
 
 
 @dataclass
 class ManifestSession:
-    """One task on one origin."""
+    """The agent runtime for one task on one origin."""
     page: object                               # page adapter (PlaywrightPage or a fake)
     ask: object = field(default_factory=DenyAsk)
+    choose: object = field(default_factory=AbandonChooser)
     audit: AuditLog = field(default_factory=AuditLog)
     agent_policy: object = None
     standing_approvals: frozenset = frozenset()
@@ -83,6 +125,7 @@ class ManifestSession:
     rejected_reason: Optional[str] = None
     pep: Optional[PolicyEnforcementPoint] = None
     task_ended: bool = False
+    traps: dict = field(default_factory=dict)  # runtime integer id -> trap descriptor
 
     def discover(self, fetch=fetch_manifest_bytes, now=None) -> bool:
         """At most once per origin per task (Section 3.5)."""
@@ -97,53 +140,34 @@ class ManifestSession:
 
     def use(self, manifest: dict):
         self.manifest = manifest
+        self.traps = {i: t for i, t in enumerate(manifest.get("knownTraps", []), 1)}
         if hasattr(self.page, "bind"):
             self.page.bind(manifest)
         self.pep = PolicyEnforcementPoint(manifest, self.audit, agent_policy=self.agent_policy,
                                           standing_approvals=self.standing_approvals,
                                           provenance=Provenance())
 
-    # -- what the model may see (Section 4.7): no description / label prose
-    def model_view(self) -> dict:
-        if not self.manifest:
-            return {}
-        return {
-            "traps": [{"trapId": t["trapId"], "category": t["category"]}
-                      for t in self.manifest.get("knownTraps", [])],
-            "fieldHints": [{"fieldId": h["fieldId"], "allowedValues": h.get("allowedValues", []),
-                            "publisherQuoted": True}
-                           for h in self.manifest.get("fieldHints", [])],
-            "shortcuts": [{"shortcutId": s["shortcutId"]} for s in self.manifest.get("shortcuts", [])],
-        }
-
-    # -- reactive consultation
-    def applicable_traps(self) -> list:
+    # -- reactive consultation (Section 5.1)
+    def active_trap_numbers(self) -> list:
         if not self.manifest or self.task_ended:
             return []
         out = []
-        for trap in self.manifest.get("knownTraps", []):
+        for n, trap in self.traps.items():
             if trap["category"] == "native-alert":
                 if self.page.condition_holds(trap.get("condition")):
-                    out.append(trap)
+                    out.append(n)
                 continue
             if len(self.page.resolve(trap["locator"])) != 1:
                 continue
             if trap.get("condition") is None or self.page.condition_holds(trap["condition"]):
-                out.append(trap)
+                out.append(n)
         return out
-
-    def _trap(self, trap_id):
-        for t in (self.manifest or {}).get("knownTraps", []):
-            if t["trapId"] == trap_id:
-                return t
-        return None
 
     def _authorize(self, req: ActionRequest):
         """Returns (decision, principal) where principal is approved/declined/None."""
         d = self.pep.decide(req, self.page)
         if d.outcome == ASK:
-            approved = bool(self.ask(req, d))
-            return d, "approved" if approved else "declined"
+            return d, ("approved" if self.ask(req, d) else "declined")
         return d, None
 
     def _after(self, req, d, principal, executed, alert_text=None) -> Optional[str]:
@@ -151,10 +175,7 @@ class ManifestSession:
         if d.outcome != DENY:
             self.pep.record(req, d, principal=principal, executed=executed, alert_text=alert_text)
         if executed:
-            modifies = req.kind == "value" or (
-                req.action == "key" and req.step.get("key") in NAV_KEYS
-                and d.element is not None and is_value_bearing(d.element))
-            self.pep.provenance.note(req, d.element, modifies)
+            self.pep.provenance.note(req, d.element, d.document_url)
             controls = self.page.detect_security_controls()
             if controls:
                 stop = Decision(DENY, "security-control:" + ",".join(sorted(controls)), stop=True)
@@ -167,32 +188,46 @@ class ManifestSession:
         # principal at hand, this agent ends the task; it never retries.
         self.task_ended = True
 
-    def recover(self, trap_id: str) -> RecoveryResult:
-        trap = self._trap(trap_id)
+    def _run(self, req: ActionRequest, execute):
+        """One manifest-derived action: authorize, execute, record.
+        Returns (status, reason, executed) with status ok|abandoned|stopped|failed."""
+        d, principal = self._authorize(req)
+        if d.stop:
+            self._stop_task()
+            return "stopped", d.reason, False
+        if d.outcome == DENY or principal == "declined":
+            if principal == "declined":
+                self._after(req, d, principal, executed=False)
+            # Section 5.2: abandon the descriptor, never try a variant of it.
+            return "abandoned", d.reason if d.outcome == DENY else "principal declined", False
+        alert_text, ok = execute(d)
+        sc = self._after(req, d, principal, executed=True, alert_text=alert_text)
+        if sc:
+            self._stop_task()
+            return "stopped", sc, True
+        return ("ok" if ok else "failed"), "", True
+
+    def recover(self, trap_no: int) -> RecoveryResult:
+        trap = self.traps.get(trap_no)
         if trap is None or self.pep is None or self.task_ended:
-            return RecoveryResult(trap_id, "abandoned", "no such trap or no manifest")
-        done = 0
+            return RecoveryResult(trap_no, "abandoned", "no such trap or no manifest")
+        res = RecoveryResult(trap_no, "completed")
         for pos, step in enumerate(trap["recovery"]):
-            req = ActionRequest("step", trap_id, pos, trap, step=step)
-            d, principal = self._authorize(req)
-            if d.stop:
-                self._stop_task()
-                return RecoveryResult(trap_id, "stopped", d.reason, done, d.reason)
-            if d.outcome == DENY or principal == "declined":
-                if principal == "declined":
-                    self._after(req, d, principal, executed=False)
-                # Section 5.2: abandon the descriptor, never try a variant of it.
-                return RecoveryResult(trap_id, "abandoned", d.reason if d.outcome == DENY else "principal declined", done)
-            alert_text, ok = self._execute(step, d, trap)
-            done += 1
-            sc = self._after(req, d, principal, executed=True, alert_text=alert_text)
-            if sc:
-                self._stop_task()
-                return RecoveryResult(trap_id, "stopped", sc, done, sc)
-            if not ok:
-                return RecoveryResult(trap_id, "assert-failed" if step["action"] == "assert" else "abandoned",
-                                      f"{step['action']} did not succeed", done)
-        return RecoveryResult(trap_id, "completed", "", done)
+            req = ActionRequest("step", trap["trapId"], pos, trap, step=step)
+            status, reason, executed = self._run(req, lambda d, s=step: self._execute(s, d, trap))
+            res.steps.append((step["action"], executed))
+            if status == "ok":
+                continue
+            res.reason = reason
+            if status == "stopped":
+                res.status, res.security_control = "stopped", reason
+            elif status == "failed":
+                res.status = "assert-failed" if step["action"] == "assert" else "abandoned"
+                res.reason = f"{step['action']} did not succeed"
+            else:
+                res.status = "abandoned"
+            return res
+        return res
 
     def _execute(self, step, d: Decision, trap):
         a = step["action"]
@@ -204,61 +239,113 @@ class ManifestSession:
             text = self.page.dismiss_alert()
             return text, text is not None
         if a == "navigate":
-            return None, self.page.navigate_same_origin(d.target_url, self.manifest["origin"])
+            return None, self.page.navigate_same_origin(d.target_url, self.manifest["origin"], self.manifest.get("scope"))
         return None, self.page.perform(a, d.handle, step.get("key"))
 
-    # -- other manifest-derived actions
-    def follow_shortcut(self, shortcut_id: str) -> bool:
-        sc = next((s for s in (self.manifest or {}).get("shortcuts", []) if s["shortcutId"] == shortcut_id), None)
-        if sc is None or self.task_ended:
-            return False
-        req = ActionRequest("shortcut", shortcut_id, None, sc)
-        d, principal = self._authorize(req)
-        if d.stop:
-            self._stop_task()
-        if d.outcome == DENY or principal == "declined":
-            if principal == "declined":
-                self._after(req, d, principal, executed=False)
-            return False
-        ok = self.page.navigate_same_origin(d.target_url, self.manifest["origin"])
-        if self._after(req, d, principal, executed=True):
-            self._stop_task()
-            return False
-        return ok
+    # -- field hints (Section 4.5)
+    def _applicable_hints(self) -> list:
+        out = []
+        for h in (self.manifest or {}).get("fieldHints", []):
+            m = self.page.resolve_focused_field(h["locator"])
+            if len(m) == 1 and self.page.when_holds(h.get("when"), self.manifest, m[0][1]):
+                out.append(h)
+        return out
 
-    def enter_listed_value(self, field_id: str, value: str) -> bool:
-        """The model proposes a listed value for the field being edited (4.5)."""
-        hint = next((h for h in (self.manifest or {}).get("fieldHints", []) if h["fieldId"] == field_id), None)
+    def propose_value(self, value: str) -> dict:
+        """The model proposes a value for the focused field. Returns booleans only."""
+        if not self.manifest or self.task_ended:
+            return {"applicable": False, "match": False, "principalChose": False}
+        hints = [h for h in self._applicable_hints() if "allowedValues" in h]
+        if not hints:
+            return {"applicable": False, "match": False, "principalChose": False}
+        if any([self.pep.check_value(h, value) for h in hints]):
+            # The model enters its own value from the task; that is not manifest-derived.
+            return {"applicable": True, "match": True, "principalChose": False}
+        hint = hints[0]
+        context = ["The value proposed for this field is not one the site lists."]
+        if hint.get("description"):
+            context.append(f"{PUBLISHER} {hint['description']}")
+        idx = self.choose(list(hint["allowedValues"]), context)
+        if idx is None:
+            return {"applicable": True, "match": False, "principalChose": False}
+        chosen = hint["allowedValues"][idx]
+        req = ActionRequest("value", hint["fieldId"], None, hint, value=chosen)
+        status, _, _ = self._run(req, lambda d: (None, self.page.type_into(d.handle, chosen)))
+        return {"applicable": True, "match": False, "principalChose": status == "ok"}
+
+    def commit_focused_field(self) -> bool:
+        hint = next((h for h in self._applicable_hints() if "commit" in h), None) if self.manifest else None
         if hint is None or self.task_ended:
             return False
-        req = ActionRequest("value", field_id, None, hint, value=value)
-        d, principal = self._authorize(req)
-        if d.stop:
-            self._stop_task()
-        if d.outcome == DENY or principal == "declined":
-            if principal == "declined":
-                self._after(req, d, principal, executed=False)
-            return False
-        ok = self.page.type_into(d.handle, value)
-        if self._after(req, d, principal, executed=True):
-            self._stop_task()
-            return False
-        return ok
+        req = ActionRequest("commit", hint["fieldId"], 0, hint, step=hint["commit"])
+        status, _, _ = self._run(req, lambda d: (None, self.page.perform("key", d.handle, hint["commit"]["key"])))
+        return status == "ok"
 
-    def commit_field(self, field_id: str) -> bool:
-        hint = next((h for h in (self.manifest or {}).get("fieldHints", []) if h["fieldId"] == field_id), None)
-        if hint is None or "commit" not in hint or self.task_ended:
+    # -- shortcuts (Section 4.6): offered to the principal only
+    def offer_shortcuts(self) -> bool:
+        shortcuts = (self.manifest or {}).get("shortcuts", [])
+        if not shortcuts or self.task_ended:
             return False
-        req = ActionRequest("commit", field_id, 0, hint, step=hint["commit"])
-        d, principal = self._authorize(req)
-        if d.stop:
-            self._stop_task()
-        if d.outcome == DENY or principal == "declined":
-            if principal == "declined":
-                self._after(req, d, principal, executed=False)
+        idx = self.choose([s["label"] for s in shortcuts], ["Pages this site lists for direct navigation:"])
+        if idx is None:
             return False
-        ok = self.page.perform("key", d.handle, hint["commit"]["key"])
-        if self._after(req, d, principal, executed=True):
-            self._stop_task()
-            return False
-        return ok
+        sc = shortcuts[idx]
+        req = ActionRequest("shortcut", sc["shortcutId"], None, sc)
+        status, _, _ = self._run(req, lambda d: (None, self.page.navigate_same_origin(
+            d.target_url, self.manifest["origin"], self.manifest.get("scope"))))
+        return status == "ok"
+
+    def submission_is_sensitive(self, element, document_url) -> bool:
+        """For the agent's own submit/save: True if the manifest modified that form."""
+        return self.pep is not None and self.pep.submission_is_sensitive(element, document_url)
+
+
+# ---------------------------------------------------------------- model side
+
+class ModelInterface:
+    """The only manifest-related surface a language model may use (Section 4.7)."""
+
+    def __init__(self, session: ManifestSession):
+        self._s = session
+
+    def describe(self) -> dict:
+        m = self._s.manifest
+        if not m:
+            return {"manifest": False}
+        rm = (m.get("frameworkHints") or {}).get("renderingModel")
+        return {"manifest": True,
+                "renderingModel": rm if rm in ("server-rendered", "client-rendered", "hybrid", "canvas") else None,
+                "traps": [{"trap": n, "category": t["category"]} for n, t in self._s.traps.items()]}
+
+    def active_traps(self) -> list:
+        return [{"trap": n, "category": self._s.traps[n]["category"], "recoveryAvailable": True}
+                for n in self._s.active_trap_numbers()]
+
+    def run_recovery(self, trap: int) -> dict:
+        if not isinstance(trap, int) or isinstance(trap, bool):
+            return {"trap": None, "completed": False, "stopped": False, "steps": []}
+        r = self._s.recover(trap)
+        return {"trap": trap, "completed": r.status == "completed", "stopped": r.status == "stopped",
+                "steps": [{"action": a, "executed": bool(e)} for a, e in r.steps]}
+
+    def propose_value(self, value: str) -> dict:
+        return self._s.propose_value(value)
+
+    def commit_field(self) -> dict:
+        return {"executed": self._s.commit_focused_field()}
+
+    def audit(self) -> list:
+        """Audit records reduced to permitted items: runtime trap number, step
+        position, action name, executed flag, match result."""
+        by_id = {t["trapId"]: n for n, t in self._s.traps.items()}
+        vocab = {"click", "focus", "key", "scroll", "wait", "assert", "navigate", "dismissAlert"}
+        out = []
+        for r in self._s.audit.records:
+            kind, _, did = r.descriptor.partition(":")
+            action = r.action.split(":")[0]
+            out.append({"trap": by_id.get(did) if kind == "step" else None,
+                        "step": r.position if isinstance(r.position, int) else None,
+                        "action": action if action in vocab else None,
+                        "executed": bool(r.executed),
+                        "match": r.match if isinstance(r.match, bool) else None})
+        return out

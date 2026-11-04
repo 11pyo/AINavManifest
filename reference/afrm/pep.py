@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Policy Enforcement Point (draft-han-ai-manifest-03 Sections 5.2-5.5).
+"""Policy Enforcement Point (draft-han-ai-manifest-03 Sections 2, 5.2-5.5).
 
 Deterministic code only: no language model takes part in a decision, and no
 decision reads a free-text member (description, label).
@@ -10,11 +10,15 @@ runs the six steps of Section 5.2 in order:
   2. re-resolve the locator / target    -> deny  "locator-*" / "target-*"
   3. detected security control          -> deny + stop  "security-control:*"
   4. default outcome (table below)
-  5. agent policy (stricter only) and standing approval (key steps only)
+  5. agent policy (stricter only) and standing approval (Enter only)
   6. audit record
+
+Reasons and audit records are for the principal and logs. They may contain
+publisher strings and are never returned to a model; ``afrm.agent.ModelInterface``
+is the only model-facing surface (Section 4.7).
 """
 import json
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from typing import Callable, Optional
 from urllib.parse import urlsplit
@@ -32,9 +36,10 @@ ACTIVATABLE_ROLES = {"button", "link", "menuitem", "menuitemcheckbox", "menuitem
 VALUE_BEARING_TAGS = {"select", "input", "textarea"}
 VALUE_BEARING_ROLES = {"combobox", "listbox", "radiogroup", "slider", "spinbutton",
                        "textbox", "tablist"}
-ALWAYS_ALLOWED_ACTIONS = {"focus", "scroll", "wait", "assert", "dismissAlert"}
+ALWAYS_ALLOWED_ACTIONS = {"focus", "scroll", "assert", "dismissAlert"}
 NAV_KEYS = {"ArrowUp", "ArrowDown", "PageUp", "PageDown"}
 LOCATOR_ACTIONS = {"click", "focus", "key", "scroll", "assert"}
+SHORT_WAIT_MS = 5000
 
 
 @dataclass(frozen=True)
@@ -55,7 +60,7 @@ class ElementInfo:
     form_has_credentials: bool = False        # form contains a password field
     editing_host: bool = False
     ancestors: tuple = ()                     # tuple[Ancestor], nearest first
-    name: str = ""                            # accessible name (for the principal only)
+    name: str = ""                            # accessible name (shown to the principal only)
     rendered: bool = True
 
 
@@ -77,9 +82,12 @@ def is_value_bearing(el: ElementInfo) -> bool:
     return any(_value_bearing_self(a.tag, a.role, a.editing_host) for a in el.ancestors)
 
 
-def is_form_input(el: ElementInfo) -> bool:
-    """'an input element with a form owner' (Enter rule)."""
-    return el.tag == "input" and el.form_id is not None
+def form_key(el: ElementInfo, document_url: str) -> str:
+    """Section 2 'Form Modified by the Manifest': the form owner, or the
+    document containing the element when it has none (script-saving apps)."""
+    p = urlsplit(document_url)
+    doc = f"{origin_of(document_url)}{p.path or '/'}"
+    return f"{doc}#form:{el.form_id}" if el.form_id is not None else f"{doc}#document"
 
 
 # Requests, decisions, records --------------------------------------------------
@@ -87,11 +95,11 @@ def is_form_input(el: ElementInfo) -> bool:
 @dataclass
 class ActionRequest:
     kind: str                       # "step" | "commit" | "shortcut" | "value"
-    descriptor_id: str              # trapId / fieldId / shortcutId
+    descriptor_id: str              # trapId / fieldId / shortcutId (never shown to a model)
     position: Optional[int]         # zero-based step position (Section 4.3); 0 for commit
     descriptor: dict                # the trap / field hint / shortcut as published
     step: Optional[dict] = None     # the step object (kind step/commit)
-    value: Optional[str] = None     # kind value: the listed value to enter
+    value: Optional[str] = None     # kind value: the listed value the principal chose
 
     @property
     def action(self) -> str:
@@ -107,10 +115,11 @@ class Decision:
     stop: bool = False              # security control: stop the recovery (Section 5.4)
     standing_eligible: bool = False
     sensitive: bool = False
-    warning: Optional[str] = None   # must be shown to the principal (form-submitting Enter)
+    warning: Optional[str] = None   # must be shown to the principal with the ask
     element: Optional[ElementInfo] = None
     handle: object = None           # adapter handle of the resolved element
     target_url: Optional[str] = None
+    document_url: Optional[str] = None
 
 
 @dataclass
@@ -123,15 +132,16 @@ class AuditRecord:
     action: str
     outcome: str
     reason: str
-    principal: Optional[str] = None     # "approved" | "declined" | None
+    principal: Optional[str] = None     # "approved" | "declined" | "chose" | None
     executed: bool = False
     alert_text: Optional[str] = None
     stop: bool = False
+    match: Optional[bool] = None        # allowedValues check result (Section 4.5)
 
 
 class AuditLog:
     """Section 5.5. Kept in memory and, if a path is given, appended as JSON Lines
-    so that the principal can read it."""
+    for the principal. Not model-safe: filter through ModelInterface."""
 
     def __init__(self, path: Optional[str] = None):
         self.records = []
@@ -145,21 +155,25 @@ class AuditLog:
 
 
 class Provenance:
-    """Tracks what manifest-derived actions changed (Section 2, 'Manifest-Derived
-    Action'), so that a later submission of such a form is itself treated as
-    manifest-derived and sensitive (Section 5.3)."""
+    """Tracks forms modified by manifest-derived actions (Section 2) so that
+    their later submission or saving, by any means, is sensitive (5.3)."""
 
     def __init__(self):
-        self.modified_forms = set()
+        self.modified = set()
         self.actions = []           # (descriptor, position, action)
 
-    def note(self, req: ActionRequest, el: Optional[ElementInfo], modifies: bool):
+    def note(self, req: ActionRequest, el: Optional[ElementInfo], document_url: str):
         self.actions.append((f"{req.kind}:{req.descriptor_id}", req.position, req.action))
-        if modifies and el is not None and el.form_id is not None:
-            self.modified_forms.add(el.form_id)
+        if el is None or document_url is None:
+            return
+        key = (req.step or {}).get("key")
+        modifies = (req.kind == "value" or req.action == "click"
+                    or (req.action == "key" and key != "Tab"))
+        if modifies:
+            self.modified.add(form_key(el, document_url))
 
-    def form_modified(self, form_id: Optional[str]) -> bool:
-        return form_id is not None and form_id in self.modified_forms
+    def is_modified(self, el: Optional[ElementInfo], document_url: str) -> bool:
+        return el is not None and form_key(el, document_url) in self.modified
 
 
 # The PEP -----------------------------------------------------------------------
@@ -179,7 +193,8 @@ class PolicyEnforcementPoint:
         self.digest = manifest_digest(manifest)
         self.audit = audit
         self.agent_policy = agent_policy
-        # Origins the principal named for a standing approval of key steps.
+        # Origins the principal named for a standing approval of key Enter, granted
+        # after being told the page can bind any effect to that key.
         self.standing_approvals = frozenset(standing_approvals)
         self.provenance = provenance or Provenance()
         self.clock = clock
@@ -200,6 +215,17 @@ class PolicyEnforcementPoint:
         if req.kind == "value" and req.value not in (req.descriptor.get("allowedValues") or []):
             return "value is not in allowedValues"
         return None
+
+    def check_value(self, hint: dict, value: str) -> bool:
+        """Section 4.5 item 1: does a model-proposed value match allowedValues?
+        Only the boolean goes back to the model."""
+        match = isinstance(value, str) and value in (hint.get("allowedValues") or [])
+        req = ActionRequest("value", hint.get("fieldId", "?"), None, hint)
+        self.audit.append(AuditRecord(
+            time=self._now(), origin=self.origin, manifest_digest=self.digest,
+            descriptor=f"value:{req.descriptor_id}", position=None, action="value-check",
+            outcome=ALLOW, reason="allowedValues-check", match=match))
+        return match
 
     def decide(self, req: ActionRequest, page) -> Decision:
         """Steps 1-5. A denial is recorded here; for allow/ask the caller reports
@@ -230,7 +256,7 @@ class PolicyEnforcementPoint:
                 unresolved = "field-hint-not-applicable-to-focused-element"
             else:
                 el, handle = matches[0]
-                if not page.when_holds(req.descriptor.get("when"), self.manifest):
+                if not page.when_holds(req.descriptor.get("when"), self.manifest, handle):
                     unresolved = "field-hint-when-not-satisfied"
         elif action in LOCATOR_ACTIONS:
             matches = page.resolve(req.step["locator"])
@@ -251,13 +277,13 @@ class PolicyEnforcementPoint:
         controls = page.detect_security_controls()
         if controls:
             return Decision(DENY, "security-control:" + ",".join(sorted(controls)), stop=True,
-                            element=el, handle=handle)
+                            element=el, handle=handle, document_url=cur)
         if unresolved:
-            return Decision(DENY, unresolved)
+            return Decision(DENY, unresolved, document_url=cur)
 
         # -- step 4: default outcome
-        d = self._default(req, el)
-        d.element, d.handle, d.target_url = el, handle, target_url
+        d = self._default(req, el, cur)
+        d.element, d.handle, d.target_url, d.document_url = el, handle, target_url, cur
 
         # -- step 5: agent policy (stricter only), then standing approval
         if self.agent_policy is not None:
@@ -269,47 +295,55 @@ class PolicyEnforcementPoint:
             d.outcome, d.reason = ALLOW, f"standing-approval ({d.reason})"
         return d
 
-    def _default(self, req: ActionRequest, el: Optional[ElementInfo]) -> Decision:
+    def _default(self, req: ActionRequest, el: Optional[ElementInfo], doc_url: str) -> Decision:
         action = req.action
+        # Section 5.3: triggering submission/saving of a manifest-modified form, or
+        # of a form holding credentials, is sensitive whatever the action.
+        sensitive = el is not None and (self.provenance.is_modified(el, doc_url) or el.form_has_credentials)
+        tag = "-sensitive" if sensitive else ""
         if req.kind == "shortcut":
             return Decision(ASK, "shortcut")
         if req.kind == "value":
-            return Decision(ASK, "value-from-allowedValues")
+            # The principal has just chosen this value from allowedValues (4.5 item 3).
+            return Decision(ALLOW, "principal-chose-listed-value")
         if action in ALWAYS_ALLOWED_ACTIONS:
             return Decision(ALLOW, f"{action}-default-allow")
-        if action in ("click", "navigate"):
-            return Decision(ASK, f"{action}-default-ask")
+        if action == "wait":
+            if req.step["timeoutMs"] <= SHORT_WAIT_MS:
+                return Decision(ALLOW, "wait-short-default-allow")
+            return Decision(ASK, "wait-long-default-ask")
+        if action == "click":
+            return Decision(ASK, "click-default-ask" + tag, sensitive=sensitive)
+        if action == "navigate":
+            return Decision(ASK, "navigate-default-ask")
         if action == "key":
             key = req.step.get("key")
             activatable = is_activatable(el)
-            value_bearing = is_value_bearing(el)
             if key == "Tab":
                 return Decision(ALLOW, "key-Tab-default-allow")
             if key in NAV_KEYS:
-                if not activatable and not value_bearing:
+                if not activatable and not is_value_bearing(el):
                     return Decision(ALLOW, f"key-{key}-on-inert-element")
                 return Decision(ASK, f"key-{key}-on-{'activatable' if activatable else 'value-bearing'}-element")
             if key == "Enter":
-                if not activatable and not is_form_input(el):
-                    return Decision(ALLOW, "key-Enter-cannot-activate-or-submit")
-                if activatable:
-                    return Decision(ASK, "key-Enter-on-activatable-element")
-                sensitive = self.provenance.form_modified(el.form_id) or el.form_has_credentials
-                return Decision(ASK, "key-Enter-may-submit-form" + ("-sensitive" if sensitive else ""),
-                                standing_eligible=True, sensitive=sensitive,
-                                warning="This key press can submit the form.")
+                return Decision(ASK, "key-Enter-default-ask" + tag, sensitive=sensitive,
+                                standing_eligible=not activatable,
+                                warning="The page can bind any effect to Enter, including submitting a form.")
             if key == "Escape":
-                return Decision(ASK, "key-Escape-default-ask", standing_eligible=not activatable)
+                return Decision(ASK, "key-Escape-default-ask" + tag, sensitive=sensitive)
         return Decision(DENY, "unclassifiable")
 
-    # Agent-originated submission of a form a manifest-derived action modified.
-    def submission_is_sensitive(self, form_id: Optional[str]) -> bool:
-        return self.provenance.form_modified(form_id)
+    def submission_is_sensitive(self, el: ElementInfo, document_url: str) -> bool:
+        """For the agent's own submit/save actions (not manifest-derived): a form
+        the manifest modified stays sensitive whatever submits it (Section 5.3)."""
+        return self.provenance.is_modified(el, document_url) or el.form_has_credentials
+
+    def _now(self):
+        return self.clock().isoformat().replace("+00:00", "Z")
 
     def record(self, req: ActionRequest, d: Decision, *, principal=None, executed=False, alert_text=None):
         self.audit.append(AuditRecord(
-            time=self.clock().isoformat().replace("+00:00", "Z"),
-            origin=self.origin, manifest_digest=self.digest,
+            time=self._now(), origin=self.origin, manifest_digest=self.digest,
             descriptor=f"{req.kind}:{req.descriptor_id}", position=req.position,
             action=req.action if req.action != "key" else f"key:{req.step.get('key')}",
             outcome=d.outcome, reason=d.reason, principal=principal,

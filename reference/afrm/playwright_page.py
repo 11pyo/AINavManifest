@@ -17,7 +17,7 @@ Approximations (documented, conservative): a locator with ``name`` but no
 ``role`` matches by label or exact text; ``column`` compares the header cell's
 aria-label or text at the same index (colspan ignored).
 """
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 from playwright.sync_api import Error as PlaywrightError
 
@@ -98,6 +98,14 @@ _DETECT_JS = r"""
   if (/\b(401 unauthorized|403 forbidden|429 too many requests|access denied|rate limit exceeded)\b/i.test(text))
     out.push('in-page-denial');
   return out;
+}
+"""
+
+_SAME_ROW_JS = r"""
+(el, editing) => {
+  const ROW = 'tr,[role=row]';
+  const r = editing && editing.closest(ROW);
+  return !!r && el.closest(ROW) === r;
 }
 """
 
@@ -208,12 +216,19 @@ class PlaywrightPage:
         """Field-hint locators match a class; return the focused member, if any."""
         return [(self._info(h), h) for h in self._matches(dict(loc, focused=True))]
 
-    def when_holds(self, when, manifest) -> bool:
+    def when_holds(self, when, manifest, editing=None) -> bool:
+        """Section 4.5 'when': if the other field's locator matches several
+        elements, use the one sharing the nearest role=row ancestor with the
+        element being edited; none or more than one -> unsatisfied."""
         for fid, expected in (when or {}).items():
             hint = next((h for h in manifest.get("fieldHints", []) if h["fieldId"] == fid), None)
             if hint is None:
                 return False
             m = self._matches(hint["locator"])
+            if len(m) > 1:
+                if editing is None:
+                    return False
+                m = [h for h in m if h.evaluate(_SAME_ROW_JS, editing.element_handle())]
             if len(m) != 1:
                 return False
             if " ".join(m[0].evaluate(_FIELD_VALUE_JS).split()) != expected:
@@ -299,30 +314,53 @@ class PlaywrightPage:
         self._dialog = None
         return text
 
-    def navigate_same_origin(self, url, origin) -> bool:
-        """GET a same-origin URL; stop on a redirect to another origin (Section 4.4)."""
+    def navigate_same_origin(self, url, origin, scope=None, max_hops=10) -> bool:
+        """GET a same-origin URL (Section 4.4). Every hop, including each redirect,
+        is checked before it is followed: a different origin, a query or fragment,
+        or a path outside scope aborts the navigation.
+
+        Chromium follows a redirect fulfilled through a route without routing the
+        next hop again, so the guard never lets the browser follow one: it aborts
+        the 3xx, checks its Location, and the next hop is a fresh, guarded goto."""
         blocked = []
+
+        def bad(u):
+            p = urlsplit(u)
+            return (origin_of(u) != origin or p.query or p.fragment
+                    or not in_scope(p.path or "/", scope))
+
+        nxt = []
 
         def guard(route, request):
             if not (request.is_navigation_request() and request.frame == self.page.main_frame):
                 return route.continue_()
-            if origin_of(request.url) != origin:
+            if bad(request.url):
                 blocked.append(request.url)
                 return route.abort()
             resp = route.fetch(max_redirects=0)
             loc = resp.headers.get("location")
             if 300 <= resp.status < 400 and loc:
-                from urllib.parse import urljoin
-                if origin_of(urljoin(request.url, loc)) != origin:
-                    blocked.append(loc)
-                    return route.abort()
+                target = urljoin(request.url, loc)
+                if bad(target):
+                    blocked.append(target)
+                else:
+                    nxt.append(target)
+                return route.abort()
             return route.fulfill(response=resp)
 
         self.page.route("**/*", guard)
         try:
-            self.page.goto(url, wait_until="load")
-        except PlaywrightError:
-            pass
+            for _ in range(max_hops):
+                try:
+                    self.page.goto(url, wait_until="load")
+                except PlaywrightError:
+                    pass
+                if blocked or not nxt:
+                    break
+                url = nxt.pop()
+            else:
+                blocked.append("too many redirects")
         finally:
             self.page.unroute("**/*", guard)
-        return not blocked and origin_of(self.page.url) == origin
+        self.blocked_navigations = blocked
+        return not blocked and not nxt and not bad(self.page.url)
