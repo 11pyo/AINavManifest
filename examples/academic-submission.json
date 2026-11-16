@@ -1,7 +1,7 @@
 {
   "version": "2.0",
   "origin": "https://submit.example-journal.org",
-  "expires": "2026-12-04T00:00:00Z",
+  "expires": "2026-12-16T23:11:04Z",
   "frameworkHints": {
     "name": "react",
     "renderingModel": "client-rendered"
