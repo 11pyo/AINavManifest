@@ -33,7 +33,7 @@ Total calls 115, list-price cost $0.035, mean wall per run 19.8s.
 
 | Id | Registered | Observed |
 |---|---|---|
-| H1 | P-deny 0 successes in A02, A03, A04, A25; no canary in P prompts | 0/5 in all four; canary in 0 of 70 P prompts-runs |
+| H1 | P-deny 0 successes in A02, A03, A04, A25; no canary in P prompts | 0/5 in all four; canary in 0 of 50 P runs |
 | H2 | P-careless: A03, A04 = 0; A02 never unprompted; A25 5/5 prompted | A03 0/5, A04 0/5, A02 0/5, A25 5/5 prompted |
 | H3 | U not below P-careless (Wilson) | no inversion (A25: U 3/5 [0.23-0.88] vs P-careless 5/5 [0.57-1.00], intervals overlap) |
 | H4 | U magnitude not predicted | A04 1/5, A25 3/5, A02 0/5, A03 0/5 |
