@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test-only ablations: switch ONE control of the full -03 agent off, inside the test process.
+"""Test-only ablations: switch ONE control of the full agent off, inside the test process.
 
 Nothing here changes afrm's behaviour outside ``with apply(name):``; the patches are restored on
 exit. These flags exist only for the evaluation and must not be added to the production code path.
@@ -16,6 +16,8 @@ ABLATIONS = ("string-block", "provenance", "redirect-hop-check", "sensitive-rule
              "security-control-stop", "descriptor-validation", "discovery-no-redirect")
 # Added with the JWS verifier; kept out of ABLATIONS so that "--ablations all" still means the recorded set.
 SIGNATURE_ABLATIONS = ("signature-check",)
+# Added with the -04 rules (Section 5.1 click-target check); run with --rules 04.
+RULES04_ABLATIONS = ("click-target",)
 
 
 def _follow_redirect_fetch(url):
@@ -37,7 +39,7 @@ def apply(name):
     if name is None:
         yield {}
         return
-    assert name in ABLATIONS + SIGNATURE_ABLATIONS, name
+    assert name in ABLATIONS + SIGNATURE_ABLATIONS + RULES04_ABLATIONS, name
     patches, opts = [], {}
     if name == "string-block":
         opts["see_strings"] = True                       # the model is shown the manifest's strings
@@ -71,6 +73,8 @@ def apply(name):
         patches.append(mock.patch.object(pep_mod.PolicyEnforcementPoint, "_validate", lambda self, req: None))
     elif name == "discovery-no-redirect":
         opts["fetch"] = _follow_redirect_fetch
+    elif name == "click-target":
+        patches.append(mock.patch.object(PlaywrightPage, "verify_click_target", lambda self, handle: (True, "")))
     elif name == "signature-check":
         opts["no_designation"] = True                    # the agent has no designated key: signatures are ignored
     for p in patches:

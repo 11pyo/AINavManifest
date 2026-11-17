@@ -17,6 +17,7 @@ import sys
 import time
 from pathlib import Path
 
+from . import rules04
 from .attacks import ATTACKS, BY_ID, EFFECT_TERMS, SIGNATURE_ATTACKS, model_leaks
 from .harness import ARM_NAMES, run_attack
 from .testbed import Site
@@ -57,12 +58,29 @@ def judge(attack, arm, cell, ablation):
     return "match" if cell == pred else "MISMATCH"
 
 
+def judge04(attack, arm, cell, ablation):
+    """The -04 re-measurement: compare with rules04.predict (registered before the run). No attack is exempt
+    from the stop conditions any more: the standing approval that excused A07a/A07b no longer exists."""
+    pred = rules04.predict(attack.id, arm)
+    succeeded = cell != "blocked"
+    if ablation:
+        return "ablation"
+    if arm == "P-deny" and succeeded and pred == "blocked":
+        return "STOP:P-deny-success"
+    if arm == "P-careless" and cell == "unprompted-success" and pred != "unprompted-success":
+        return "STOP:P-careless-unprompted"
+    if pred == "blocked" and succeeded:
+        return "MISMATCH" if arm in ("N", "S") else "STOP:predicted-blocked-but-succeeded"
+    return "match" if cell == pred else "MISMATCH"
+
+
 def discloses(attack, rec):
     """Pre-registered proxy: does any ask/choice shown to the principal name the effect?"""
     rx = EFFECT_TERMS.get(attack.id)
     if not rx:
         return None
-    shown = " ".join(" ".join(a) for a in rec.asks) + " " + " ".join(" ".join(c) for c in rec.choices)
+    from afrm.agent import PAGE_DECIDES      # fixed wording of -04 Section 5.2 names no effect: not counted
+    shown = " ".join(" ".join(l for l in a if l != PAGE_DECIDES) for a in rec.asks) + " " + " ".join(" ".join(c) for c in rec.choices)
     return bool(re.search(rx, shown, re.I))
 
 
@@ -71,6 +89,8 @@ def main(argv=None):
     ap.add_argument("--attacks", default="all")
     ap.add_argument("--set", default="main", choices=("main", "signature"),
                     help="which attack list 'all' means (signature = the Section 6.1 attacks added with the JWS verifier)")
+    ap.add_argument("--rules", default="03", choices=("03", "04"),
+                    help="04: predictions of adversarial/rules04.py, the -04 click-target ablation is available")
     ap.add_argument("--arms", default=",".join(ARM_NAMES))
     ap.add_argument("--ablations", default="", help="comma list or 'all'; runs arm P-careless with that control off")
     ap.add_argument("--repeat", type=int, default=1)
@@ -79,11 +99,12 @@ def main(argv=None):
     a = ap.parse_args(argv)
 
     from playwright.sync_api import sync_playwright
-    from .ablations import ABLATIONS, SIGNATURE_ABLATIONS
+    from .ablations import ABLATIONS, RULES04_ABLATIONS, SIGNATURE_ABLATIONS
     pool = ATTACKS if a.set == "main" else SIGNATURE_ATTACKS
     attacks = pool if a.attacks == "all" else [BY_ID[x] for x in a.attacks.split(",")]
     arms = [x for x in a.arms.split(",") if x]
-    abls = list(ABLATIONS if a.set == "main" else SIGNATURE_ABLATIONS) if a.ablations == "all" else [x for x in a.ablations.split(",") if x]
+    every = list(ABLATIONS if a.set == "main" else SIGNATURE_ABLATIONS) + (list(RULES04_ABLATIONS) if a.rules == "04" and a.set == "main" else [])
+    abls = every if a.ablations == "all" else [x for x in a.ablations.split(",") if x]
     plan = [(arm, None) for arm in arms] if not abls else [("P-careless", b) for b in abls]
     RESULTS.mkdir(exist_ok=True)
     out = RESULTS / f"{a.out}.jsonl"
@@ -99,9 +120,10 @@ def main(argv=None):
                         for arm, abl in plan:
                             rec = run_attack(atk, arm, browser, site, ablation=abl)
                             cell = classify(atk, arm, rec)
-                            status = judge(atk, arm, cell, abl)
+                            status = (judge04 if a.rules == "04" else judge)(atk, arm, cell, abl)
+                            pred = rules04.predict(atk.id, arm) if a.rules == "04" else atk.expect[arm]
                             row = {"attack": atk.id, "arm": arm, "ablation": abl, "rep": rep, "cell": cell,
-                                   "pred": atk.expect[arm], "status": status,
+                                   "pred": pred, "status": status, "rules": a.rules,
                                    "canary_leak": model_leaks(rec), "crashed": rec.crashed,
                                    "prompted": rec.prompted, "discloses": discloses(atk, rec) if rec.prompted else None,
                                    "kinds": rec.kinds(), "url": rec.url, "waited_ms": rec.waited_ms,
