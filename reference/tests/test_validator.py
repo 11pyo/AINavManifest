@@ -138,3 +138,50 @@ def test_removed_members_warn():
     m["publisher"] = "erp.example.com"
     rep = validate(m, retrieved_from=URL, now=NOW)
     assert rep.ok and any("removed" in w for w in rep.warnings)
+
+
+# ---- nesting depth (implementation limit; draft Section 3.5 sets none) and parser errors
+
+import json as _json
+
+from afrm.validator import MAX_NESTING_DEPTH, ManifestRejected as _MR, parse_i_json as _parse
+
+
+def _nested(depth):
+    return b'{"a":' + b"[" * (depth - 1) + b"]" * (depth - 1) + b"}"
+
+
+def test_depth_at_the_limit_passes_and_one_more_is_rejected():
+    assert isinstance(_parse(_nested(MAX_NESTING_DEPTH)), dict)
+    with pytest.raises(_MR, match="nesting"):
+        _parse(_nested(MAX_NESTING_DEPTH + 1))
+
+
+def test_fifty_thousand_levels_are_rejected_not_raised():
+    with pytest.raises(_MR):
+        _parse(_nested(50000))
+
+
+def test_brackets_inside_strings_do_not_count_as_depth():
+    text = _json.dumps({"description": "[" * 5000 + '{"' * 100 + "\\\\\\\"[[", "x": "]" * 5000}).encode()
+    assert isinstance(_parse(text), dict)
+
+
+def test_parser_exceptions_become_manifest_rejected(monkeypatch):
+    import afrm.validator as v
+    for exc in (RecursionError, MemoryError, ValueError):
+        monkeypatch.setattr(v.json, "loads", lambda *a, **k: (_ for _ in ()).throw(exc("x")))
+        with pytest.raises(_MR):
+            _parse(b"{}")
+
+
+def test_discover_returns_baseline_on_a_deeply_nested_manifest():
+    from afrm.agent import ManifestSession
+
+    class FakePage:
+        def url(self):
+            return "http://127.0.0.1:1/shop/"
+
+    s = ManifestSession(FakePage())
+    ok = s.discover(fetch=lambda url: (_nested(50000), "http://127.0.0.1:1/.well-known/ai-friction-manifest.json"))
+    assert ok is False and s.manifest is None and "nesting" in s.rejected_reason

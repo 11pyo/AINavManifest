@@ -28,6 +28,10 @@ SCHEMA_PATH = Path(__file__).resolve().parents[2] / "ai-friction-manifest.schema
 SCHEMA = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 
 MAX_OCTETS = 262144                     # Section 3.5
+# draft §3.5 does not set a depth limit; implementation limit. Deeper JSON can exhaust the parser's
+# recursion (an uncaught RecursionError would kill the agent instead of falling back to baseline
+# behaviour, §3.5), and no legitimate manifest comes near this depth (schema depth is well under 10).
+MAX_NESTING_DEPTH = 64
 MAX_SAFE_INT = 2 ** 53 - 1              # I-JSON (RFC 7493 Section 2.2)
 REMOVED_MEMBERS = ("publisher", "manifestId", "registry_url")   # Section 4.1
 DESCRIPTOR_KINDS = (("knownTraps", "trap", "trapId"),
@@ -105,6 +109,28 @@ def _check_i_json_values(value, path="$"):
             _check_i_json_values(v, f"{path}.{k}")
 
 
+def _check_depth(text: str):
+    """Reject over-deep nesting by a linear scan, before json.loads can recurse on it.
+    Brackets inside string literals do not count."""
+    depth, in_str, esc = 0, False, False
+    for ch in text:
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+        elif ch == '"':
+            in_str = True
+        elif ch in "[{":
+            depth += 1
+            if depth > MAX_NESTING_DEPTH:
+                raise ManifestRejected(f"nesting deeper than {MAX_NESTING_DEPTH} levels (implementation limit)")
+        elif ch in "]}":
+            depth -= 1
+
+
 def parse_i_json(raw: bytes):
     """Parse manifest octets, enforcing the size limit and I-JSON (Section 3.5)."""
     if len(raw) > MAX_OCTETS:
@@ -115,11 +141,16 @@ def parse_i_json(raw: bytes):
         text = raw.decode("utf-8", errors="strict")
     except UnicodeDecodeError:
         raise ManifestRejected("not UTF-8 (I-JSON)")
+    _check_depth(text)
     try:
         obj = json.loads(text, object_pairs_hook=_reject_duplicates,
                          parse_constant=lambda c: (_ for _ in ()).throw(ManifestRejected(c)))
+    except ManifestRejected:
+        raise
     except json.JSONDecodeError as e:
         raise ManifestRejected(f"not JSON: {e}")
+    except (RecursionError, MemoryError, ValueError, OverflowError) as e:   # fail closed: no manifest (§3.5)
+        raise ManifestRejected(f"cannot parse manifest: {type(e).__name__}")
     _check_i_json_values(obj)
     if not isinstance(obj, dict):
         raise ManifestRejected("top level is not an object")
