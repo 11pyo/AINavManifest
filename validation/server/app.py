@@ -66,16 +66,26 @@ MANIFEST_HASH = hashlib.sha256(MANIFEST_BYTES).hexdigest()
 # --------------------------------------------------
 # 버전 "2.0" 매니페스트 (draft-han-ai-manifest-03 §3.1, §4)
 # 이 주문 폼에는 알려진 함정이 없다(knownTraps 빈 배열). 사이트 고유 지식은
-# 통화 코드 목록뿐이므로 fieldHints 로 둔다. expires 는 제공 시점 + 30 일.
+# 통화 코드 목록뿐이므로 fieldHints 로 둔다. expires 는 UTC 오늘 00:00 + 30 일(같은 UTC 날짜 안에서는 같은 값).
 # --------------------------------------------------
 ORIGIN = "http://127.0.0.1:6000"
+MANIFEST_VALID_DAYS = 30   # same constant/logic as demo_erp, demo_sap
+
+
+def _utcnow():
+    return datetime.now(timezone.utc)
+
+
+def manifest_expires() -> str:
+    day = _utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+    return (day + timedelta(days=MANIFEST_VALID_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def manifest_v2():
     return {
         "version": "2.0",
         "origin": ORIGIN,
-        "expires": (datetime.now(timezone.utc) + timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "expires": manifest_expires(),
         "scope": ["/order/"],
         "frameworkHints": {"name": "flask-jinja", "renderingModel": "server-rendered"},
         "knownTraps": [],
