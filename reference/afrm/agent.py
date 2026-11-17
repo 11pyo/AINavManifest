@@ -29,7 +29,8 @@ from urllib.parse import urlsplit
 from .discovery import fetch_manifest_bytes
 from .pep import (ASK, DENY, ActionRequest, AuditLog, Decision,
                   PolicyEnforcementPoint, Provenance)
-from .validator import ManifestRejected, load_for_agent, origin_of
+from .jws import verify_manifest
+from .validator import ManifestRejected, load_for_agent, origin_of, parse_i_json
 
 PUBLISHER = "[publisher-written]"
 
@@ -126,14 +127,30 @@ class ManifestSession:
     pep: Optional[PolicyEnforcementPoint] = None
     task_ended: bool = False
     traps: dict = field(default_factory=dict)  # runtime integer id -> trap descriptor
+    # Section 6.1: public keys the agent's own configuration designates, {origin: [DesignatedKey, ...]}.
+    # Never filled from a manifest. Verification only decides whether the manifest is used at all; it
+    # grants nothing and the PEP does not see it.
+    designated_keys: dict = field(default_factory=dict)
+    signed_by: Optional[str] = None            # kid that verified (audit/log only)
 
     def discover(self, fetch=fetch_manifest_bytes, now=None) -> bool:
         """At most once per origin per task (Section 3.5)."""
         try:
             raw, url = fetch(self.page.url())
             manifest, _ = load_for_agent(raw, url, now=now)
+            self.signed_by = None
+            keys = self.designated_keys.get(origin_of(url))
+            if keys:                       # Section 6.1: a key is designated, so a verifying signature is required
+                try:
+                    outcome = verify_manifest(parse_i_json(raw), keys)
+                except Exception as e:     # fail closed whatever goes wrong
+                    raise ManifestRejected(f"signature check failed: {type(e).__name__}")
+                if not outcome.verified:
+                    raise ManifestRejected("no signature verifies under a key designated for this origin (Section 6.1): "
+                                           + "; ".join(outcome.reasons)[:300])
+                self.signed_by = outcome.kid
         except ManifestRejected as e:
-            self.manifest, self.rejected_reason = None, str(e)
+            self.manifest, self.rejected_reason, self.signed_by = None, str(e), None
             return False
         self.use(manifest)
         return True

@@ -10,6 +10,8 @@ discovery, policy enforcement point (PEP), and audit record.
 | `afrm/validator.py` | §3.5, §4 | I-JSON, 262144-octet limit, version, origin binding, expiry, unique ids, navigate/shortcut targets and scope, `when` references; per-descriptor fail-closed load for agents; CLI |
 | `afrm/discovery.py` | §3.1, §3.2 | Fetches only `/.well-known/ai-friction-manifest.json` on the page's origin, without credentials, refusing cross-origin redirects |
 | `afrm/jcs.py` | §5.5, §6.1 | RFC 8785 canonical JSON, manifest SHA-256 digest, signing payload |
+| `afrm/jws.py` | §6.1 | Detached-JWS publisher signatures: ES256 and Ed25519, standard library only; verifies only against keys the agent's own configuration designates for the origin; no result of it reaches the PEP |
+| `afrm/jws_sign.py` | §6.1 | Publisher-side signing helper and test kit (not used by an agent) |
 | `afrm/pep.py` | §5.2–§5.5 | Non-LLM PEP: the six steps, default outcomes, "activatable element" and "value-bearing control", standing approvals, provenance, audit log |
 | `afrm/agent.py` | §5.1, §5.2 | `ManifestSession`: discover, find applicable traps, run a recovery, follow a shortcut, enter a listed value, commit a field — each through the PEP |
 | `afrm/playwright_page.py` | §4.2, §5.1, §5.4 | Live-document locator resolution (same-origin, in-scope frames only), trusted input through Playwright, security-control detection |
@@ -25,6 +27,19 @@ python -m afrm.validator https://erp.example.com/            # discover and vali
 Exit status is non-zero on any error. Plain HTTP is accepted only for loopback
 origins (`localhost`, `127.0.0.1`, `[::1]`), with a warning, so that the local
 demos can be validated; §3.1 requires HTTPS.
+
+## Verify publisher signatures (Section 6.1)
+
+```python
+from afrm.jws import DesignatedKey
+
+keys = {"https://erp.example.com": [DesignatedKey("acme-2026", "ES256", {"kty": "EC", "crv": "P-256", "x": "...", "y": "..."})]}
+session = ManifestSession(PlaywrightPage(page), designated_keys=keys)   # from the agent's own configuration
+```
+
+If a key is designated for the origin, a manifest without a signature that verifies under it is ignored (baseline
+behaviour). With no designated key the `signatures` member is ignored. Keys named by the manifest or by a JWS header
+(`jwk`, `jku`, `x5u`, `x5c`) are never used. A verified signature changes no PEP decision.
 
 ## Use the agent core
 
