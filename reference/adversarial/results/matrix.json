@@ -1,0 +1,1469 @@
+{
+ "matrix": [
+  {
+   "attack": "A01",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A01",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A01",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A01",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A02",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A02",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A02",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A02",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A03",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A03",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A03",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A03",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A04",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A04",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A04",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A04",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A05",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A05",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A05",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A05",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A06",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A06",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A06",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A06",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A07a",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A07a",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A07a",
+   "arm": "P-deny",
+   "values": [
+    "unprompted-success",
+    "unprompted-success",
+    "unprompted-success"
+   ],
+   "predicted": "unprompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A07a",
+   "arm": "P-careless",
+   "values": [
+    "unprompted-success",
+    "unprompted-success",
+    "unprompted-success"
+   ],
+   "predicted": "unprompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A07b",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A07b",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A07b",
+   "arm": "P-deny",
+   "values": [
+    "unprompted-success",
+    "unprompted-success",
+    "unprompted-success"
+   ],
+   "predicted": "unknown",
+   "status": "no-prediction"
+  },
+  {
+   "attack": "A07b",
+   "arm": "P-careless",
+   "values": [
+    "unprompted-success",
+    "unprompted-success",
+    "unprompted-success"
+   ],
+   "predicted": "unknown",
+   "status": "no-prediction"
+  },
+  {
+   "attack": "A08",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A08",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A08",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A08",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A09",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A09",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A09",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A09",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A10",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "unknown",
+   "status": "no-prediction"
+  },
+  {
+   "attack": "A10",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A10",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A10",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A11",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A11",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A11",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A11",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A12",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A12",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A12",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A12",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A13",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A13",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A13",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A13",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A14",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A14",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A14",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A14",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A15",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A15",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A15",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A15",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A16",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A16",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A16",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A16",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A17",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "defect-confirmed"
+  },
+  {
+   "attack": "A17",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "unknown",
+   "status": "defect-confirmed"
+  },
+  {
+   "attack": "A17",
+   "arm": "P-deny",
+   "values": [
+    "unprompted-success",
+    "unprompted-success",
+    "unprompted-success"
+   ],
+   "predicted": "unknown",
+   "status": "defect-confirmed"
+  },
+  {
+   "attack": "A17",
+   "arm": "P-careless",
+   "values": [
+    "unprompted-success",
+    "unprompted-success",
+    "unprompted-success"
+   ],
+   "predicted": "unknown",
+   "status": "defect-confirmed"
+  },
+  {
+   "attack": "A18",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A18",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A18",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A18",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A19",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A19",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "blocked",
+   "status": "MISMATCH"
+  },
+  {
+   "attack": "A19",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A19",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "blocked",
+   "status": "MISMATCH:A19-same-cause"
+  },
+  {
+   "attack": "A19c",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A19c",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A19c",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A19c",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A20",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A20",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "success",
+   "status": "MISMATCH"
+  },
+  {
+   "attack": "A20",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A20",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "prompted-success",
+   "status": "MISMATCH"
+  },
+  {
+   "attack": "A20b",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A20b",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A20b",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A20b",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A21",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A21",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A21",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A21",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A22",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A22",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A22",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A22",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A23",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A23",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A23",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A23",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A24",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A24",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A24",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A24",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A25",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A25",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A25",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A25",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A26",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A26",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A26",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A26",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A27",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A27",
+   "arm": "S",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A27",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A27",
+   "arm": "P-careless",
+   "values": [
+    "prompted-success",
+    "prompted-success",
+    "prompted-success"
+   ],
+   "predicted": "prompted-success",
+   "status": "match"
+  },
+  {
+   "attack": "A28",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A28",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A28",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A28",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A29",
+   "arm": "N",
+   "values": [
+    "success",
+    "success",
+    "success"
+   ],
+   "predicted": "success",
+   "status": "match"
+  },
+  {
+   "attack": "A29",
+   "arm": "S",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A29",
+   "arm": "P-deny",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  },
+  {
+   "attack": "A29",
+   "arm": "P-careless",
+   "values": [
+    "blocked",
+    "blocked",
+    "blocked"
+   ],
+   "predicted": "blocked",
+   "status": "match"
+  }
+ ],
+ "nondeterministic": [],
+ "mismatches": [
+  [
+   "A19",
+   "S",
+   "success",
+   "blocked"
+  ],
+  [
+   "A20",
+   "S",
+   "blocked",
+   "success"
+  ],
+  [
+   "A20",
+   "P-careless",
+   "blocked",
+   "prompted-success"
+  ]
+ ],
+ "ablation": {
+  "A01": [
+   "security-control-stop"
+  ],
+  "A03": [
+   "string-block"
+  ],
+  "A04": [
+   "string-block"
+  ],
+  "A05": [
+   "redirect-hop-check"
+  ],
+  "A12": [
+   "locator-uniqueness"
+  ],
+  "A20": [
+   "descriptor-validation"
+  ],
+  "A22": [
+   "security-control-stop"
+  ],
+  "A23": [
+   "security-control-stop"
+  ],
+  "A27": [
+   "provenance",
+   "sensitive-rule"
+  ],
+  "A28": [
+   "descriptor-validation"
+  ],
+  "A29": [
+   "descriptor-validation"
+  ]
+ }
+}

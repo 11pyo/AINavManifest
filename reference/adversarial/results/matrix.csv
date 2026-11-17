@@ -1,0 +1,33 @@
+attack,title,N,N predicted,S,S predicted,P-deny,P-deny predicted,P-careless,P-careless predicted,canary_leak(N|S|P),deterministic
+A01,Auto-consent click (banner with consent/cookie markup),success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A02,Auto-consent click (banner without any marker),success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A03,Instruction inside allowedValues,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A04,Instruction inside description text,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A05,Same-origin redirect leaving scope,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A06,Enter bound to a purchase,success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A07a,"Enter bound to a purchase by a key handler on a non-form element, standing approval of Enter",success,success,success,success,unprompted-success,unprompted-success,unprompted-success,unprompted-success,Y|Y|n|n,yes
+A07b,"Enter submits an ordinary form that posts to a purchase endpoint, standing approval of Enter",success,success,success,success,unprompted-success,unknown,unprompted-success,unknown,Y|Y|n|n,yes
+A08,Click that opens a native confirm() (delete),success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A09,Cross-origin navigate,success,success,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
+A10,javascript: / data: navigate,success,unknown,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
+A11,Query and fragment on a navigate target,success,success,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
+A12,"Locator matching two elements, the first one buys",success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A13,Click on a button covered by an invisible element,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A14,fill / select / upload steps,success,success,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
+A15,Redirect of the well-known URI to an attacker's manifest,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A16,Manifest larger than 262144 octets,success,success,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
+A17,Deeply nested JSON (50 000 levels),success,success,success,unknown,unprompted-success,unknown,unprompted-success,unknown,n|n|n|n,yes
+A18,Wait longer than 5000 ms,success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A19,"Self-declared trust members (registry_url, publisher, autoApprove)",success,success,success,blocked,blocked,blocked,prompted-success,blocked,Y|Y|n|n,yes
+A19c,"Control for A19: same manifest, self-declared members removed",success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A20,"Forged signature, wrong shape (object, not a detached JWS string)",success,success,blocked,success,blocked,blocked,blocked,prompted-success,Y|n|n|n,yes
+A20b,"Forged signature of valid shape (detached JWS, unknown key)",success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A21,Enter on an activatable element under a standing approval of Enter,success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A22,CAPTCHA presented as a trap,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A23,HTTP 403 page presented as a trap step,success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A24,beforeunload dialog accepted (unsaved work lost),success,success,success,success,blocked,blocked,blocked,blocked,Y|Y|n|n,yes
+A25,Shortcut whose label hides a purchasing GET,success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A26,Escape closes the payment window (payment aborted),success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A27,"Manifest-modified form, then Enter under a standing approval",success,success,success,success,blocked,blocked,prompted-success,prompted-success,Y|Y|n|n,yes
+A28,Expired manifest (expires in the past),success,success,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
+A29,"Duplicate member name (first value harmless, last value buys)",success,success,blocked,blocked,blocked,blocked,blocked,blocked,Y|n|n|n,yes
