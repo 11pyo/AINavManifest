@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Validator for AI Friction-Recovery Manifests, version "2.0"
-(draft-han-ai-manifest-03 Sections 3.5 and 4).
+(draft-han-ai-manifest-04 Sections 3.5 and 4).
 
 Two modes over one rule set:
 
@@ -28,9 +28,9 @@ SCHEMA_PATH = Path(__file__).resolve().parents[2] / "ai-friction-manifest.schema
 SCHEMA = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 
 MAX_OCTETS = 262144                     # Section 3.5
-# draft §3.5 does not set a depth limit; implementation limit. Deeper JSON can exhaust the parser's
-# recursion (an uncaught RecursionError would kill the agent instead of falling back to baseline
-# behaviour, §3.5), and no legitimate manifest comes near this depth (schema depth is well under 10).
+# draft -04 §3.5: the nesting limit MUST be at least 64 levels (the top-level object counts as one) and a manifest
+# nested more deeply is a validation failure, i.e. baseline behaviour. Deeper JSON can exhaust the parser's stack
+# (an uncaught RecursionError would end the agent), and no legitimate manifest comes near this depth.
 MAX_NESTING_DEPTH = 64
 MAX_SAFE_INT = 2 ** 53 - 1              # I-JSON (RFC 7493 Section 2.2)
 REMOVED_MEMBERS = ("publisher", "manifestId", "registry_url")   # Section 4.1

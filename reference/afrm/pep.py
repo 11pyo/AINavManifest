@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Policy Enforcement Point (draft-han-ai-manifest-03 Sections 2, 5.2-5.5).
+"""Policy Enforcement Point (draft-han-ai-manifest-04 Sections 2, 5.2-5.5).
 
 Deterministic code only: no language model takes part in a decision, and no
 decision reads a free-text member (description, label).
@@ -10,7 +10,7 @@ runs the six steps of Section 5.2 in order:
   2. re-resolve the locator / target    -> deny  "locator-*" / "target-*"
   3. detected security control          -> deny + stop  "security-control:*"
   4. default outcome (table below)
-  5. agent policy (stricter only) and standing approval (Enter only)
+  5. agent policy (stricter only; nothing turns an ask into an allow)
   6. audit record
 
 Reasons and audit records are for the principal and logs. They may contain
@@ -62,6 +62,9 @@ class ElementInfo:
     ancestors: tuple = ()                     # tuple[Ancestor], nearest first
     name: str = ""                            # accessible name (shown to the principal only)
     rendered: bool = True
+    submit_button: bool = False               # a submit button [HTML]: button in the Submit state, input submit/image
+    implicit_submit: bool = False             # the form owner could be submitted by implicit submission [HTML]
+    rendered_text: str = ""                   # text drawn for the element (shown to the principal only)
 
 
 def is_activatable(el: ElementInfo) -> bool:
@@ -113,8 +116,9 @@ class Decision:
     outcome: str                    # allow | ask | deny
     reason: str
     stop: bool = False              # security control: stop the recovery (Section 5.4)
-    standing_eligible: bool = False
     sensitive: bool = False
+    effects: tuple = ()             # sensitive actions the PEP determined (Section 5.3), the agent's own wording
+    form_modified: bool = False     # one of them is the submission of a form the manifest modified
     warning: Optional[str] = None   # must be shown to the principal with the ask
     element: Optional[ElementInfo] = None
     handle: object = None           # adapter handle of the resolved element
@@ -156,7 +160,9 @@ class AuditLog:
 
 class Provenance:
     """Tracks forms modified by manifest-derived actions (Section 2) so that
-    their later submission or saving, by any means, is sensitive (5.3)."""
+    their submission or saving, by any means, is sensitive (5.3). ``note`` is
+    called BEFORE a step is executed, so that the step which modifies a form
+    and submits it in one go is already recorded when the next decision is made."""
 
     def __init__(self):
         self.modified = set()
@@ -176,6 +182,20 @@ class Provenance:
         return el is not None and form_key(el, document_url) in self.modified
 
 
+def _squash(t: str) -> str:
+    return " ".join((t or "").split()).casefold()
+
+
+def mislabel_warning(el: Optional[ElementInfo]) -> Optional[str]:
+    """Section 5.2 SHOULD: warn when the text drawn for an activatable element is not contained in its
+    accessible name. Both strings are publisher-controlled, so they are quoted by the display."""
+    if el is None or not is_activatable(el) or not _squash(el.rendered_text):
+        return None
+    if _squash(el.rendered_text) in _squash(el.name):
+        return None
+    return "mislabel"
+
+
 # The PEP -----------------------------------------------------------------------
 
 AgentPolicy = Callable[[ActionRequest, Decision], str]
@@ -184,7 +204,6 @@ AgentPolicy = Callable[[ActionRequest, Decision], str]
 class PolicyEnforcementPoint:
     def __init__(self, manifest: dict, audit: AuditLog, *,
                  agent_policy: Optional[AgentPolicy] = None,
-                 standing_approvals: frozenset = frozenset(),
                  provenance: Optional[Provenance] = None,
                  clock=lambda: datetime.now(timezone.utc)):
         self.manifest = manifest
@@ -193,9 +212,6 @@ class PolicyEnforcementPoint:
         self.digest = manifest_digest(manifest)
         self.audit = audit
         self.agent_policy = agent_policy
-        # Origins the principal named for a standing approval of key Enter, granted
-        # after being told the page can bind any effect to that key.
-        self.standing_approvals = frozenset(standing_approvals)
         self.provenance = provenance or Provenance()
         self.clock = clock
 
@@ -285,22 +301,43 @@ class PolicyEnforcementPoint:
         d = self._default(req, el, cur)
         d.element, d.handle, d.target_url, d.document_url = el, handle, target_url, cur
 
-        # -- step 5: agent policy (stricter only), then standing approval
+        # -- step 5: agent policy (stricter only). Nothing turns an ask into an allow (Section 5.3).
+        if d.sensitive and d.outcome == ALLOW:
+            d.outcome, d.reason = ASK, f"sensitive ({d.reason})"
         if self.agent_policy is not None:
             stricter = self.agent_policy(req, d)
             if _RANK.get(stricter, 2) > _RANK[d.outcome]:
                 d.outcome, d.reason = stricter, f"agent-policy ({d.reason})"
-        if (d.outcome == ASK and d.standing_eligible and not d.sensitive
-                and self.origin in self.standing_approvals):
-            d.outcome, d.reason = ALLOW, f"standing-approval ({d.reason})"
+        d.warning = d.warning or mislabel_warning(el)
         return d
+
+    def _effects(self, req: ActionRequest, el: Optional[ElementInfo], doc_url: str):
+        """Section 5.3: the sensitive actions this action can perform or trigger, as far as the PEP can
+        determine them. The floor: a click or a key step other than Tab on a submit button; key Enter on an
+        element whose form owner could be submitted by implicit submission; any submission of a form recorded
+        as modified by the manifest or containing a password input. More is allowed ('by its own means',
+        never from manifest content): here, any action on an element of such a modified or credential form."""
+        if el is None:
+            return (), False
+        action, key = req.action, (req.step or {}).get("key")
+        out, modified = [], False
+        if (action == "click" or (action == "key" and key != "Tab")) and el.submit_button:
+            out.append("submit a form (the target is a submit button)")
+        if action == "key" and key == "Enter" and el.implicit_submit:
+            out.append("submit a form by implicit submission (Enter in a form that can be submitted that way)")
+        if self.provenance.is_modified(el, doc_url):
+            out.append("submit or save a form that manifest-derived actions have modified")
+            modified = True
+        if el.form_has_credentials:
+            out.append("submit a form that contains a password field")
+        return tuple(out), modified
 
     def _default(self, req: ActionRequest, el: Optional[ElementInfo], doc_url: str) -> Decision:
         action = req.action
-        # Section 5.3: triggering submission/saving of a manifest-modified form, or
-        # of a form holding credentials, is sensitive whatever the action.
-        sensitive = el is not None and (self.provenance.is_modified(el, doc_url) or el.form_has_credentials)
+        effects, modified = self._effects(req, el, doc_url)
+        sensitive = bool(effects)
         tag = "-sensitive" if sensitive else ""
+        kw = dict(sensitive=sensitive, effects=effects, form_modified=modified)
         if req.kind == "shortcut":
             return Decision(ASK, "shortcut")
         if req.kind == "value":
@@ -313,7 +350,7 @@ class PolicyEnforcementPoint:
                 return Decision(ALLOW, "wait-short-default-allow")
             return Decision(ASK, "wait-long-default-ask")
         if action == "click":
-            return Decision(ASK, "click-default-ask" + tag, sensitive=sensitive)
+            return Decision(ASK, "click-default-ask" + tag, **kw)
         if action == "navigate":
             return Decision(ASK, "navigate-default-ask")
         if action == "key":
@@ -324,13 +361,11 @@ class PolicyEnforcementPoint:
             if key in NAV_KEYS:
                 if not activatable and not is_value_bearing(el):
                     return Decision(ALLOW, f"key-{key}-on-inert-element")
-                return Decision(ASK, f"key-{key}-on-{'activatable' if activatable else 'value-bearing'}-element")
+                return Decision(ASK, f"key-{key}-on-{'activatable' if activatable else 'value-bearing'}-element" + tag, **kw)
             if key == "Enter":
-                return Decision(ASK, "key-Enter-default-ask" + tag, sensitive=sensitive,
-                                standing_eligible=not activatable,
-                                warning="The page can bind any effect to Enter, including submitting a form.")
+                return Decision(ASK, "key-Enter-default-ask" + tag, **kw)
             if key == "Escape":
-                return Decision(ASK, "key-Escape-default-ask" + tag, sensitive=sensitive)
+                return Decision(ASK, "key-Escape-default-ask" + tag, **kw)
         return Decision(DENY, "unclassifiable")
 
     def submission_is_sensitive(self, el: ElementInfo, document_url: str) -> bool:

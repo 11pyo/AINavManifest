@@ -1,7 +1,7 @@
 # AFRM 2.0 reference implementation
 
 Implements version "2.0" of the AI Friction-Recovery Manifest as specified in
-`draft-han-ai-manifest-03`: the publisher-side validator and the agent-side
+`draft-han-ai-manifest-04`: the publisher-side validator and the agent-side
 discovery, policy enforcement point (PEP), and audit record.
 
 | Module | Spec | Purpose |
@@ -12,7 +12,7 @@ discovery, policy enforcement point (PEP), and audit record.
 | `afrm/jcs.py` | §5.5, §6.1 | RFC 8785 canonical JSON, manifest SHA-256 digest, signing payload |
 | `afrm/jws.py` | §6.1 | Detached-JWS publisher signatures: ES256 and Ed25519, standard library only; verifies only against keys the agent's own configuration designates for the origin; no result of it reaches the PEP |
 | `afrm/jws_sign.py` | §6.1 | Publisher-side signing helper and test kit (not used by an agent) |
-| `afrm/pep.py` | §5.2–§5.5 | Non-LLM PEP: the six steps, default outcomes, "activatable element" and "value-bearing control", standing approvals, provenance, audit log |
+| `afrm/pep.py` | §5.2–§5.5 | Non-LLM PEP: the six steps, default outcomes, "activatable element" and "value-bearing control", the Section 5.3 floor of sensitive actions, provenance, audit log |
 | `afrm/agent.py` | §5.1, §5.2 | `ManifestSession`: discover, find applicable traps, run a recovery, follow a shortcut, enter a listed value, commit a field — each through the PEP |
 | `afrm/playwright_page.py` | §4.2, §5.1, §5.4 | Live-document locator resolution (same-origin, in-scope frames only), trusted input through Playwright, security-control detection |
 
@@ -75,16 +75,36 @@ Shortcuts are offered only to the principal (`session.offer_shortcuts()`).
 
 ## "ask"
 
-Default outcomes follow the final -03 §5.2: Enter and Escape ask on every
-element; click, navigate and shortcuts ask; a wait over 5000 ms asks; focus,
-scroll, assert, dismissAlert, Tab, short waits and arrow/page keys on inert
-elements are allowed. A standing approval, for an origin the principal names,
-covers Enter only (never Escape, activatable elements, value-bearing arrows,
-click, navigate, shortcuts, values, long waits, or sensitive actions).
+Default outcomes follow -04 §5.2: Enter and Escape ask on every element; click,
+navigate and shortcuts ask; a wait over 5000 ms asks; focus, scroll, assert,
+dismissAlert, Tab, short waits and arrow/page keys on inert elements are allowed.
+There is no standing approval (withdrawn in -04): nothing turns an ask into an allow.
 
-Each ask shows the action, the role and accessible name of the element actually
-resolved, the page's origin and path, and publisher text marked
-`[publisher-written]`.
+Each ask shows **Target** (the action with its key or wait time; the role and
+accessible name of the element actually resolved; the destination's origin and
+path), **Source** (a recovery step, a field-hint commit, a shortcut, or the
+submission of a form the manifest modified, with the page's origin and path) and
+**Effect** (first every sensitive action the PEP determined, then the conventional
+effect, then a fixed statement that the page decides the actual effect; a wait has
+no such statement). Values the publisher controls are shown as quoted data;
+description and label text is appended last, marked `[publisher-written]`. A
+warning is added when the text drawn for an activatable element is not part of its
+accessible name (the name is an approximation of the accessible-name computation).
+
+Sensitive actions the PEP determines (§5.3 floor): a click or a key step other than
+Tab on a submit button; Enter on an element whose form owner could be submitted by
+implicit submission; any action on a form recorded as modified by the manifest or
+containing a password input. Provenance is recorded before a step runs, so the step
+that modifies a form and submits it in one go is already covered.
+
+Click target (§5.1): after any ask and immediately before the click, the adapter
+works out which element would receive it at the point it will use (innermost
+element, no retargeting across open shadow roots, every frame ancestor must lead to
+the frame) and accepts only the resolved element, a non-activatable shadow-including
+descendant, or a label of it. The check is repeated for up to 5000 ms, scrolling
+only; a failure is a PEP denial (`click-target-declined`), recorded. Key steps on an
+element the principal cannot see (transparent, hidden, outside the viewport) are
+declined the same way. The click is then sent at the checked point.
 
 * `DenyAsk` + `AbandonChooser` (defaults): automated benchmark runs have no
   principal, so every ask is declined and every list choice is abandoned; the
@@ -98,7 +118,7 @@ task (§5.4).
 "Form modified by the manifest" (§2) is the form owner of an element a click or
 non-Tab key step targeted, or into which a listed value was entered, or the
 whole document when there is no form owner. Any later click or Enter that can
-submit or save it is sensitive (no standing approval), and
+submit or save it is sensitive, and
 `session.submission_is_sensitive(element, url)` tells the agent's own code the same.
 
 ## Redirects

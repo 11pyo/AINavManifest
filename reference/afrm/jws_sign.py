@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Publisher-side signing helper for draft-han-ai-manifest-03 Section 6.1, and the test kit of the suite.
+"""Publisher-side signing helper for draft-han-ai-manifest-04 Section 6.1, and the test kit of the suite.
 
 Produces the compact, detached-payload JWS that ``jws.verify_manifest`` accepts.  Standard library only,
 no side-channel hardening: use it for tests, demos and offline signing, not on a shared machine with

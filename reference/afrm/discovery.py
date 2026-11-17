@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Manifest retrieval (draft-han-ai-manifest-03 Sections 3.1, 3.2, 3.5).
+"""Manifest retrieval (draft-han-ai-manifest-04 Sections 3.1, 3.2, 3.5).
 
 * Only /.well-known/ai-friction-manifest.json on the page's own origin.
   The old /.well-known/ai-manifest.json is ignored entirely (Section 3.1).

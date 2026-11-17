@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""End-to-end: real HTTP discovery + Chromium + PEP (final -03 rules).
+"""End-to-end: real HTTP discovery + Chromium + PEP (-04 rules).
 
 On a live page: Enter and click are "ask"; an HTTP 403 reached during recovery
 stops it; confirm() stops; alerts are dismissed and recorded; every redirect of

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Playwright page adapter for ManifestSession.
+"""Playwright page adapter for ManifestSession (draft-han-ai-manifest-04).
 
 * Locators are resolved against the live document at the time of use, only in
   frames of the manifest's origin whose path is in scope (Section 4.2). Open
   shadow roots are pierced by Playwright's role engine; cross-origin frames are
   never searched.
 * Actions go through Playwright's input pipeline (CDP Input events, trusted),
-  never through page script (Section 5.1).
+  never through page script (Section 5.1). Immediately before a click, and after any ask,
+  ``verify_click_target`` checks which element would receive the click (Section 5.1); the click itself is
+  then sent at the point that was checked.
 * Security-control detection (Section 5.4) is best effort: HTTP 401/403/429 on
   documents and fetch/XHR, pending confirm/prompt/beforeunload dialogs, CAPTCHA
   frames/widgets, password and one-time-code fields, site-built confirmation
@@ -46,12 +48,33 @@ el => {
                     editing_host: p.isContentEditable && !(p.parentElement && p.parentElement.isContentEditable)});
   const form = ('form' in el) ? el.form : null;
   const rendered = el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0;
+  const norm = s => (s || '').replace(/\s+/g, ' ').trim();
+  const doc = el.ownerDocument;
+  const drawn = norm((tag === 'input' && ['submit', 'button', 'reset'].includes(type)) ? el.value : el.innerText);
+  const labelledby = norm((el.getAttribute('aria-labelledby') || '').split(/\s+/)
+      .map(id => doc.getElementById(id)).filter(Boolean).map(e => e.innerText || e.textContent).join(' '));
+  const labels = norm(el.labels ? [...el.labels].map(l => l.innerText).join(' ') : '');
+  const name = labelledby || norm(el.getAttribute('aria-label')) ||
+      (tag === 'input' && type === 'image' ? norm(el.getAttribute('alt')) : '') ||
+      (tag === 'input' && ['submit', 'button', 'reset'].includes(type) ? norm(el.value) : '') ||
+      labels || drawn || norm(el.getAttribute('title')) || norm(el.value);
+  const isSubmit = e => (e.tagName === 'BUTTON' && e.type === 'submit') ||
+      (e.tagName === 'INPUT' && ['submit', 'image'].includes((e.type || '').toLowerCase()));
+  const BLOCKS = ['text', 'search', 'url', 'tel', 'email', 'password', 'date', 'month', 'week', 'time',
+                  'datetime-local', 'number'];
+  let implicit = false;
+  if (form) {
+    const fields = [...form.elements];
+    const dflt = fields.find(isSubmit);
+    if (dflt) implicit = !dflt.disabled;
+    else implicit = fields.filter(e => e.tagName === 'INPUT' && BLOCKS.includes((e.type || 'text').toLowerCase())).length <= 1;
+  }
   return {tag, role, input_type: type, has_href: el.hasAttribute('href'),
           form_id: form ? (form.id || form.getAttribute('name') || 'form#' + [...document.forms].indexOf(form)) : null,
-          form_has_credentials: form ? !!form.querySelector('input[type=password]') : false,
+          form_has_credentials: form ? [...form.elements].some(e => e.tagName === 'INPUT' && e.type === 'password') : false,
           editing_host: el.isContentEditable && !(el.parentElement && el.parentElement.isContentEditable),
-          ancestors, rendered,
-          name: (el.getAttribute('aria-label') || el.innerText || el.value || '').replace(/\s+/g, ' ').trim().slice(0, 120)};
+          ancestors, rendered, submit_button: isSubmit(el), implicit_submit: implicit,
+          rendered_text: drawn.slice(0, 120), name: name.slice(0, 120)};
 }
 """
 
@@ -98,6 +121,80 @@ _DETECT_JS = r"""
   if (/\b(401 unauthorized|403 forbidden|429 too many requests|access denied|rate limit exceeded)\b/i.test(text))
     out.push('in-page-denial');
   return out;
+}
+"""
+
+_HIT_JS = r"""
+(el, pt) => {
+  const [px, py] = pt;
+  const ACT_INPUT = ['submit', 'image', 'reset', 'button', 'checkbox', 'radio'];
+  const ACT_ROLE = ['button', 'link', 'menuitem', 'menuitemcheckbox', 'menuitemradio', 'option', 'tab', 'switch',
+                    'checkbox', 'radio'];
+  const activatable = n => n.nodeType === 1 && (
+      n.tagName === 'BUTTON' || ((n.tagName === 'A' || n.tagName === 'AREA') && n.hasAttribute('href')) ||
+      n.tagName === 'SUMMARY' || (n.tagName === 'INPUT' && ACT_INPUT.includes((n.type || 'text').toLowerCase())) ||
+      ACT_ROLE.includes(((n.getAttribute('role') || '').trim().split(/\s+/)[0] || '').toLowerCase()));
+  // innermost element at the point, descending into OPEN shadow roots (no retargeting across the boundary)
+  const deep = (doc, x, y) => {
+    let e = doc.elementFromPoint(x, y);
+    while (e && e.shadowRoot) {
+      const inner = e.shadowRoot.elementFromPoint(x, y);
+      if (!inner || inner === e) break;
+      e = inner;
+    }
+    return e;
+  };
+  const vis = el.checkVisibility ? el.checkVisibility({checkOpacity: true, checkVisibilityCSS: true,
+                                                       opacityProperty: true, visibilityProperty: true}) : true;
+  if (!vis) return {ok: false, why: 'element is not visible (transparent, hidden or not rendered)'};
+  const chain = [];
+  let top;
+  try {
+    let w = el.ownerDocument.defaultView;
+    while (w !== w.top) {
+      const fe = w.frameElement;
+      if (!fe) return {ok: false, why: 'frame chain is not accessible'};
+      chain.push(fe);
+      w = w.parent;
+    }
+    top = w.document;
+  } catch (e) { return {ok: false, why: 'frame chain is not accessible'}; }
+  chain.reverse();
+  let doc = top, x = px, y = py;
+  try {
+    for (const fe of chain) {                           // each ancestor document must lead to the frame
+      const h = deep(doc, x, y);
+      if (h !== fe) return {ok: false, why: 'the frame that leads to the element is not at the point'};
+      const r = fe.getBoundingClientRect(), cs = fe.ownerDocument.defaultView.getComputedStyle(fe);
+      x -= r.left + fe.clientLeft + parseFloat(cs.paddingLeft);
+      y -= r.top + fe.clientTop + parseFloat(cs.paddingTop);
+      doc = fe.contentDocument;
+      if (!doc) return {ok: false, why: 'frame document is not accessible'};
+    }
+  } catch (e) { return {ok: false, why: 'frame chain is not accessible'}; }
+  const hit = deep(doc, x, y);
+  if (!hit) return {ok: false, why: 'no element at the point (outside the viewport or clipped away)'};
+  if (hit === el) return {ok: true};
+  if (hit.tagName === 'LABEL' && hit.control === el) return {ok: true};
+  for (let n = hit; n; n = n.nodeType === 11 ? n.host : n.parentNode) {   // up the shadow-including tree
+    if (n === el) return {ok: true};
+    if (activatable(n)) return {ok: false, why: 'an activatable element lies between the point and the element'};
+  }
+  return {ok: false, why: 'another element would receive the click'};
+}
+"""
+
+_VISIBLE_JS = r"""
+(el, pt) => {
+  const vis = el.checkVisibility ? el.checkVisibility({checkOpacity: true, checkVisibilityCSS: true,
+                                                       opacityProperty: true, visibilityProperty: true}) : true;
+  if (!vis) return {ok: false, why: 'element is not visible (transparent, hidden or not rendered)'};
+  let w = el.ownerDocument.defaultView;
+  try { if (w !== w.top) w = w.top; } catch (e) { return {ok: false, why: 'frame chain is not accessible'}; }
+  const vw = w.innerWidth, vh = w.innerHeight;
+  if (!(pt[0] >= 0 && pt[1] >= 0 && pt[0] < vw && pt[1] < vh))
+    return {ok: false, why: 'the in-view position is outside the viewport'};
+  return {ok: true};
 }
 """
 
@@ -276,10 +373,54 @@ class PlaywrightPage:
             self.page.wait_for_timeout(100)
         return not self.condition_holds(cond)
 
+    # -- Section 5.1 checks. The click is sent at the point that was checked; the repeat window may only scroll.
+    def _point(self, handle):
+        """(x, y) in the main viewport, and the same point relative to the element's padding box."""
+        handle.scroll_into_view_if_needed(timeout=5000)
+        box = handle.bounding_box()
+        if not box or box["width"] <= 0 or box["height"] <= 0:
+            return None
+        bw, bh = handle.evaluate("e => [e.clientLeft, e.clientTop]")
+        x, y = box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
+        return x, y, box["width"] / 2 - bw, box["height"] / 2 - bh
+
+    def _verified(self, handle, js, timeout_ms=5000):
+        import time
+        deadline = time.monotonic() + timeout_ms / 1000
+        why = "not checked"
+        while True:
+            try:
+                pt = self._point(handle)
+                if pt is None:
+                    why = "the element has no box"
+                else:
+                    r = handle.evaluate(js, [pt[0], pt[1]])
+                    if r["ok"]:
+                        return True, "", pt
+                    why = r["why"]
+            except PlaywrightError as e:
+                why = "the check could not run: " + type(e).__name__
+            if time.monotonic() >= deadline:
+                return False, why, None
+            self.page.wait_for_timeout(100)
+
+    def verify_click_target(self, handle):
+        ok, why, _ = self._verified(handle, _HIT_JS)
+        return ok, why
+
+    def verify_key_target(self, handle):
+        """Section 5.1 SHOULD: a key step on an element the principal cannot see at its in-view position is declined."""
+        ok, why, _ = self._verified(handle, _VISIBLE_JS)
+        return ok, why
+
     def perform(self, action, handle, key=None) -> bool:
         try:
             if action == "click":
-                handle.click(timeout=5000)
+                pt = self._point(handle)
+                if pt is None:
+                    return False
+                # force: Playwright's own hit-target wait is not used, Section 5.1 has been checked at this point
+                handle.click(position={"x": pt[2], "y": pt[3]}, force=True, timeout=5000)
                 self.page.wait_for_load_state("load", timeout=5000)   # let a triggered navigation land
             elif action == "focus":
                 handle.focus(timeout=5000)

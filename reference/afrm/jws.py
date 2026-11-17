@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Publisher signature verification (draft-han-ai-manifest-03 Section 6.1).  Standard library only.
+"""Publisher signature verification (draft-han-ai-manifest-04 Section 6.1).  Standard library only.
 
 Each element of ``signatures`` is a JWS [RFC7515] in compact serialization with a detached payload
 (Appendix F), over the RFC 8785 canonical form of the manifest with ``signatures`` removed

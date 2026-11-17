@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Manifest-aware agent core for version "2.0" manifests.
+"""Manifest-aware agent core for version "2.0" manifests (draft-han-ai-manifest-04).
 
 Two surfaces, kept apart as Section 4.7 requires:
 
@@ -22,6 +22,7 @@ Principal-facing handlers:
   shortcut labels): ``ConsoleChooser`` or ``AbandonChooser`` (default; automated
   runs abandon the entry).
 """
+import json
 from dataclasses import dataclass, field
 from typing import Optional
 from urllib.parse import urlsplit
@@ -37,26 +38,78 @@ PUBLISHER = "[publisher-written]"
 
 # ---------------------------------------------------------------- principal side
 
+PAGE_DECIDES = ("Effect: the page decides the actual effect, which the agent cannot determine; "
+                "it can include a purchase, a deletion, or another sensitive action.")
+"""Fixed wording of Section 5.2: it discloses that the effect is unknown and identifies no effect, so a
+check of whether an ask 'names the effect' must not count it (adversarial.run_eval.discloses drops it)."""
+
+_SOURCE = {"step": "a recovery step of a known trap", "commit": "the commit of a field hint",
+           "shortcut": "a shortcut", "value": "a value the principal chose from a field hint"}
+_CONVENTIONAL = {"click": "activating the element", "focus": "moving focus to the element",
+                 "scroll": "scrolling", "assert": "checking that the element exists",
+                 "navigate": "loading the destination with GET", "dismissAlert": "dismissing an alert",
+                 "wait": "letting time pass"}
+
+
+def q(value) -> str:
+    """Publisher-controlled values are shown as quoted data, apart from the agent's own wording."""
+    return json.dumps(value, ensure_ascii=False)
+
+
 def describe_ask(req: ActionRequest, d: Decision) -> list:
-    """Lines an ask must show (Section 5.2): the action; for element actions the
-    resolved element's role and accessible name; the page's origin and path;
-    publisher text visibly marked as publisher-written."""
-    what = req.action if req.action != "key" else f"press {req.step.get('key')}"
-    lines = [f"Action: {what}"]
-    if d.element is not None:
-        lines.append(f"Element: role={d.element.role or d.element.tag} name={d.element.name!r}")
+    """The lines an ask shows (Section 5.2): Target, Source, Effect. Built from the live page, the structural
+    values of the validated descriptor and the PEP's own classification; never from description or label text
+    (those are appended afterwards, marked as publisher-written)."""
+    action = req.action
+    key = (req.step or {}).get("key") if req.step else None
+    el = d.element
+    if action == "wait":
+        target = f"Target: wait {req.step.get('timeoutMs')} ms"
+    elif action in ("navigate",) or req.kind == "shortcut":
+        url = d.target_url or ""
+        target = f"Target: navigate to origin {q(origin_of(url) if url else '')} path {q(urlsplit(url).path if url else '')}"
+    elif req.kind == "value":
+        target = "Target: enter the value the principal chose into the focused element"
+        if el is not None:
+            target += f" (role {q(el.role or el.tag)}, accessible name {q(el.name)})"
+    else:
+        what = f"press {key}" if action == "key" else action
+        target = f"Target: {what}"
+        if el is not None:
+            target += f" on the element with role {q(el.role or el.tag)} and accessible name {q(el.name)}"
+    lines = [target]
+
+    src = f"Source: {_SOURCE.get(req.kind, req.kind)} from the manifest of the page's origin"
     if d.document_url:
         p = urlsplit(d.document_url)
-        lines.append(f"Page: {origin_of(d.document_url)}{p.path or '/'}")
-    if d.target_url:
-        lines.append(f"Destination: {d.target_url}")
-    for key in ("description", "label"):
-        if req.descriptor.get(key):
-            lines.append(f"{PUBLISHER} {req.descriptor[key]}")
-    if d.warning:
+        src += f"; page origin {q(origin_of(d.document_url))} path {q(p.path or '/')}"
+    if d.form_modified:
+        src += "; the submission of a form the manifest modified"
+    lines.append(src)
+
+    if d.sensitive:                                     # the sensitive actions the PEP determined come first
+        lines += [f"Effect: sensitive action determined by the agent: {e}" for e in d.effects]
+    conv = _CONVENTIONAL.get(action)
+    if req.kind == "shortcut":
+        conv = _CONVENTIONAL["navigate"]
+    if action == "key":
+        conv = {"Enter": "committing with Enter", "Escape": "dismissing with Escape"}.get(key, f"pressing {key}")
+        if el is not None and key not in ("Enter", "Escape"):
+            conv += " (this can change the value of a control)"
+    if conv:
+        lines.append(f"Effect: conventional effect: {conv}")
+    if req.kind == "value":
+        lines.append("Effect: conventional effect: changing the value of a control")
+    if action != "wait":
+        lines.append(PAGE_DECIDES)
+    if d.warning == "mislabel" and el is not None:
+        lines.append(f"Warning: the text drawn for this element ({q(el.rendered_text)}) is not part of its "
+                     f"accessible name ({q(el.name)})")
+    elif d.warning:
         lines.append(f"Warning: {d.warning}")
-    if d.sensitive:
-        lines.append("Sensitive: this can submit or save a form changed by manifest-derived actions.")
+    for k in ("description", "label"):
+        if req.descriptor.get(k):
+            lines.append(f"{PUBLISHER} {req.descriptor[k]}")
     return lines
 
 
@@ -121,7 +174,6 @@ class ManifestSession:
     choose: object = field(default_factory=AbandonChooser)
     audit: AuditLog = field(default_factory=AuditLog)
     agent_policy: object = None
-    standing_approvals: frozenset = frozenset()
     manifest: Optional[dict] = None
     rejected_reason: Optional[str] = None
     pep: Optional[PolicyEnforcementPoint] = None
@@ -161,7 +213,6 @@ class ManifestSession:
         if hasattr(self.page, "bind"):
             self.page.bind(manifest)
         self.pep = PolicyEnforcementPoint(manifest, self.audit, agent_policy=self.agent_policy,
-                                          standing_approvals=self.standing_approvals,
                                           provenance=Provenance())
 
     # -- reactive consultation (Section 5.1)
@@ -188,11 +239,10 @@ class ManifestSession:
         return d, None
 
     def _after(self, req, d, principal, executed, alert_text=None) -> Optional[str]:
-        """Record step 6, update provenance, and re-check security controls."""
+        """Record step 6 and re-check security controls (provenance was noted before execution)."""
         if d.outcome != DENY:
             self.pep.record(req, d, principal=principal, executed=executed, alert_text=alert_text)
         if executed:
-            self.pep.provenance.note(req, d.element, d.document_url)
             controls = self.page.detect_security_controls()
             if controls:
                 stop = Decision(DENY, "security-control:" + ",".join(sorted(controls)), stop=True)
@@ -217,12 +267,31 @@ class ManifestSession:
                 self._after(req, d, principal, executed=False)
             # Section 5.2: abandon the descriptor, never try a variant of it.
             return "abandoned", d.reason if d.outcome == DENY else "principal declined", False
+        # Section 2: the form this step modifies is recorded BEFORE the step runs.
+        self.pep.provenance.note(req, d.element, d.document_url)
+        bad = self._target_check(req, d)
+        if bad:                                          # Section 5.1: treated as denied by the PEP, recorded (5.5)
+            self.pep.record(req, Decision(DENY, bad, element=d.element, document_url=d.document_url),
+                            principal=principal, executed=False)
+            return "abandoned", bad, False
         alert_text, ok = execute(d)
         sc = self._after(req, d, principal, executed=True, alert_text=alert_text)
         if sc:
             self._stop_task()
             return "stopped", sc, True
         return ("ok" if ok else "failed"), "", True
+
+    def _target_check(self, req: ActionRequest, d: Decision) -> Optional[str]:
+        """Section 5.1, immediately before the input and after any ask: a click must reach the resolved element
+        (or an allowed descendant or label); a click or key step on an element the principal cannot see is
+        declined. The adapter repeats the check for up to 5000 ms, scrolling only. None = proceed."""
+        if d.handle is None or req.action not in ("click", "key"):
+            return None
+        check = getattr(self.page, "verify_click_target" if req.action == "click" else "verify_key_target", None)
+        if check is None:
+            return None
+        ok, why = check(d.handle)
+        return None if ok else f"{'click' if req.action == 'click' else 'key'}-target-declined: {why}"
 
     def recover(self, trap_no: int) -> RecoveryResult:
         trap = self.traps.get(trap_no)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """JSON Canonicalization Scheme (RFC 8785) and the manifest digest of
-draft-han-ai-manifest-03 Section 5.5 / 6.1.
+draft-han-ai-manifest-04 Section 5.5 / 6.1.
 
 Input is assumed to be I-JSON (validator.parse_i_json enforces that), so
 strings carry no lone surrogates and integers fit IEEE 754 doubles.
