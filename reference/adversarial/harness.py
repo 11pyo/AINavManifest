@@ -182,7 +182,7 @@ class RecordingAsk:
         return self.approve
 
 
-def run_pep(attack, arm, page, site, rec, *, see_strings=False, fetch=None, standing=None):
+def run_pep(attack, arm, page, site, rec, *, see_strings=False, fetch=None, standing=None, no_designation=False):
     approve = arm == "P-careless"
     asks, choices = [], []
     sizes = []
@@ -206,7 +206,8 @@ def run_pep(attack, arm, page, site, rec, *, see_strings=False, fetch=None, stan
 
     pw.wait_until_clear = spy
     use_standing = attack.standing if standing is None else standing
-    s = ManifestSession(pw, ask=RecordingAsk(approve, asks), choose=chooser,
+    keys = attack.designated(site) if (attack.designated and not no_designation) else {}
+    s = ManifestSession(pw, ask=RecordingAsk(approve, asks), choose=chooser, designated_keys=keys,
                         standing_approvals=frozenset({site.origin}) if use_standing else frozenset())
     try:
         ok = s.discover(fetch=fetch_)

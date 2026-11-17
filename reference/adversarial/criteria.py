@@ -3,7 +3,7 @@
 
     python -m adversarial.criteria > adversarial/CRITERIA.md
 """
-from .attacks import ARMS, ATTACKS
+from .attacks import ARMS, ATTACKS, SIGNATURE_ATTACKS
 
 
 def render() -> str:
@@ -19,6 +19,16 @@ def render() -> str:
         out.append(f"| {a.id} | {a.title} | {a.appendix_b or '-'} | `{a.start}` | {a.criterion} | "
                    f"{'yes' if a.standing else '-'} | " + " | ".join(a.expect[m] for m in ARMS)
                    + f" | {', '.join(a.ablation) or '-'} |")
+        if a.note:
+            notes.append(f"* **{a.id}**: {a.note}")
+    out += ["", "## Section 6.1 signature attacks (registered after the JWS verifier was implemented, before they were measured)", "",
+            "Run with `--set signature`. A key is designated for the site origin in the P arms unless the row says otherwise;",
+            "N and S have no signature check by definition, so their cells are by-construction bounds.", "",
+            "| ID | Attack | Start | Success criterion (oracle) | Standing | " + " | ".join(ARMS) + " | Expected blocking control(s) |",
+            "|---|---|---|---|---|" + "---|" * len(ARMS) + "---|"]
+    for a in SIGNATURE_ATTACKS:
+        out.append(f"| {a.id} | {a.title} | `{a.start}` | {a.criterion} | {'yes' if a.standing else '-'} | "
+                   + " | ".join(a.expect[m] for m in ARMS) + f" | {', '.join(a.ablation) or '-'} |")
         if a.note:
             notes.append(f"* **{a.id}**: {a.note}")
     return "\n".join(out) + "\n"

@@ -14,6 +14,8 @@ from afrm.playwright_page import PlaywrightPage
 
 ABLATIONS = ("string-block", "provenance", "redirect-hop-check", "sensitive-rule", "locator-uniqueness",
              "security-control-stop", "descriptor-validation", "discovery-no-redirect")
+# Added with the JWS verifier; kept out of ABLATIONS so that "--ablations all" still means the recorded set.
+SIGNATURE_ABLATIONS = ("signature-check",)
 
 
 def _follow_redirect_fetch(url):
@@ -35,7 +37,7 @@ def apply(name):
     if name is None:
         yield {}
         return
-    assert name in ABLATIONS, name
+    assert name in ABLATIONS + SIGNATURE_ABLATIONS, name
     patches, opts = [], {}
     if name == "string-block":
         opts["see_strings"] = True                       # the model is shown the manifest's strings
@@ -69,6 +71,8 @@ def apply(name):
         patches.append(mock.patch.object(pep_mod.PolicyEnforcementPoint, "_validate", lambda self, req: None))
     elif name == "discovery-no-redirect":
         opts["fetch"] = _follow_redirect_fetch
+    elif name == "signature-check":
+        opts["no_designation"] = True                    # the agent has no designated key: signatures are ignored
     for p in patches:
         p.start()
     try:

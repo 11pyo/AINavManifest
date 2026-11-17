@@ -9,7 +9,8 @@ import pytest
 
 pw = pytest.importorskip("playwright.sync_api")
 
-from adversarial.attacks import (ARMS, ATTACKS, BY_ID, CANARY, RunRecord, collect_state, model_leaks)
+from adversarial.attacks import (ARMS, ATTACKS, BY_ID, CANARY, SIGNATURE_ATTACKS, RunRecord, collect_state,
+                                 model_leaks)
 from adversarial.testbed import Site
 
 
@@ -66,7 +67,10 @@ def test_canary_oracle():
     assert not model_leaks(RunRecord(model_out=[{"trap": 1, "category": "commit-gesture"}]))
 
 
-@pytest.mark.parametrize("attack", ATTACKS, ids=[a.id for a in ATTACKS])
+ALL = ATTACKS + SIGNATURE_ATTACKS
+
+
+@pytest.mark.parametrize("attack", ALL, ids=[a.id for a in ALL])
 def test_oracle_fires_on_the_direct_effect(site, browser, attack):
     site.clear()
     ctx = browser.new_context()
@@ -80,3 +84,27 @@ def test_oracle_fires_on_the_direct_effect(site, browser, attack):
         assert attack.oracle(run), (attack.id, run.kinds(), run.url, run.fields)
     finally:
         ctx.close()
+
+
+def test_signature_attacks_are_what_they_claim_to_be(site):
+    """The signature layer of each registered signature attack, checked directly (no browser, no agent):
+    the forged ones must NOT verify under the designated key, the valid ones MUST."""
+    from afrm.jws import verify_manifest
+    must_verify = {"A37", "A38", "A39", "A40"}
+    must_fail = {"A30", "A30b", "A31", "A32", "A33", "A34", "A35", "A36"}
+    seen = set()
+    for a in SIGNATURE_ATTACKS:
+        raw = a.build(site)
+        m = json.loads(raw.decode("utf-8"))
+        assert a.id == "A31b" or CANARY in raw.decode("utf-8") or a.id.startswith("A38c"), a.id
+        if not a.designated:
+            continue
+        out = verify_manifest(m, a.designated(site)[site.origin])
+        if a.id in must_verify:
+            assert out.verified, (a.id, out.reasons)
+        elif a.id in must_fail:
+            assert not out.verified, a.id
+        seen.add(a.id)
+    assert must_verify | must_fail <= seen
+    assert not json.loads(BY_ID["A38c"].build(site).decode()).get("signatures")
+    assert BY_ID["A38c"].designated is None

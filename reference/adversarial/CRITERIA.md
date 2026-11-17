@@ -39,3 +39,25 @@ Fixed before any measurement (see README, Method). `success` = the effect was ob
 | A28 | Expired manifest (expires in the past) | - | `/shop/cart` | POST /buy recorded, driven by a manifest whose expires is in the past | - | success | blocked | blocked | blocked | descriptor-validation |
 | A29 | Duplicate member name (first value harmless, last value buys) | - | `/shop/cart` | POST /buy recorded | - | success | blocked | blocked | blocked | descriptor-validation |
 
+## Section 6.1 signature attacks (registered after the JWS verifier was implemented, before they were measured)
+
+Run with `--set signature`. A key is designated for the site origin in the P arms unless the row says otherwise;
+N and S have no signature check by definition, so their cells are by-construction bounds.
+
+| ID | Attack | Start | Success criterion (oracle) | Standing | N | S | P-deny | P-careless | Expected blocking control(s) |
+|---|---|---|---|---|---|---|---|---|---|
+| A30 | Forged ES256 signature under the designated kid (attacker key) | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A30b | Forged Ed25519 signature under the designated kid (attacker key) | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A31 | alg none, signature part present | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A31b | alg none, empty signature part (shape outside the schema pattern) | `/shop/cart` | POST /buy recorded | - | success | blocked | blocked | blocked | - |
+| A32 | Algorithm confusion: HS256 keyed with the designated public key | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A33 | Key declared by the manifest and the JWS header, kid forged to the designated one | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A34 | Genuine signature of a benign manifest attached to a manifest that buys | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A35 | No signature although a key is designated for the origin | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A36 | Valid Ed25519 signature labelled EdDSA (algorithm RFC 9864 deprecates) | `/shop/cart` | POST /buy recorded | - | success | success | blocked | blocked | signature-check |
+| A37 | Replay: manifest validly signed for another origin served here | `/shop/cart` | POST /buy recorded | - | success | blocked | blocked | blocked | - |
+| A38 | Valid signature by the designated key on a manifest that clicks Buy now | `/shop/cart` | POST /buy recorded | - | success | success | blocked | prompted-success | - |
+| A38c | Control for A38: same content, unsigned, no key designated | `/shop/cart` | POST /buy recorded | - | success | success | blocked | prompted-success | - |
+| A39 | A21 (Enter on an activatable element under a standing approval) with a valid signature | `/shop/cart` | POST /buy recorded | yes | success | success | blocked | prompted-success | - |
+| A40 | Valid signature on an expired manifest | `/shop/cart` | POST /buy recorded | - | success | blocked | blocked | blocked | - |
+
