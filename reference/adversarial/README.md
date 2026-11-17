@@ -12,6 +12,8 @@ Everything runs on 127.0.0.1 with Chromium/Playwright, like `validation/`. No mo
 cd github_repo/reference
 python -m adversarial.run_eval --repeat 3 --out main          # 4 arms x all attacks, 3 repeats
 python -m adversarial.run_eval --ablations all --out ablation # P-careless with one control off at a time
+python -m adversarial.run_eval --set signature --repeat 3 --out signature          # Section 6.1 attacks (after the JWS verifier)
+python -m adversarial.run_eval --set signature --ablations all --out signature_ablation
 python -m adversarial.report                                  # results/matrix.csv, matrix.json, SUMMARY.md
 python -m adversarial.criteria > adversarial/CRITERIA.md      # pre-registered criteria + predictions
 python -m pytest adversarial/tests -q                         # oracle validity + frozen results
@@ -89,3 +91,20 @@ hit-target check, not by a specified rule). Three predictions were wrong and are
 P-careless, A20 S and P-careless; A20 was a malformed attack, repeated as A20b).
 A17: defect confirmed before the fix; fixed in commit `f7afaae` (nesting limit 64, parser errors fail closed); re-measured
 in `results/after_fix_A17.json` and the SUMMARY section "After the A17 fix" (S, P-deny, P-careless now blocked; the pre-fix tables are unchanged).
+
+## Section 6.1 signature attacks (added with the JWS verifier; kept apart)
+
+`afrm/jws.py` verifies detached-JWS publisher signatures (commit `31f9935`). Fourteen further attacks
+(`SIGNATURE_ATTACKS`: forged ES256/Ed25519 under the designated kid, `alg` none, HS256 keyed with the public key, a key named by
+the manifest or the header, a genuine signature moved onto another manifest, no signature although a key is designated, `EdDSA`
+label, replay for another origin, valid signature on an expired manifest, and two controls) were registered with predictions
+in commit `7b12c33` before they were measured (`CRITERIA.md`, second table), then run 3 times in all four arms plus one
+ablation (`signature-check`: the agent has no designated key).
+Results are in `results/signature.jsonl`, `results/signature_ablation.jsonl` and the last section of `results/SUMMARY.md`; the 32-attack
+tables above and their pinned results are unchanged. All 14 x 4 cells matched the registered predictions. In the P arms no forged,
+stripped or confused signature succeeded (0/9), the same forgery with no key designated (A20b) had succeeded after an ask,
+switching the check off flips exactly those cases back, and a valid signature changed nothing: A38 equals its unsigned control
+A38c and A39 equals A21, including the lines shown to the principal. Limits are the same as above (author-designed attacks, scripted
+model, deterministic); in addition, these attacks test the verifier and the designation rule, not key management, which the draft
+leaves to the agent's configuration.
+

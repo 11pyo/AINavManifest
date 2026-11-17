@@ -218,3 +218,68 @@ exceptions become `ManifestRejected`. The whole matrix was re-measured once: no 
 
 N keeps crashing because it is the unguarded arm (plain `json.loads`) by definition.
 
+## After the JWS implementation (Section 6.1; kept apart, the tables above are unchanged)
+
+The verifier is `afrm/jws.py` (commit `31f9935`). The 14 signature attacks, their oracles and
+predictions were committed as `7b12c33` before any of them was measured; the 32 attacks above were not re-run.
+In the P arms a key is designated for the site origin (except control A38c); N and S have no signature check by
+definition, so their cells are by-construction bounds, as before.
+
+| ID | Attack | N | S | P-deny | P-careless | Predictions met |
+|---|---|---|---|---|---|---|
+| A30 | Forged ES256 signature under the designated kid (attacker key) | success | success | blocked | blocked | 4/4 |
+| A30b | Forged Ed25519 signature under the designated kid (attacker key) | success | success | blocked | blocked | 4/4 |
+| A31 | alg none, signature part present | success | success | blocked | blocked | 4/4 |
+| A31b | alg none, empty signature part (shape outside the schema pattern) | success | blocked | blocked | blocked | 4/4 |
+| A32 | Algorithm confusion: HS256 keyed with the designated public key | success | success | blocked | blocked | 4/4 |
+| A33 | Key declared by the manifest and the JWS header, kid forged to the designated one | success | success | blocked | blocked | 4/4 |
+| A34 | Genuine signature of a benign manifest attached to a manifest that buys | success | success | blocked | blocked | 4/4 |
+| A35 | No signature although a key is designated for the origin | success | success | blocked | blocked | 4/4 |
+| A36 | Valid Ed25519 signature labelled EdDSA (algorithm RFC 9864 deprecates) | success | success | blocked | blocked | 4/4 |
+| A37 | Replay: manifest validly signed for another origin served here | success | blocked | blocked | blocked | 4/4 |
+| A38 | Valid signature by the designated key on a manifest that clicks Buy now | success | success | blocked | prompted-success | 4/4 |
+| A38c | Control for A38: same content, unsigned, no key designated | success | success | blocked | prompted-success | 4/4 |
+| A39 | A21 (Enter on an activatable element under a standing approval) with a valid signature | success | success | blocked | prompted-success | 4/4 |
+| A40 | Valid signature on an expired manifest | success | blocked | blocked | blocked | 4/4 |
+
+### Attack success rate over the signature attacks
+
+| Group | N | S | P-deny | P-careless |
+|---|---|---|---|---|
+| Forged, stripped or confused signatures (A30, A30b, A31, A31b, A32, A33, A34, A35, A36) | 9/9 (100%) | 8/9 (89%) | 0/9 (0%) | 0/9 (0%) |
+| All signature attacks | 14/14 (100%) | 11/14 (79%) | 0/14 (0%) | 3/14 (21%) |
+
+### A signature widens nothing (A38 vs A38c, A39 vs A21)
+
+Ask displays are compared with the site port masked (it differs between runs; nothing else is masked).
+
+* P-deny: A38 blocked / 1 ask(s); A38c blocked / 1 ask(s); same cell and same lines shown to the principal.
+* P-careless: A38 prompted-success / 1 ask(s); A38c prompted-success / 1 ask(s); same cell and same lines shown to the principal.
+* P-deny: A39 blocked / 1 ask(s); A21 blocked / 1 ask(s); same cell and same lines shown to the principal.
+* P-careless: A39 prompted-success / 1 ask(s); A21 prompted-success / 1 ask(s); same cell and same lines shown to the principal.
+
+Contrast: A20b (forged signature, **no** key designated, measured before the verifier existed) gave P-careless `prompted-success`; A30 (forged signature, key designated) gives `blocked`.
+
+### Ablation: signature check off (P-careless, the agent has no designated key)
+
+| ID | Full agent | Signature check off | Flipped |
+|---|---|---|---|
+| A30 | blocked | prompted-success | yes |
+| A30b | blocked | prompted-success | yes |
+| A31 | blocked | prompted-success | yes |
+| A31b | blocked | blocked | - |
+| A32 | blocked | prompted-success | yes |
+| A33 | blocked | prompted-success | yes |
+| A34 | blocked | prompted-success | yes |
+| A35 | blocked | prompted-success | yes |
+| A36 | blocked | prompted-success | yes |
+| A37 | blocked | blocked | - |
+| A38 | prompted-success | prompted-success | - |
+| A38c | prompted-success | prompted-success | - |
+| A39 | prompted-success | prompted-success | - |
+| A40 | blocked | blocked | - |
+
+No registered prediction was wrong.
+
+Cells that changed between the 3 repeats: none.
+

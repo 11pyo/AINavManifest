@@ -5,6 +5,7 @@
 """
 import csv
 import json
+import re
 import sys
 from collections import Counter, OrderedDict
 from pathlib import Path
@@ -239,8 +240,98 @@ def build():
         for r in d["rows"]:
             L.append(f"| {r['arm']} | {r['before']} | {r['after']} | {r['crashed_after'] or 'none'} |")
         L += ["", "N keeps crashing because it is the unguarded arm (plain `json.loads`) by definition.", ""]
+    L += signature_section(out)
     (RES / "SUMMARY.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     return "\n".join(L)
+
+
+JWS_IMPL_COMMIT, JWS_PREREG_COMMIT = "31f9935", "7b12c33"
+FORGERY = ("A30", "A30b", "A31", "A31b", "A32", "A33", "A34", "A35", "A36")
+
+
+def _mask(asks):
+    """The site port differs between runs; it is the only thing masked when ask displays are compared."""
+    return re.sub(r"127\.0\.0\.1:\d+", "<site>", json.dumps(asks))
+
+
+def signature_section(out):
+    """Appended after the pre-JWS tables, never replacing them (Section 6.1 attacks, run after the verifier existed)."""
+    from .attacks import SIGNATURE_ATTACKS
+    rows, abl = load("signature"), load("signature_ablation")
+    if not rows:
+        return []
+    c = cells(rows)
+    ac = cells(abl)
+    mc = cells(load("main"))
+    L = ["## After the JWS implementation (Section 6.1; kept apart, the tables above are unchanged)", "",
+         f"The verifier is `afrm/jws.py` (commit `{JWS_IMPL_COMMIT}`). The {len(SIGNATURE_ATTACKS)} signature attacks, their oracles and",
+         f"predictions were committed as `{JWS_PREREG_COMMIT}` before any of them was measured; the 32 attacks above were not re-run.",
+         "In the P arms a key is designated for the site origin (except control A38c); N and S have no signature check by",
+         "definition, so their cells are by-construction bounds, as before.", "",
+         "| ID | Attack | " + " | ".join(ARMS) + " | Predictions met |", "|---|---|" + "---|" * len(ARMS) + "---|"]
+    mism, nondet = [], []
+    for a in SIGNATURE_ATTACKS:
+        cols, met = [], 0
+        for arm in ARMS:
+            runs = c.get((a.id, arm, None)) or []
+            vals = sorted({r["cell"] for r in runs})
+            if len(vals) > 1:
+                nondet.append((a.id, arm, vals))
+            v = runs[0]["cell"] if runs else "-"
+            ok = bool(runs) and runs[0]["status"] == "match"
+            if runs and not ok:
+                mism.append((a.id, arm, v, a.expect[arm], runs[0]["status"]))
+            met += ok
+            cols.append(v + ("" if ok or not runs else " **(MISMATCH)**"))
+        L.append(f"| {a.id} | {a.title} | " + " | ".join(cols) + f" | {met}/{len(ARMS)} |")
+    L.append("")
+    out["signature"] = {"cells": {f"{k[0]}|{k[1]}": v[0]["cell"] for k, v in c.items() if k[2] is None},
+                        "mismatches": mism, "nondeterministic": nondet}
+    L += ["### Attack success rate over the signature attacks", "",
+          "| Group | " + " | ".join(ARMS) + " |", "|---|" + "---|" * len(ARMS)]
+    for label, ids in (("Forged, stripped or confused signatures (" + ", ".join(FORGERY) + ")", FORGERY),
+                       ("All signature attacks", [a.id for a in SIGNATURE_ATTACKS])):
+        cols = []
+        for arm in ARMS:
+            n = sum(1 for i in ids if c.get((i, arm, None)))
+            k = sum(1 for i in ids if c.get((i, arm, None)) and c[(i, arm, None)][0]["cell"] != "blocked")
+            cols.append(pct(k, n))
+        L.append(f"| {label} | " + " | ".join(cols) + " |")
+    L += ["", "### A signature widens nothing (A38 vs A38c, A39 vs A21)", "",
+          "Ask displays are compared with the site port masked (it differs between runs; nothing else is masked).", ""]
+    for x, y, src in (("A38", "A38c", c), ("A39", "A21", None)):
+        for arm in ("P-deny", "P-careless"):
+            r1 = (c.get((x, arm, None)) or [None])[0]
+            r2 = ((src or mc).get((y, arm, None)) or [None])[0]
+            if r1 and r2:
+                same = r1["cell"] == r2["cell"] and _mask(r1["asks"]) == _mask(r2["asks"])
+                L.append(f"* {arm}: {x} {r1['cell']} / {len(r1['asks'])} ask(s); {y} {r2['cell']} / {len(r2['asks'])} ask(s); "
+                         + ("same cell and same lines shown to the principal." if same else "**DIFFERENT**."))
+    r1 = (c.get(("A30", "P-careless", None)) or [None])[0]
+    r2 = (mc.get(("A20b", "P-careless", None)) or [None])[0]
+    if r1 and r2:
+        L += ["", f"Contrast: A20b (forged signature, **no** key designated, measured before the verifier existed) gave P-careless "
+                  f"`{r2['cell']}`; A30 (forged signature, key designated) gives `{r1['cell']}`."]
+    if abl:
+        L += ["", "### Ablation: signature check off (P-careless, the agent has no designated key)", "",
+              "| ID | Full agent | Signature check off | Flipped |", "|---|---|---|---|"]
+        for a in SIGNATURE_ATTACKS:
+            full = (c.get((a.id, "P-careless", None)) or [None])[0]
+            off = (ac.get((a.id, "P-careless", "signature-check")) or [None])[0]
+            if full and off:
+                flipped = (full["cell"] == "blocked") != (off["cell"] == "blocked")
+                L.append(f"| {a.id} | {full['cell']} | {off['cell']} | {'yes' if flipped else '-'} |")
+        L.append("")
+    if mism:
+        L += ["### Prediction mismatches (kept as registered)", "",
+              "| ID | Arm | Observed | Registered | Status |", "|---|---|---|---|---|"]
+        L += [f"| {i} | {a} | {v} | {e} | {st} |" for i, a, v, e, st in mism]
+        L.append("")
+    else:
+        L += ["No registered prediction was wrong.", ""]
+    L += ["Cells that changed between the 3 repeats: "
+          + (", ".join(f"{i}/{a}" for i, a, _ in nondet) if nondet else "none") + ".", ""]
+    return L
 
 
 if __name__ == "__main__":
