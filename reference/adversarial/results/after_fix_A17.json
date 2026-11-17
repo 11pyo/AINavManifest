@@ -1,0 +1,59 @@
+{
+ "fix": "MAX_NESTING_DEPTH=64 + parser exceptions -> ManifestRejected",
+ "rows": [
+  {
+   "attack": "A17",
+   "arm": "N",
+   "before": "success",
+   "after": "success",
+   "crashed_after": "RecursionError",
+   "manifest_loaded_after": false
+  },
+  {
+   "attack": "A17",
+   "arm": "S",
+   "before": "success",
+   "after": "blocked",
+   "crashed_after": null,
+   "manifest_loaded_after": false
+  },
+  {
+   "attack": "A17",
+   "arm": "P-deny",
+   "before": "unprompted-success",
+   "after": "blocked",
+   "crashed_after": null,
+   "manifest_loaded_after": false
+  },
+  {
+   "attack": "A17",
+   "arm": "P-careless",
+   "before": "unprompted-success",
+   "after": "blocked",
+   "crashed_after": null,
+   "manifest_loaded_after": false
+  }
+ ],
+ "other_cells_changed": [
+  [
+   "A17",
+   "S",
+   "success",
+   "blocked"
+  ],
+  [
+   "A17",
+   "P-deny",
+   "unprompted-success",
+   "blocked"
+  ],
+  [
+   "A17",
+   "P-careless",
+   "unprompted-success",
+   "blocked"
+  ]
+ ],
+ "fix_commit": "f7afaae",
+ "note": "N is unguarded by design (plain json.loads) and keeps crashing; S, P-deny, P-careless no longer crash. All other 31 attacks x 4 arms unchanged (one repeat)."
+}

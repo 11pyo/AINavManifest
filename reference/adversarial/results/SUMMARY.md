@@ -203,3 +203,18 @@ Section 5.3 admits: the PEP cannot judge the effect.
 * A28: flipped by `descriptor-validation` (pre-registered expectation: descriptor-validation)
 * A29: flipped by `descriptor-validation` (pre-registered expectation: descriptor-validation)
 
+## After the A17 fix (kept apart; the tables above are the pre-fix measurement)
+
+A17 was confirmed as a defect before the fix (RecursionError escaped discovery; Section 3.5 MUST violated, no depth
+limit in the draft). Fix commit `f7afaae`: `MAX_NESTING_DEPTH = 64` checked before parsing, and parser
+exceptions become `ManifestRejected`. The whole matrix was re-measured once: no other cell changed.
+
+| Arm | before | after | exception after |
+|---|---|---|---|
+| N | success | success | RecursionError |
+| S | success | blocked | none |
+| P-deny | unprompted-success | blocked | none |
+| P-careless | unprompted-success | blocked | none |
+
+N keeps crashing because it is the unguarded arm (plain `json.loads`) by definition.
+

@@ -87,4 +87,5 @@ any P run (canary 0/192). Findings: A17 (RecursionError escapes discovery; Secti
 sets no depth limit), A07a/A07b (standing approval of Enter vs Section 5.3), A13 (blocked only by the adapter's
 hit-target check, not by a specified rule). Three predictions were wrong and are kept as registered (A19 S and
 P-careless, A20 S and P-careless; A20 was a malformed attack, repeated as A20b).
-A17 after a fix of `afrm` would be re-measured in a separate column; no fix has been applied.
+A17: defect confirmed before the fix; fixed in commit `f7afaae` (nesting limit 64, parser errors fail closed); re-measured
+in `results/after_fix_A17.json` and the SUMMARY section "After the A17 fix" (S, P-deny, P-careless now blocked; the pre-fix tables are unchanged).

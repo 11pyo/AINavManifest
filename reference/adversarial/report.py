@@ -226,6 +226,19 @@ def build():
         out["ablation"] = flips
         (RES / "matrix.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
 
+    fix = RES / "after_fix_A17.json"
+    if fix.exists():
+        d = json.loads(fix.read_text(encoding="utf-8"))
+        others = [c for c in d["other_cells_changed"] if c[0] != "A17"]
+        L += ["## After the A17 fix (kept apart; the tables above are the pre-fix measurement)", "",
+              "A17 was confirmed as a defect before the fix (RecursionError escaped discovery; Section 3.5 MUST violated, no depth",
+              f"limit in the draft). Fix commit `{d['fix_commit']}`: `MAX_NESTING_DEPTH = 64` checked before parsing, and parser",
+              "exceptions become `ManifestRejected`. The whole matrix was re-measured once: "
+              + ("no other cell changed." if not others else "OTHER CELLS CHANGED, see after_fix_A17.json."), "",
+              "| Arm | before | after | exception after |", "|---|---|---|---|"]
+        for r in d["rows"]:
+            L.append(f"| {r['arm']} | {r['before']} | {r['after']} | {r['crashed_after'] or 'none'} |")
+        L += ["", "N keeps crashing because it is the unguarded arm (plain `json.loads`) by definition.", ""]
     (RES / "SUMMARY.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     return "\n".join(L)
 
