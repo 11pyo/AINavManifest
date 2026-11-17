@@ -108,3 +108,15 @@ A38c and A39 equals A21, including the lines shown to the principal. Limits are 
 model, deterministic); in addition, these attacks test the verifier and the designation rule, not key management, which the draft
 leaves to the agent's configuration.
 
+
+## After the -04 rules
+
+The reference implementation was changed to follow `draft-han-ai-manifest-04` (commit `f417d32`): no standing approval, the §5.3
+floor of sensitive actions, the §5.2 ask display (Target / Source / Effect), the §5.1 click-target check. The predictions were
+committed first (`1da1a98`: `rules04.py`, last section of `CRITERIA.md`), then all 32 + 14 attacks were run again with
+`python -m adversarial.run_eval --rules 04 --set main|signature --repeat 3` (plus the ablations), into `results/rules04*.jsonl`.
+The -03 results and tables are unchanged; the new section is the last one of `results/SUMMARY.md`. `Standing` in the older tables
+describes the -03 runs; under -04 there is nothing to grant.
+
+Note for the LLM pilot (`LLM_PILOT.md`): it ran against the -03 implementation (commits `994aaaa`..`ab8b693`). Its P arms use the
+agent code of this directory, so a re-run now exercises the -04 rules; the recorded pilot rows were not re-measured.

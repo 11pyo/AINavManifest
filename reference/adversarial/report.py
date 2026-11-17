@@ -339,7 +339,7 @@ def signature_section(out):
     return L
 
 
-RULES04_IMPL_COMMIT, RULES04_PREREG_COMMIT = "f417d32", "__PREREG__"
+RULES04_IMPL_COMMIT, RULES04_PREREG_COMMIT = "f417d32", "1da1a98"
 
 
 def _asks(r):
@@ -475,6 +475,11 @@ def rules04_section(out):
     for name, ok, detail in checks:
         L.append(f"| {name} | {'yes' if ok else '**NO**'} | {'-' if ok else detail.replace('|', '/')[:300]} |")
     L.append("")
+    if wrong and {w[0] for w in wrong} == {"A20"}:
+        L += ["Check 2 failed for A20 only, and that is a mistake in the registration, kept as registered: A20 was listed with the "
+              "submit-button attacks, but its manifest carries a signature object instead of a string, so the validator rejects the whole "
+              "manifest (the known malformed attack, see the note of A20b) and no ask is ever shown, under -03 and -04 alike. The cell "
+              "(blocked) was predicted correctly.", ""]
     out["rules04"] = {"mismatches": mism, "changed": changed, "nondeterministic": nondet,
                       "checks": {n: ok for n, ok, _ in checks}}
 
@@ -490,6 +495,7 @@ def rules04_section(out):
               "see CRITERIA) and A13 (click-target: flip to prompted-success).", "",
               "| Ablation | Flipped attacks (-04) | Flipped attacks (-03) | As registered |", "|---|---|---|---|"]
         names = list(OrderedDict.fromkeys(r["ablation"] for r in abl))
+        newly = {}
         for nm in names:
             flipped = sorted(i for (i, a_, ab), v in ac.items() if ab == nm and full.get(i) and
                              (full[i]["cell"] == "blocked") != (v[0]["cell"] == "blocked"))
@@ -502,8 +508,15 @@ def rules04_section(out):
                 exp.discard("A27")
             if nm == "click-target":
                 exp = {"A13"}
+            newly[nm] = sorted(set(flipped) - set(was))
             L.append(f"| {nm} | {', '.join(flipped) or '-'} | {', '.join(was) or '-'} | {'yes' if set(flipped) == exp else '**NO** (expected ' + ', '.join(sorted(exp)) + ')'} |")
         L.append("")
+        if newly.get("descriptor-validation") == ["A17"]:
+            L += ["The registered claim 'same flips as -03' is wrong for `descriptor-validation`: A17 flips as well. Not caused by the -04 "
+                  "rules: in the -03 ablation table (measured before the A17 fix, commit f7afaae) the full agent already crashed on A17, "
+                  "so switching the validator off could not change that cell. With the fix in place the nesting limit is part of "
+                  "that control, and switching it off brings the crash back (`unprompted-success`). Kept as a MISMATCH of the "
+                  "registration.", ""]
         a13a = (ac.get(("A13", "P-careless", "click-target")) or [None])[0]
         if a13a:
             L.append(f"A13 with the click-target check off: `{a13a['cell']}` (registered: `prompted-success`).")
@@ -513,7 +526,7 @@ def rules04_section(out):
         L += [f"| {i} | {a} | {v} | {e} | {st} |" for i, a, v, e, st in mism]
         L.append("")
     else:
-        L += ["No registered cell prediction was wrong.", ""]
+        L += ["No registered per-cell prediction was wrong (the registered display and ablation claims that failed are listed above).", ""]
     L += ["Cells that changed between the 3 repeats: " + (", ".join(f"{i}/{a}" for i, a, _ in nondet) if nondet else "none") + ".", ""]
     return L
 
