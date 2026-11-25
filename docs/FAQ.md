@@ -114,7 +114,7 @@ Contributions at any stage accelerate the timeline.
 
 ### Q. Who is behind this?
 
-Won-pyo Han — solo inventor and maintainer. Contact: <pk102h@naver.com>.
+Won-pyo Han — solo inventor and maintainer. Contact: <pk102h@gmail.com>.
 
 ### Q. How can I stay updated?
 
@@ -124,4 +124,4 @@ Won-pyo Han — solo inventor and maintainer. Contact: <pk102h@naver.com>.
 
 ### Q. I have a question not answered here.
 
-Open a [GitHub Issue](https://github.com/11pyo/AINavManifest/issues) with the `question` label, or email <pk102h@naver.com>. Good questions get added to this FAQ.
+Open a [GitHub Issue](https://github.com/11pyo/AINavManifest/issues) with the `question` label, or email <pk102h@gmail.com>. Good questions get added to this FAQ.

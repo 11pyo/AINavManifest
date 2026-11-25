@@ -135,7 +135,7 @@ LinkedIn 메시지·이메일 서명·명함 등에 삽입:
 
 ```
 🌐 https://11pyo.github.io/AINavManifest/
-📧 pk102h@naver.com
+📧 pk102h@gmail.com
 📜 IETF draft-han-ai-manifest-00
 📝 KR Patent 10-2026-0071716
 ```

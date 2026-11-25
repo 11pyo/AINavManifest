@@ -50,7 +50,7 @@ Should this specification be adopted by a Standards Setting Organization (IETF, 
 ## Contact
 
 - Inventor: Won-pyo Han
-- Email: <pk102h@naver.com>
+- Email: <pk102h@gmail.com>
 - Commercial licensing inquiries welcome via email
 
 ## Disclaimer

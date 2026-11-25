@@ -27,7 +27,7 @@ Enforcement decisions are final.
 
 ## Reporting
 
-Report problems by emailing <pk102h@naver.com>. Reports are handled confidentially. If your concern involves the maintainer, please still write; we will find a neutral third party to help.
+Report problems by emailing <pk102h@gmail.com>. Reports are handled confidentially. If your concern involves the maintainer, please still write; we will find a neutral third party to help.
 
 ## Scope
 

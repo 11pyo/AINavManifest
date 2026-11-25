@@ -162,4 +162,4 @@ Issues, schema proposals, and implementation PRs welcome. Please read [`docs/FRA
 
 ## Author
 
-**Won-pyo Han** · <pk102h@naver.com>
+**Won-pyo Han** · <pk102h@gmail.com>

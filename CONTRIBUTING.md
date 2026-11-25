@@ -41,7 +41,7 @@ By participating, you agree to uphold the [Code of Conduct](CODE_OF_CONDUCT.md).
 ## Communication
 
 - **GitHub Issues** — primary discussion channel, public archive
-- **Email** — <pk102h@naver.com> for licensing, coordinated disclosure, or private matters
+- **Email** — <pk102h@gmail.com> for licensing, coordinated disclosure, or private matters
 
 ## Looking for a First Contribution?
 
